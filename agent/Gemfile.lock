@@ -6,9 +6,8 @@ GIT
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
 
-GIT
-  remote: https://github.com/chetan/devops_common.git
-  revision: 7615092b2e47ac2e0234d2427387fd38c86b8d17
+PATH
+  remote: vendor/cache/common
   specs:
     bixby_common (0.2.0)
       curb
