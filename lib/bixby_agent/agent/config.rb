@@ -14,7 +14,7 @@ module Config
     end
 
     def config_file
-      File.join(config_dir, "devops.yml")
+      File.join(config_dir, "bixby.yml")
     end
 
     def load_config(root_dir)

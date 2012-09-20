@@ -15,7 +15,7 @@ class TestAgent < TestCase
     @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
     @agent.save_config()
     assert(@agent.new?)
-    assert( File.exists? File.join(@root_dir, "etc", "devops.yml") )
+    assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
   end
@@ -59,7 +59,7 @@ class TestAgent < TestCase
 
   def test_bad_config
     setup_existing_agent()
-    File.open(File.join(@root_dir, "etc", "devops.yml"), 'w') { |f| f.write("foo") }
+    File.open(File.join(@root_dir, "etc", "bixby.yml"), 'w') { |f| f.write("foo") }
     assert_throws(SystemExit) do
       Agent.create
     end

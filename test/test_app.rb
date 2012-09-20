@@ -18,7 +18,7 @@ class TestApp < TestCase
     app.load_agent()
 
     assert_requested(:post, @manager_uri + "/api", :times => 1)
-    assert( File.exists? File.join(@root_dir, "etc", "devops.yml") )
+    assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
   end
 
   def test_missing_manager_uri

@@ -52,8 +52,8 @@ module CLI
   option :directory,
       :short          => "-d DIRECTORY",
       :long           => "--directory DIRECTORY",
-      :default        => "/opt/devops",
-      :description    => "Root directory for devops (default: /opt/devops)"
+      :default        => "/opt/bixby",
+      :description    => "Root directory for Bixby (default: /opt/bixby)"
 
   option :port,
       :short          => "-p PORT",

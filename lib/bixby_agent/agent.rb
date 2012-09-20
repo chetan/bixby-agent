@@ -14,7 +14,7 @@ require "bixby_agent/agent/config"
 module Bixby
 class Agent
 
-  DEFAULT_ROOT_DIR = "/opt/devops"
+  DEFAULT_ROOT_DIR = "/opt/bixby"
 
   include HttpClient
   include Config
