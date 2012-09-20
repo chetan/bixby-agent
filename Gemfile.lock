@@ -6,10 +6,11 @@ GIT
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
 
-PATH
-  remote: vendor/cache/common
+GIT
+  remote: https://github.com/chetan/bixby-common.git
+  revision: e6223dbdbaa1503d90c37ca1e939b74b028dc7a7
   specs:
-    bixby_common (0.2.0)
+    bixby-common (0.2.0)
       curb
       multi_json
       oj
@@ -107,7 +108,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   bahia
-  bixby_common!
+  bixby-common!
   cane
   colorize
   curb

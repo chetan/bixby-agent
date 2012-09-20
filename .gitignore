@@ -5,8 +5,8 @@ pkg/
 coverage/
 .rvmrc
 .bundle/
-agent/vendor/cache/
+vendor/cache/
 
-/agent/etc
-/agent/var
-/agent/repo/vendor
+etc
+var
+repo/vendor

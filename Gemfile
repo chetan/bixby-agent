@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-# gem 'bixby_common', :git => "https://github.com/chetan/devops_common.git"
-gem 'bixby_common', :path => "/Users/chetan/work/chetan/devops/common"
+gem 'bixby-common', :git => "https://github.com/chetan/bixby-common.git"
 
 gem 'sinatra', '~> 1.3'
 gem 'thin'
