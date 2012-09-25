@@ -36,7 +36,8 @@ end
 gems.each do |spec|
   gem_path = "#{Bundler.rubygems.gem_dir}/cache/#{spec.full_name}.gem"
   if not File.exist? gem_path then
-    puts "#{gem_path} doesn't exit"
+    `gem fetch -v #{spec.version} #{spec.name}`
+    `mv ./#{spec.name}-#{spec.version}.gem #{VENDOR}`
     next
   end
   if not File.exist? File.join(VENDOR, File.basename(gem_path)) then
@@ -44,7 +45,7 @@ gems.each do |spec|
   end
 end
 
-`gem fetch rubygems-update -q | awk '{print $2}'`
+`gem fetch rubygems-update -q`
 `mv ./rubygems-update-*.gem #{VENDOR}`
 
 exit
