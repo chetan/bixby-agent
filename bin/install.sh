@@ -2,8 +2,29 @@
 
 set -e
 
+# helpers
+uname=$(uname)
+
+is_mac() {
+  [[ $uname == "Darwin" ]]
+}
+
+is_centos() {
+  [[ -f /etc/centos-release ]]
+}
+
+is_ubuntu() {
+  [[ -f /etc/lsb-release ]] &&
+    GREP_OPTIONS="" \grep "DISTRIB_ID=Ubuntu" /etc/lsb-release >/dev/null
+}
+
 # install deps
-apt-get -yqq install build-essential ruby rubygems curl libcurl4-openssl-dev libopenssl-ruby > /dev/null
+if [[ is_ubuntu ]]; then
+  DEBIAN_FRONTEND=noninteractive
+  apt-get -yqq install build-essential ruby rubygems curl libcurl4-openssl-dev libopenssl-ruby > /dev/null
+elif [[ is_centos ]]; then
+  yum -q install ruby ruby-devel curl-devel rdoc ri zlib zlib-devel
+fi
 
 # grab bixby
 wget -q http://192.168.80.99/~chetan/bixby/bixby-agent.tar.gz
