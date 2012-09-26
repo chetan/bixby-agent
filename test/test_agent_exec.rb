@@ -29,9 +29,10 @@ class AgentExec < TestCase
     setup_root()
     (status, stdout, stderr) = @agent.exec(@c.to_hash)
     assert status
+    assert status.kind_of? Fixnum
+    assert_equal 0, status
     assert stdout
     assert stderr
-    assert(status.success?)
     assert_equal("hi\n", stdout)
     assert_equal("", stderr)
   end
