@@ -19,8 +19,6 @@ module RemoteExec
   #
   # @return [Array<FixNum, String, String>] status code, stdout, stderr
   def exec(params)
-    @log.debug{ "exec: #{params}" }
-
     digest = params.delete("digest") || params.delete(:digest)
 
     cmd = CommandSpec.new(params)

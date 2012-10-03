@@ -40,10 +40,10 @@ class Server < Sinatra::Base
       @log.debug { "received a JsonResponse; returning" }
       return req
     end
-    @log.debug{ "request: \n#{req.to_json}" }
+    @log.debug{ "request: \n#{req.to_json}\n" }
 
     ret = handle_exec(req)
-    @log.debug{ "response: \n#{ret}" }
+    @log.debug{ "response: \n#{ret.to_json}\n" }
 
     return ret
   end
@@ -86,8 +86,8 @@ class Server < Sinatra::Base
       @log.error(ex)
       return JsonResponse.new("fail", ex.message, nil, 500)
     end
-    data = { :status => status.exitstatus, :stdout => stdout, :stderr => stderr }
-    return JsonResponse.new("success", nil, data)
+    data = { :status => status, :stdout => stdout, :stderr => stderr }
+    return JsonResponse.new((status == 0 ? "success" : "fail"), nil, data)
   end
 
 end # Server

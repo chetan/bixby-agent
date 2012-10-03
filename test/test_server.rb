@@ -44,8 +44,7 @@ module Test
     end
 
     def test_exec
-      `ls` # hack to create a Process::Status object we can pass to our stub
-      @agent.expects(:exec).once().returns([$?, "", ""])
+      @agent.expects(:exec).once().returns([0, "", ""])
       post "/foobar", JsonRequest.new("exec", {}).to_json
 
       assert_equal 200, last_response.status
@@ -54,10 +53,19 @@ module Test
       assert_equal 0, res.data["status"]
     end
 
+    def test_exec_fail
+      @agent.expects(:exec).once().returns([2, "", ""])
+      post "/foobar", JsonRequest.new("exec", {}).to_json
+
+      assert_equal 200, last_response.status
+      res = JsonResponse.from_json(last_response.body)
+      assert res.fail?
+      assert_equal 2, res.data["status"]
+    end
+
     def test_exec_encrypted
       ENV["BIXBY_NOCRYPTO"] = "0"
-      `ls` # hack to create a Process::Status object we can pass to our stub
-      @agent.expects(:exec).once().returns([$?, "", ""])
+      @agent.expects(:exec).once().returns([0, "", ""])
       post "/foobar", encrypt_for_agent( JsonRequest.new("exec", {}).to_json )
 
       assert_equal 200, last_response.status
