@@ -36,6 +36,12 @@ group :development, :test do
 
     gem "rack-test"
 
+    # tools
+    gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
+    gem 'rb-fsevent', '~> 0.9.1' if RbConfig::CONFIG['target_os'] =~ /darwin(1.+)?$/i
+    gem 'rb-inotify', '~> 0.8.8', :github => 'mbj/rb-inotify' if RbConfig::CONFIG['target_os'] =~ /linux/i
+    gem 'wdm',        '~> 0.0.3' if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/i
+
     # coverage
     gem "simplecov",:platforms => :mri_19
     gem "rcov", :platforms => :mri_18
