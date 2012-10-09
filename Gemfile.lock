@@ -18,9 +18,9 @@ GIT
 
 GIT
   remote: https://github.com/chetan/test_guard.git
-  revision: c7dfcaa264d08a9e4ca1271ede514ad760bbd077
+  revision: 87e79592d1102acde8ca06cb305a40557ead01f4
   specs:
-    test_guard (0.1.0)
+    test_guard (0.1.1)
       awesome_print
       colorize
       growl
