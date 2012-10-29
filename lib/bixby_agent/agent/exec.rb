@@ -18,6 +18,8 @@ module Exec
   # @option params [Hash] :env            Hash of extra ENV key/values to pass to sub-shell
   #
   # @return [Array<FixNum, String, String>] status code, stdout, stderr
+  # @raise [BundleNotFound] If bundle doesn't exist or digest does not match
+  # @raise [CommandNotFound] If command doesn't exist
   def exec(params)
     digest = params.delete("digest") || params.delete(:digest)
 
