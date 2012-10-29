@@ -45,6 +45,17 @@ class AgentExec < TestCase
     end
   end
 
+  def test_execute_stdin
+    setup_root()
+    @c.command = "cat"
+    @c.stdin = "hi"
+    (status, stdout, stderr) = @agent.exec(@c.to_hash)
+    assert_equal 0, status
+    assert_equal("hi", stdout)
+    assert_equal("", stderr)
+  end
+
+
 end
 
 end
