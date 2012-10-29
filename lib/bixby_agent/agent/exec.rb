@@ -4,7 +4,7 @@ require 'systemu'
 module Bixby
 class Agent
 
-module RemoteExec
+module Exec
 
   # Shell exec a local command with the given params
   #
@@ -32,7 +32,7 @@ module RemoteExec
     return ret
   end
 
-end # RemoteExec
+end # Exec
 
 end # Agent
 end # Bixby

@@ -7,7 +7,7 @@ require "logging"
 
 require "bixby_agent/config_exception"
 require "bixby_agent/agent/handshake"
-require "bixby_agent/agent/remote_exec"
+require "bixby_agent/agent/exec"
 require "bixby_agent/agent/api"
 require "bixby_agent/agent/config"
 
@@ -19,7 +19,7 @@ class Agent
   include HttpClient
   include Config
   include Handshake
-  include RemoteExec
+  include Exec
   include API
 
   class << self
