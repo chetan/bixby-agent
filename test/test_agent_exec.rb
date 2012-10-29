@@ -37,14 +37,6 @@ class AgentExec < TestCase
     assert_equal("", stderr)
   end
 
-  def test_exec_digest_changed_throws_error
-    setup_root()
-    @c.digest = "lkjasdfasdf"
-    assert_throws(BundleNotFound) do
-      @agent.exec(@c.to_hash)
-    end
-  end
-
   def test_execute_stdin
     setup_root()
     @c.command = "cat"

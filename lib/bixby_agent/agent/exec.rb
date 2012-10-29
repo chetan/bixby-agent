@@ -22,10 +22,7 @@ module Exec
     digest = params.delete("digest") || params.delete(:digest)
 
     cmd = CommandSpec.new(params)
-    cmd.validate()
-    if digest and cmd.digest != digest then
-      raise BundleNotFound, "digest does not match", caller
-    end
+    cmd.validate(digest)
 
     ret = execute(cmd)
     @log.debug{ "ret: " + MultiJson.dump(ret) }
