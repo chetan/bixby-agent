@@ -3,7 +3,7 @@ module Bixby
 class Agent
   module API
 
-    # Execute the given API request
+    # Execute the given API request on the manager
     #
     # @param [JsonRequest] json_req
     # @return [JsonResponse]
