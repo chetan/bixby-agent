@@ -34,9 +34,9 @@ class Agent
     self.class.agent_root = path
   end
 
-  attr_accessor :port, :manager_uri, :uuid, :mac_address, :password, :log
+  attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password, :log
 
-  def self.create(uri = nil, password = nil, root_dir = nil, port = nil, use_config = true)
+  def self.create(uri = nil, tenant = nil, password = nil, root_dir = nil, port = nil, use_config = true)
 
     agent = load_config(root_dir) if use_config
 
@@ -47,7 +47,7 @@ class Agent
     if agent.nil? then
       # create a new one if unable to load
       uri = uri.gsub(%r{/$}, '') # remove trailing slash
-      agent = new(uri, password, root_dir, port)
+      agent = new(uri, tenant, password, root_dir, port)
     end
 
     # pass config to some modules
@@ -59,13 +59,14 @@ class Agent
     return agent
   end
 
-  def initialize(uri, password = nil, root_dir = nil, port = nil)
+  def initialize(uri, tenant = nil, password = nil, root_dir = nil, port = nil)
     @new = true
 
     @log = Logging.logger[self]
 
     @port = port
     @manager_uri = uri
+    @tenant = tenant
     @password = password
     @agent_root = root_dir.nil? ? DEFAULT_ROOT_DIR : root_dir
 

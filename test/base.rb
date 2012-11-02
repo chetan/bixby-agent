@@ -11,6 +11,7 @@ module Bixby
         WebMock.reset!
 
         @manager_uri = "http://localhost:3000"
+        @tenant = "pixelcop"
         @password = "foobar"
         @root_dir = "/tmp/agent_test_temp"
         @port = 9999
@@ -46,7 +47,7 @@ module Bixby
 
       def create_new_agent
         ENV["BIXBY_HOME"] = nil
-        @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+        @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
       end
 
 

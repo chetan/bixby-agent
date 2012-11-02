@@ -8,7 +8,7 @@ class Provisioning < TestCase
 
   def setup
     super
-    @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+    @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
   end
 
   def test_list_files

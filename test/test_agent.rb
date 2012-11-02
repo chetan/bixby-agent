@@ -12,7 +12,7 @@ class TestAgent < TestCase
   end
 
   def test_create_new_agent
-    @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+    @agent = create_agent()
     @agent.save_config()
     assert(@agent.new?)
     assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
@@ -22,7 +22,7 @@ class TestAgent < TestCase
 
   def test_load_existing_agent
     setup_existing_agent()
-    @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+    @agent = create_agent()
     assert(!@agent.new?)
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
@@ -43,16 +43,18 @@ class TestAgent < TestCase
   def test_create_missing_manager_uri
     @manager_uri = nil
     assert_throws(ConfigException) do
-      @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+      @agent = create_agent()
     end
   end
 
   def test_register_with_manager
-    @agent = Agent.create(@manager_uri, @password, @root_dir, @port)
+    @agent = create_agent()
 
     # stub out http request
-    stub_request(:post, "#{@manager_uri}/api").
-      to_return(:body => '{"data":null,"code":null,"status":"success","message":null}', :status => 200)
+    stub_request(:post, "#{@manager_uri}/api").with { |req|
+      req.body =~ /inventory:register_agent/ and req.body =~ /9999,"pixelcop"/
+
+    }.to_return(:body => '{"data":null,"code":null,"status":"success","message":null}', :status => 200)
     response = @agent.register_agent
     assert response.status == "success"
   end
@@ -63,6 +65,13 @@ class TestAgent < TestCase
     assert_throws(SystemExit) do
       Agent.create
     end
+  end
+
+
+  private
+
+  def create_agent
+    @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
   end
 
 end
