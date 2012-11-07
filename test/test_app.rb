@@ -12,13 +12,21 @@ class TestApp < TestCase
     ARGV << @root_dir
     ARGV << @manager_uri
 
-    stub_request(:post, "http://localhost:3000/api").to_return(:status => 200, :body => "{}")
+    response_str = MultiJson.dump({
+                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----"},
+                      :code    => nil,
+                      :status  => "success",
+                      :message => nil })
+
+    stub_request(:post, "http://localhost:3000/api").
+      to_return(:status => 200, :body => response_str)
 
     app = App.new
     app.load_agent()
 
     assert_requested(:post, @manager_uri + "/api", :times => 1)
     assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
+    assert( File.exists? File.join(@root_dir, "etc", "server.pub") )
   end
 
   def test_missing_manager_uri

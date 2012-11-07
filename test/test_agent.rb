@@ -50,13 +50,23 @@ class TestAgent < TestCase
   def test_register_with_manager
     @agent = create_agent()
 
+    response_str = MultiJson.dump({
+                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----"},
+                      :code    => nil,
+                      :status  => "success",
+                      :message => nil })
+
     # stub out http request
     stub_request(:post, "#{@manager_uri}/api").with { |req|
       req.body =~ /inventory:register_agent/ and req.body =~ /9999,"pixelcop"/
 
-    }.to_return(:body => '{"data":null,"code":null,"status":"success","message":null}', :status => 200)
+    }.to_return(:body => response_str, :status => 200)
     response = @agent.register_agent
     assert response.status == "success"
+
+    key_file = File.join(@agent.agent_root, "etc", "server.pub")
+    assert File.exists? key_file
+    assert File.read(key_file).include? "PUBLIC KEY"
   end
 
   def test_bad_config

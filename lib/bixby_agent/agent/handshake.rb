@@ -15,10 +15,24 @@ module Handshake
     # TODO send dereg request
   end
 
+  # Register the agent with the server
+  #
+  # @return [JsonResponse] response from server
   def register_agent
     params = [ @uuid, self.public_key.to_s, get_hostname(), @port, @tenant, @password ]
     req = JsonRequest.new("inventory:register_agent", params)
-    return exec_api(req)
+    ret = exec_api(req)
+
+    if ret.fail? then
+      return ret
+    end
+
+    # success, store server's pub key
+    File.open(self.server_key_file, 'w') do |f|
+      f.puts(ret.data["server_key"])
+    end
+
+    return ret
   end
 
   def mac_changed?
