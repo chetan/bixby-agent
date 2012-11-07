@@ -14,11 +14,6 @@ class App
     tenant   = @config[:tenant]
     password = @config[:password]
 
-    if @config[:debug] then
-      puts "crypto disabled due to --debug flag"
-      ENV["BIXBY_NOCRYPTO"] = "1"
-    end
-
     begin
       agent = Agent.create(uri, tenant, password, root_dir, port)
     rescue Exception => ex
