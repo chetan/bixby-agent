@@ -27,7 +27,7 @@ class Agent
     # Execute the given API download request
     #
     # @param [JsonRequest] json_req     Request to download a file
-    # @param [String] download_path     Location to download requested file to
+    # @param [String] download_path     Absolute filename to download requested file to
     # @return [JsonResponse]
     def exec_api_download(json_req, download_path)
       uri = URI.join(BaseModule.manager_uri, "/api").to_s

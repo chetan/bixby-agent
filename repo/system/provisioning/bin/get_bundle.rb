@@ -61,14 +61,17 @@ module Bixby
         params = cmd.to_hash
         params.delete(:digest)
 
-        path = File.join(local_path, f['file'])
-        FileUtils.mkdir_p(path) if not File.exist? path
+        filename = File.join(local_path, f['file'])
+        path = File.dirname(filename)
+        if not File.exist? path then
+          FileUtils.mkdir_p(path)
+        end
 
         req = JsonRequest.new("provisioning:fetch_file", [ params, f['file'] ])
-        @agent.exec_api_download(req, path)
+        @agent.exec_api_download(req, filename)
         if f['file'] =~ /^bin/ then
           # correct permissions for executables
-          FileUtils.chmod(0755, path)
+          FileUtils.chmod(0755, filename)
         end
       end # files.each
 
