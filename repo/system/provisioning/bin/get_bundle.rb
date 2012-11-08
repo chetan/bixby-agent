@@ -62,6 +62,8 @@ module Bixby
         params.delete(:digest)
 
         path = File.join(local_path, f['file'])
+        FileUtils.mkdir_p(path) if not File.exist? path
+
         req = JsonRequest.new("provisioning:fetch_file", [ params, f['file'] ])
         @agent.exec_api_download(req, path)
         if f['file'] =~ /^bin/ then
