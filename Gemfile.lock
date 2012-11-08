@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 98224248d0704dd4b2d504e6879dc06b42dc4760
+  revision: 6bd37398f8d93ea1b4c4f1b030594144c03c7327
   specs:
     bixby-common (0.2.0)
       curb
@@ -43,7 +43,7 @@ GEM
     coderay (1.0.7)
     colorize (0.5.8)
     crack (0.3.1)
-    curb (0.8.1)
+    curb (0.8.2)
     daemons (1.1.9)
     eventmachine (0.12.10)
     facter (1.6.12)
@@ -75,7 +75,7 @@ GEM
     mocha (0.12.4)
       metaclass (~> 0.0.1)
     multi_json (1.3.7)
-    oj (1.4.3)
+    oj (1.4.4)
     open4 (1.3.0)
     parallel (0.5.18)
     pry (0.9.10)
