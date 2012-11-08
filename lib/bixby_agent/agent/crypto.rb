@@ -63,7 +63,7 @@ module Crypto
   # @return [String] unencrypted data
   def decrypt_from_server(data)
     data = StringIO.new(data, 'rb')
-    uuid = data.readline.strip
+    uuid = data.readline.strip # TODO throwaway the uuid for now
     Bixby::CryptoUtil.decrypt(data, keypair, server_key)
   end
 
