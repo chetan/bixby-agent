@@ -17,8 +17,8 @@ require 'webmock'
 include WebMock::API
 require 'mocha'
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 require 'bixby_agent'
 
 require "base"
