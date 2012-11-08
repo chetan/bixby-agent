@@ -10,7 +10,7 @@ gem 'curb'
 gem 'facter'
 gem 'mixlib-cli'
 gem 'uuidtools'
-gem 'systemu'
+gem 'systemu', :git => "https://github.com/chetan/systemu.git", :branch => "forkbomb"
 gem 'logging'
 
 group :development, :test do
