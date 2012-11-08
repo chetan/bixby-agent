@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2012-09-20"
+  s.date = "2012-11-08"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
-  s.executables = ["agent", "agent.rb", "bundle", "install.sh", "package"]
+  s.executables = ["agent", "agent.rb", "bundle", "cache_all.rb", "install.sh", "package"]
   s.files = [
     ".document",
     "Gemfile",
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "bin/agent",
     "bin/agent.rb",
     "bin/bundle",
+    "bin/cache_all.rb",
     "bin/install.sh",
     "bin/package",
     "bixby-agent.gemspec",
@@ -31,10 +32,9 @@ Gem::Specification.new do |s|
     "lib/bixby_agent/agent/api.rb",
     "lib/bixby_agent/agent/config.rb",
     "lib/bixby_agent/agent/crypto.rb",
+    "lib/bixby_agent/agent/exec.rb",
     "lib/bixby_agent/agent/handshake.rb",
-    "lib/bixby_agent/agent/remote_exec.rb",
     "lib/bixby_agent/app.rb",
-    "lib/bixby_agent/bootstrap.rb",
     "lib/bixby_agent/cli.rb",
     "lib/bixby_agent/config_exception.rb",
     "lib/bixby_agent/model/bundle_command.rb",
@@ -66,8 +66,7 @@ Gem::Specification.new do |s|
     "test/test_crypto.rb",
     "test/test_get_bundle.rb",
     "test/test_provisioning.rb",
-    "test/test_server.rb",
-    "test_guard.rb"
+    "test/test_server.rb"
   ]
   s.homepage = "http://github.com/chetan/bixby-agent"
   s.require_paths = ["lib"]
@@ -103,6 +102,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<minitest>, [">= 0"])
       s.add_development_dependency(%q<turn>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
+      s.add_development_dependency(%q<test_guard>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<cane>, [">= 0"])
@@ -132,6 +132,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<minitest>, [">= 0"])
       s.add_dependency(%q<turn>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0"])
+      s.add_dependency(%q<test_guard>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<cane>, [">= 0"])
@@ -162,6 +163,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<minitest>, [">= 0"])
     s.add_dependency(%q<turn>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0"])
+    s.add_dependency(%q<test_guard>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<cane>, [">= 0"])
