@@ -24,7 +24,7 @@ class Server < Sinatra::Base
   get '/*' do
     @log.debug { "Disposing of GET request: #{request.path}" }
     status 405
-    return "GET requests are not allowed"
+    return "GET requests are not allowed\n"
   end
 
   post '/*' do
