@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 622fbf232c99ba53f7c4e800e2efc6ce0605fc36
+  revision: 100ffdb06295e679069e4a6e0f3907ec3b7bab08
   specs:
     bixby-common (0.2.0)
       curb
@@ -50,7 +50,7 @@ GEM
     coderay (1.0.7)
     colorize (0.5.8)
     crack (0.3.1)
-    curb (0.8.2)
+    curb (0.8.3)
     daemons (1.1.9)
     eventmachine (0.12.10)
     facter (1.6.12)
