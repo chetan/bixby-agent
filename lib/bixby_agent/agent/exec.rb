@@ -52,7 +52,7 @@ module Exec
     cmd += @args ? " #{spec.args}'" : "'"
 
     # Cleanup the ENV before executing command
-    rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE", "RUBYOPT" ]
+    rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
     old_env = {}
     rem.each{ |r| old_env[r] = ENV.delete(r) }
     status, stdout, stderr = systemu(cmd)
