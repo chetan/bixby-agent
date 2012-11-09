@@ -23,7 +23,8 @@ class Server < Sinatra::Base
 
   get '/*' do
     @log.debug { "Disposing of GET request: #{request.path}" }
-    return encrypt(JsonResponse.invalid_request.to_json)
+    status 405
+    return "GET requests are not allowed"
   end
 
   post '/*' do
