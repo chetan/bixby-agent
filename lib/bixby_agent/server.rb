@@ -38,13 +38,13 @@ class Server < Sinatra::Base
   def handle_request
     req = extract_valid_request()
     if req.kind_of? JsonResponse then
-      @log.debug { "received a JsonResponse; returning" }
+      @log.debug { "received a JsonResponse; returning\n" + req.to_s }
       return req
     end
-    @log.debug{ "request: \n#{req.to_json}\n" }
+    @log.debug{ req.to_s }
 
     ret = handle_exec(req)
-    @log.debug{ "response: \n#{ret.to_json}\n" }
+    @log.debug{ ret.to_s }
 
     return ret
   end
