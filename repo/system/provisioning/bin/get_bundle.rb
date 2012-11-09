@@ -78,5 +78,7 @@ module Bixby
       cmd.update_digest
     end
 
-end # Provisioning
+end # Provision
 end # Bixby
+
+Bixby::Provision.new.run
