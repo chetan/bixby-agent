@@ -28,7 +28,10 @@ class Server < Sinatra::Base
   end
 
   post '/*' do
-    return encrypt(handle_request().to_json)
+    res = handle_request().to_json
+    @log.debug { ret.to_s }
+    @log.debug { "--- response sent ---\n\n" }
+    return encrypt(res)
   end
 
   def encrypt(json)
@@ -38,15 +41,12 @@ class Server < Sinatra::Base
   def handle_request
     req = extract_valid_request()
     if req.kind_of? JsonResponse then
-      @log.debug { "received a JsonResponse; returning\n" + req.to_s }
+      @log.debug { "request extraction failed" }
       return req
     end
     @log.debug{ req.to_s }
 
-    ret = handle_exec(req)
-    @log.debug{ ret.to_s }
-
-    return ret
+    return handle_exec(req)
   end
 
   def extract_valid_request
