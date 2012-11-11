@@ -29,7 +29,7 @@ class Server < Sinatra::Base
 
   post '/*' do
     res = handle_request().to_json
-    @log.debug { ret.to_s }
+    @log.debug { res.to_s }
     @log.debug { "--- response sent ---\n\n" }
     return encrypt(res)
   end
