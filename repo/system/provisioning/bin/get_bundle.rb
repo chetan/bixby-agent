@@ -42,6 +42,8 @@ module Bixby
     # @param [CommandSpec] cmd    CommandSpec representing the Bundle to which the files belong
     # @param [Hash] files         Hash, returned from #list_files
     def download_files(cmd, files)
+      return if files.nil? or files.empty?
+
       local_path = cmd.bundle_dir
       digest = cmd.load_digest
       files.each do |f|
