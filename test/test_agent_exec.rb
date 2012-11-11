@@ -27,13 +27,14 @@ class AgentExec < TestCase
 
   def test_exec_pass
     setup_root()
+    @c.args = "foo bar baz"
     (status, stdout, stderr) = @agent.exec(@c.to_hash)
     assert status
     assert status.kind_of? Fixnum
     assert_equal 0, status
     assert stdout
     assert stderr
-    assert_equal("hi\n", stdout)
+    assert_equal("foo bar baz\n", stdout)
     assert_equal("", stderr)
   end
 

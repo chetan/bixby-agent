@@ -40,7 +40,7 @@ module Exec
   #
   # @return [Array<FixNum, String, String>] status code, stdout, stderr
   def execute(spec)
-    if not (spec.stdin.nil? || spec.stdin.empty?) then
+    if not (spec.stdin.nil? or spec.stdin.empty?) then
       temp = Tempfile.new("input-")
       temp << spec.stdin
       temp.flush
@@ -49,7 +49,9 @@ module Exec
     else
       cmd = "sh -c '#{spec.command_file}"
     end
-    cmd += @args ? " #{spec.args}'" : "'"
+    cmd += spec.args ? " #{spec.args}'" : "'"
+
+    @log.debug{ "cmd: #{cmd}" }
 
     # Cleanup the ENV before executing command
     rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
