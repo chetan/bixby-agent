@@ -21,8 +21,8 @@ module Test
 
     def test_get_is_invalid
       get "/foobar"
-      assert_equal 200, last_response.status
-      assert last_response.body =~ /invalid request/
+      assert_equal 405, last_response.status
+      assert_equal 'GET requests are not allowed', last_response.body.strip
     end
 
     def test_post_empty_req
