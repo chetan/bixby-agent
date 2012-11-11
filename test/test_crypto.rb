@@ -33,7 +33,10 @@ class Crypto < TestCase
   def test_api_call_with_crypto
 
     setup_test_bundle("local", "system/provisioning", "get_bundle.rb")
-    require @c.command_file
+    begin
+      require @c.command_file
+    rescue Exception => ex
+    end
     ENV["BIXBY_NOCRYPTO"] = "0"
     setup_existing_agent()
 

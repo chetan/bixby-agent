@@ -10,15 +10,18 @@ class GetBundle < TestCase
     super
     setup_test_bundle("local", "system/provisioning", "get_bundle.rb")
     @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
+    Agent.stubs(:create).returns(@agent)
   end
 
   def test_get_bundle
 
     assert @c.command_file
     assert File.exists? @c.command_file
-    require @c.command_file
 
-    Agent.stubs(:create).returns(@agent)
+    begin
+        require @c.command_file
+    rescue Exception => ex
+    end
 
     # test our stub
     a = Agent.create
@@ -49,9 +52,10 @@ class GetBundle < TestCase
 
   def test_bad_json
 
-    require @c.command_file
-
-    Agent.stubs(:create).returns(@agent)
+    begin
+        require @c.command_file
+    rescue Exception => ex
+    end
 
     # test our stub
     a = Agent.create
