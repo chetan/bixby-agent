@@ -78,6 +78,7 @@ class Agent
     ENV["BIXBY_HOME"] = self.agent_root
 
     paths = []
+    paths << ENV["RUBYLIB"] if ENV.include? "RUBYLIB" and not ENV["RUBYLIB"].empty?
     $:.each{ |p| paths << p if p =~ %r(/gems/) }
     paths << File.join(self.agent_root, 'lib')
     ENV["RUBYLIB"] = paths.join(":")
