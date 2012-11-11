@@ -32,7 +32,11 @@ class Agent
     def exec_api_download(json_req, download_path)
       uri = URI.join(BaseModule.manager_uri, "/api").to_s
       begin
-        json_req.http_post_download(uri, json_req.to_json, download_path)
+        post = json_req.to_json
+        if crypto_enabled? and have_server_key? then
+          post = encrypt_for_server(post)
+        end
+        json_req.http_post_download(uri, post, download_path)
         return JsonResponse.new("success")
       rescue Curl::Err::CurlError => ex
         return JsonResponse.new("fail", ex.message, ex.backtrace)
