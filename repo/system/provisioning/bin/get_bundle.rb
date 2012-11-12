@@ -15,11 +15,24 @@ module Bixby
       end
 
       begin
-        cmd = CommandSpec.from_json(input)
+        digest = input.delete("digest")
+        cmd = CommandSpec.new(input)
       rescue Exception => ex
         puts ex.message
         puts ex.backtrace.join("\n")
         exit 1
+      end
+
+      # see if it exists and is up to date already
+      begin
+        if cmd.validate(digest) == true then
+          # digest matches, already up to date
+          return
+        end
+      rescue Exception => ex
+        # expected if bundle/command doesn't exist or is out of date
+        # (digest doesn't match)
+        # TODO: log?
       end
 
       files = list_files(cmd)

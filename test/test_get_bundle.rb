@@ -27,10 +27,15 @@ class GetBundle < TestCase
     a = Agent.create
     assert_equal @agent, a
 
-    cmd = CommandSpec.new({ :repo => "support", :bundle => "test_bundle", :command => "echo" })
+    cmd = CommandSpec.new({
+        :repo => "support",
+        :bundle => "test_bundle",
+        :command => "echo",
+        :digest => "c1af0e59a74367e83492a7501f6bdd7ed33de005c3f727a302c5ddfafa8c6f70" })
 
+    cmd_hash = MultiJson.load(cmd.to_json)
     provisioner = Provision.new
-    provisioner.stubs(:get_json_input).returns(cmd.to_json)
+    provisioner.stubs(:get_json_input).returns(cmd_hash.dup, cmd_hash.dup)
 
     # setup our expectations on the run method
     ret_list = JsonResponse.from_json('{"status":"success","message":null,"data":[{"file":"bin/echo","digest":"abcd"}],"code":null}')
@@ -39,7 +44,7 @@ class GetBundle < TestCase
         dir = File.dirname(filename)
         assert File.exists? dir
         assert File.directory? dir
-        FileUtils.touch(filename)
+        `cp -a #{@bundle_path} #{@root_dir}/repo/support/` # copy whole bundle
         true
         }.returns(true)
 
@@ -48,6 +53,9 @@ class GetBundle < TestCase
     assert File.exists? cmd.command_file
     assert File.file? cmd.command_file
     assert File.executable? cmd.command_file
+
+    # a second run shouldn't do anything since digests already match
+    provisioner.run
   end
 
   def test_bad_json
