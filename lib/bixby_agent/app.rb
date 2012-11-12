@@ -2,6 +2,8 @@
 require 'bixby_agent/server'
 require 'bixby_agent/cli'
 
+require 'daemons'
+
 module Bixby
 class App
 
@@ -67,6 +69,15 @@ class App
     # like "#{Agent.root}/logs/access|error.log"
     # Server.disable :logging
     # Server.disable :dump_errors
+
+    if not @config[:debug] then
+      Daemons.daemonize({
+        :app_name   => "bixby_agent",
+        :dir        => File.join(agent.root, "var"),
+        :dir_mode   => :normal,
+        :log_output => true
+        })
+    end
 
     Server.run!
   end
