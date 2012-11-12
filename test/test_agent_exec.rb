@@ -8,7 +8,8 @@ class AgentExec < TestCase
 
   def setup
     super
-    setup_test_bundle("support", "test_bundle", "echo")
+    setup_test_bundle("support", "test_bundle", "echo",
+      "c1af0e59a74367e83492a7501f6bdd7ed33de005c3f727a302c5ddfafa8c6f70")
     @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
   end
 
