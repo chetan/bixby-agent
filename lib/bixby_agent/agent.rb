@@ -21,11 +21,13 @@ class Agent
 
   class << self
     attr_accessor :agent_root
+    alias_method :root, :agent_root
   end
 
   def agent_root
     self.class.agent_root
   end
+  alias_method :root, :agent_root
 
   def agent_root=(path)
     self.class.agent_root = path
