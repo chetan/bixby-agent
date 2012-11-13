@@ -28,6 +28,21 @@ class Crypto < TestCase
     assert_equal "foobar", @agent.decrypt_from_server(input)
   end
 
+  def test_decrypt_invalid_hmac
+    setup_existing_agent()
+    input = encrypt_for_agent("foobar")
+
+    # mangle the hmac
+    s = StringIO.new(input)
+    test = s.readline
+    test += "32" + s.readline
+    test += s.read
+
+    assert_throws RuntimeError, "hmac verification failed" do
+      @agent.decrypt_from_server(test)
+    end
+  end
+
   # This test is the same as Bixby::Test::Provisioning.test_list_files except
   # that crypto routines are enabled.
   def test_api_call_with_crypto
