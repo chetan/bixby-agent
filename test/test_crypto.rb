@@ -38,7 +38,7 @@ class Crypto < TestCase
     test += "32" + s.readline
     test += s.read
 
-    assert_throws RuntimeError, "hmac verification failed" do
+    assert_throws Bixby::EncryptionError, "hmac verification failed" do
       @agent.decrypt_from_server(test)
     end
   end
