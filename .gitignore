@@ -6,6 +6,8 @@ coverage/
 .rvmrc
 .bundle/
 vendor/cache/
+.yardoc/
+doc/
 
 etc
 var
