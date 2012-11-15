@@ -53,7 +53,6 @@ class Agent
     BundleRepository.path = File.join(agent.agent_root, "repo")
     BaseModule.agent = agent
     BaseModule.manager_uri = agent.manager_uri
-    agent.setup_env()
 
     return agent
   end
@@ -75,14 +74,19 @@ class Agent
   end
   private_class_method :new
 
-  def setup_env
+  def self.setup_env
     # setup the env for child processes
-    ENV["BIXBY_HOME"] = self.agent_root
-
     paths = []
-    paths << ENV["RUBYLIB"] if ENV.include? "RUBYLIB" and not ENV["RUBYLIB"].empty?
-    $:.each{ |p| paths << p if p =~ %r(/gems/) }
-    paths << File.join(self.agent_root, 'lib')
+    if ENV.include? "RUBYLIB" and not ENV["RUBYLIB"].empty? then
+      paths = ENV["RUBYLIB"].split(/:/)
+    end
+    $:.each { |p|
+      if p =~ %r(/gems/) and not paths.include? p then
+        paths << p
+      end
+    }
+    self_lib = File.expand_path(File.join(File.dirname(__FILE__), '../..', 'lib'))
+    paths << self_lib if not paths.include? self_lib
     ENV["RUBYLIB"] = paths.join(":")
     ENV["RUBYOPT"] = '-rbixby_agent'
   end
