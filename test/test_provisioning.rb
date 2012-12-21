@@ -21,7 +21,8 @@ class Provisioning < TestCase
     ret = provisioner.list_files(cmd)
 
     assert_requested(:post, @manager_uri + "/api", :times => 1) { |req|
-      req.body == '{"operation":"provisioning:list_files","params":{"repo":"support","bundle":"test_bundle","command":"echo"}}'
+      b = MultiJson.load(req.body)
+      b.kind_of?(Hash) && b["params"]["command"] == "echo" && b["operation"] == "provisioning:list_files"
     }
 
   end
@@ -43,11 +44,15 @@ class Provisioning < TestCase
       { "file" => "manifest.json", "digest" => sha.hexdigest(File.read("#{path}/../manifest.json")) }
     ]
 
-    body1 = '{"operation":"provisioning:fetch_file","params":[{"repo":"support","bundle":"test_bundle","command":"echo"},"bin/echo"]}'
-    body2 = '{"operation":"provisioning:fetch_file","params":[{"repo":"support","bundle":"test_bundle","command":"echo"},"bin/cat"]}'
+    req1 = stub_request(:post, @api_url).with{ |req|
+      b = MultiJson.load(req.body)
+      b.kind_of?(Hash) && b["params"].last == "bin/echo" && b["operation"] == "provisioning:fetch_file"
+      }.to_return(:status => 200, :body => File.new("#{path}/echo")).times(1)
 
-    req1 = stub_request(:post, @api_url).with(:body => body1, :times => 1).to_return(:status => 200, :body => File.new("#{path}/echo"))
-    req2 = stub_request(:post, @api_url).with(:body => body2, :times => 1).to_return(:status => 200, :body => File.new("#{path}/cat"))
+    req2 = stub_request(:post, @api_url).with{ |req|
+      b = MultiJson.load(req.body)
+      b.kind_of?(Hash) && b["params"].last == "bin/cat" && b["operation"] == "provisioning:fetch_file"
+      }.to_return(:status => 200, :body => File.new("#{path}/cat")).times(1)
 
     digest_file = File.join(@root_dir, "repo", "support", "test_bundle", "digest")
     digest_mtime = File::Stat.new(digest_file).mtime.to_i
