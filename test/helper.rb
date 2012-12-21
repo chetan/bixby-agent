@@ -15,7 +15,7 @@ TestGuard.load_simplecov()
 require 'curb'
 require 'webmock'
 include WebMock::API
-require 'mocha'
+require 'mocha/setup'
 
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
