@@ -6,6 +6,8 @@ gem 'sinatra', '~> 1.3'
 gem 'thin'
 gem 'multi_json'
 gem 'oj'
+gem 'httpi',        :git => "https://github.com/chetan/httpi.git",
+                    :branch => "chunked_responses"
 gem 'curb'
 gem 'facter'
 gem 'mixlib-cli'
