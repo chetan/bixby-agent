@@ -3,11 +3,15 @@
 cd $(dirname $(readlink -f $0))/..
 
 # cache all gems
-bundle package --all
+echo "* running bundle package"
+bundle package --all > /dev/null
+
+echo "* copying extra gems"
 cp -a `bundle show bundler` vendor/cache/
 ruby bin/cache_all.rb
 
 # create tarball
+echo "* creating tarball"
 rm -rf pkg/bixby pkg/bixby-agent.tar.gz
 mkdir -p pkg/bixby
 cp -a --target-directory=pkg/bixby/ bin/ lib/ repo/ vendor/ Gemfile*
@@ -15,5 +19,9 @@ cd pkg
 tar -czf bixby-agent.tar.gz bixby/*
 
 # cleanup
+echo "* cleanup"
 cd ..
 rm -rf vendor/
+
+echo ""
+echo "* package created at pkg/bixby-agent.tar.gz"
