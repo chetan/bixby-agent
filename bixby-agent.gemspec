@@ -9,22 +9,17 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-01-11"
+  s.date = "2013-01-16"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
-  s.executables = ["agent", "agent.rb", "bundle", "cache_all.rb", "install.sh", "package"]
+  s.executables = ["bixby-agent"]
   s.files = [
     ".document",
     "Gemfile",
     "Gemfile.lock",
     "Rakefile",
     "VERSION",
-    "bin/agent",
-    "bin/agent.rb",
-    "bin/bundle",
-    "bin/cache_all.rb",
-    "bin/install.sh",
-    "bin/package",
+    "bin/bixby-agent",
     "bixby-agent.gemspec",
     "lib/bixby-agent.rb",
     "lib/bixby_agent.rb",
