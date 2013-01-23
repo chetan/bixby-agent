@@ -27,6 +27,9 @@ module Handshake
       return ret
     end
 
+    @access_key = ret.data["access_key"]
+    @secret_key = ret.data["secret_key"]
+
     # success, store server's pub key
     File.open(self.server_key_file, 'w') do |f|
       f.puts(ret.data["server_key"])

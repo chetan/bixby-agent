@@ -33,7 +33,8 @@ class Agent
     self.class.agent_root = path
   end
 
-  attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password, :log
+  attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password,
+                :log, :access_key, :secret_key
 
   def self.create(uri = nil, tenant = nil, password = nil, root_dir = nil, port = nil, use_config = true)
 

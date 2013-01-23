@@ -51,7 +51,9 @@ class TestAgent < TestCase
     @agent = create_agent()
 
     response_str = MultiJson.dump({
-                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----"},
+                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
+                                :access_key => "foo",
+                                :secret_key => "bar"},
                       :code    => nil,
                       :status  => "success",
                       :message => nil })
@@ -61,17 +63,21 @@ class TestAgent < TestCase
       req.body =~ /inventory:register_agent/ and req.body =~ /9999,"pixelcop"/
 
     }.to_return(:body => response_str, :status => 200)
+
     response = @agent.register_agent
     assert response.status == "success"
 
     key_file = File.join(@agent.agent_root, "etc", "server.pub")
     assert File.exists? key_file
     assert File.read(key_file).include? "PUBLIC KEY"
+
+    assert_equal "foo", @agent.access_key
+    assert_equal "bar", @agent.secret_key
   end
 
   def test_bad_config
     setup_existing_agent()
-    File.open(File.join(@root_dir, "etc", "bixby.yml"), 'w') { |f| f.write("foo") }
+    File.open(config_file(), 'w') { |f| f.write("foo") }
     assert_throws(SystemExit) do
       Agent.create
     end
@@ -79,6 +85,10 @@ class TestAgent < TestCase
 
 
   private
+
+  def config_file
+    File.join(@root_dir, "etc", "bixby.yml")
+  end
 
   def create_agent
     @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
