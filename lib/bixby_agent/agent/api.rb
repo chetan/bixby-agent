@@ -1,4 +1,6 @@
 
+require "api-auth"
+
 module Bixby
 class Agent
   module API
@@ -12,8 +14,9 @@ class Agent
       begin
         post = json_req.to_json
         if crypto_enabled? and have_server_key? then
-          ret = json_req.http_post(uri, encrypt_for_server(post))
-          res = decrypt_from_server(ret)
+          req = HTTPI::Request.new(:url => uri, :body => post)
+          ApiAuth.sign!(req, access_key, secret_key)
+          res = HTTPI.post(req).body
         else
           res = json_req.http_post_json(uri, post)
         end

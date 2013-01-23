@@ -55,17 +55,20 @@ class Crypto < TestCase
     ENV["BIXBY_NOCRYPTO"] = "0"
     setup_existing_agent()
 
-    ret_data = encrypt_for_agent("{}")
-    stub_request(:post, @api_url).to_return(:status => 200, :body => ret_data)
+    stub_request(:post, @api_url).with { |req|
+      req.headers.include?("Authorization") &&
+        req.headers.include?("Date") &&
+        req.headers.include?("Content-Md5") &&
+        req.body =~ /operation/ && req.body =~ /test_bundle/
+    }.to_return(:status => 200, :body => JsonResponse.new(200, nil, {:foo => "bar"}).to_json)
     Agent.stubs(:create).returns(@agent)
 
     cmd = CommandSpec.new({ :repo => "support", :bundle => "test_bundle", :command => "echo" })
     provisioner = Provision.new
     ret = provisioner.list_files(cmd)
-
-    assert_requested(:post, @manager_uri + "/api", :times => 1) { |req|
-      not req.body.include? "operation"
-    }
+    assert ret
+    assert_kind_of Hash, ret
+    assert_equal "bar", ret["foo"]
   end
 
 end
