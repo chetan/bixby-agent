@@ -1,6 +1,6 @@
 
 require 'mixlib/cli'
-require 'optparse'
+require 'highline/import'
 
 module Bixby
 class App
@@ -34,9 +34,16 @@ EOF
       :description    => "Tenant name"
 
   option :password,
-      :short          => "-P PASSWORD",
-      :long           => "--password PASSWORD",
-      :description    => "Agent registration password"
+      :short          => "-P [PASSWORD]",
+      :long           => "--password [PASSWORD]",
+      :description    => "Agent registration password (prompt if not supplied)",
+      :proc           => Proc.new { |c|
+                           if c then
+                             c
+                           else
+                             HighLine.new.ask("Enter password: ") { |q| q.echo = "*" }
+                           end
+                         }
 
   option :directory,
       :short          => "-d DIRECTORY",
