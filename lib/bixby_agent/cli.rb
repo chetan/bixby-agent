@@ -49,6 +49,14 @@ module CLI
       :show_options   => true,
       :exit           => 0
 
+  option :version,
+      :short          => "-v",
+      :long           => "--version",
+      :description    => "Show version",
+      :proc           => Proc.new { puts "Bixby v" + Bixby::Agent::VERSION },
+      :exit           => 0
+
+
   def initialize
     super
     @argv = parse_options()
