@@ -20,7 +20,7 @@ gem 'logging'
 group :development, :test do
 
     # packaging
-    gem 'jeweler', '~> 1.8.3'
+    gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
     gem 'yard', '~> 0.7'
 
     # debugging
