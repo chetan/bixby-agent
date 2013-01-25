@@ -22,8 +22,9 @@ class App
     rescue Exception => ex
       if ex.message == "Missing manager URI" then
         # if unable to load from config and no uri passed, bail!
-        puts "manager uri is required the first time you call me!"
-        puts "usage: agent.rb [-d root dir] <manager uri>"
+        puts "ERROR: manager uri is required the first time you call me!"
+        puts
+        puts @opt_parser.help()
         exit
       end
       raise ex

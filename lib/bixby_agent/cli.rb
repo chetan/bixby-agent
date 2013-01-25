@@ -13,6 +13,7 @@ module CLI
     receiver.extend(Mixlib::CLI::ClassMethods)
     receiver.instance_variable_set(:@options, @options)
     receiver.instance_variable_set(:@banner, @banner)
+    receiver.instance_variable_set(:@opt_parser, @opt_parser)
   end
 
   banner <<-EOF
