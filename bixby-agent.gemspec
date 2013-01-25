@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bixby-agent"
-  s.version = "0.1.0"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-01-16"
+  s.date = "2013-01-25"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/bixby_agent/model/bundle_command.rb",
     "lib/bixby_agent/model/bundle_util.rb",
     "lib/bixby_agent/server.rb",
+    "lib/bixby_agent/version.rb",
     "repo/system/provisioning/bin/get_bundle.rb",
     "repo/system/provisioning/manifest.json",
     "tasks/cane.rake",
@@ -75,12 +76,14 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<bixby-common>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, ["~> 1.3"])
       s.add_runtime_dependency(%q<thin>, [">= 0"])
+      s.add_runtime_dependency(%q<api-auth>, [">= 0"])
       s.add_runtime_dependency(%q<multi_json>, [">= 0"])
       s.add_runtime_dependency(%q<oj>, [">= 0"])
       s.add_runtime_dependency(%q<httpi>, [">= 0"])
       s.add_runtime_dependency(%q<curb>, [">= 0"])
       s.add_runtime_dependency(%q<facter>, [">= 0"])
       s.add_runtime_dependency(%q<mixlib-cli>, [">= 0"])
+      s.add_runtime_dependency(%q<highline>, [">= 0"])
       s.add_runtime_dependency(%q<uuidtools>, [">= 0"])
       s.add_runtime_dependency(%q<systemu>, [">= 0"])
       s.add_runtime_dependency(%q<logging>, [">= 0"])
@@ -106,12 +109,14 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bixby-common>, [">= 0"])
       s.add_dependency(%q<sinatra>, ["~> 1.3"])
       s.add_dependency(%q<thin>, [">= 0"])
+      s.add_dependency(%q<api-auth>, [">= 0"])
       s.add_dependency(%q<multi_json>, [">= 0"])
       s.add_dependency(%q<oj>, [">= 0"])
       s.add_dependency(%q<httpi>, [">= 0"])
       s.add_dependency(%q<curb>, [">= 0"])
       s.add_dependency(%q<facter>, [">= 0"])
       s.add_dependency(%q<mixlib-cli>, [">= 0"])
+      s.add_dependency(%q<highline>, [">= 0"])
       s.add_dependency(%q<uuidtools>, [">= 0"])
       s.add_dependency(%q<systemu>, [">= 0"])
       s.add_dependency(%q<logging>, [">= 0"])
@@ -138,12 +143,14 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bixby-common>, [">= 0"])
     s.add_dependency(%q<sinatra>, ["~> 1.3"])
     s.add_dependency(%q<thin>, [">= 0"])
+    s.add_dependency(%q<api-auth>, [">= 0"])
     s.add_dependency(%q<multi_json>, [">= 0"])
     s.add_dependency(%q<oj>, [">= 0"])
     s.add_dependency(%q<httpi>, [">= 0"])
     s.add_dependency(%q<curb>, [">= 0"])
     s.add_dependency(%q<facter>, [">= 0"])
     s.add_dependency(%q<mixlib-cli>, [">= 0"])
+    s.add_dependency(%q<highline>, [">= 0"])
     s.add_dependency(%q<uuidtools>, [">= 0"])
     s.add_dependency(%q<systemu>, [">= 0"])
     s.add_dependency(%q<logging>, [">= 0"])
