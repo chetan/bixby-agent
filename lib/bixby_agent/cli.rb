@@ -12,7 +12,21 @@ module CLI
   def self.included(receiver)
     receiver.extend(Mixlib::CLI::ClassMethods)
     receiver.instance_variable_set(:@options, @options)
+    receiver.instance_variable_set(:@banner, @banner)
   end
+
+  banner <<-EOF
+Usage: #{$0}
+
+Run bixby-agent as a background daemon.
+
+Register with manager:
+
+  #{$0} [-p PORT] -t TENANT -P PASSWORD <manager url>
+
+Options:
+
+EOF
 
   option :tenant,
       :short          => "-t TENANT",
