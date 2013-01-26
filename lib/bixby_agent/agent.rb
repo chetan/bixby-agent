@@ -1,6 +1,7 @@
 
 require "uri"
 require "logging"
+require "rbconfig"
 
 require "bixby_agent/config_exception"
 require "bixby_agent/agent/handshake"
@@ -90,6 +91,15 @@ class Agent
     paths << self_lib if not paths.include? self_lib
     ENV["RUBYLIB"] = paths.join(":")
     ENV["RUBYOPT"] = '-rbixby_agent'
+
+    # make sure the correct ruby version is on the path
+    c = begin; ::RbConfig::CONFIG; rescue NameError; ::Config::CONFIG; end
+    ruby_dir = File.expand_path(c['bindir'])
+    stdout = `which ruby` # don't use systemu here to avoid recursive issues
+    if not $?.success? or File.dirname(stdout.strip) != ruby_dir then
+      ENV["PATH"] = ruby_dir + File::PATH_SEPARATOR + ENV["PATH"]
+    end
+
   end
 
 end # Agent
