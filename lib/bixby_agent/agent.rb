@@ -77,8 +77,9 @@ class Agent
   end
   private_class_method :new
 
+  # Setup the environment for shelling out. Makes sure the correct Ruby
+  # version is on the path and that bixby-agent will be loaded by default
   def self.setup_env
-    # setup the env for child processes
     paths = []
     if ENV.include? "RUBYLIB" and not ENV["RUBYLIB"].empty? then
       paths = ENV["RUBYLIB"].split(/:/)
