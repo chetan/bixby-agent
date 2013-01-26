@@ -10,8 +10,6 @@ module Bixby
 class BundleCommand
 
   include BundleUtil
-  include Jsonify
-
   include Mixlib::CLI
 
   option :help,
