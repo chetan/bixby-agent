@@ -13,7 +13,9 @@ class TestApp < TestCase
     ARGV << @manager_uri
 
     response_str = MultiJson.dump({
-                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----"},
+                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
+                                :access_key => "foo",
+                                :secret_key => "bar"},
                       :code    => nil,
                       :status  => "success",
                       :message => nil })
@@ -25,8 +27,16 @@ class TestApp < TestCase
     app.load_agent()
 
     assert_requested(:post, @manager_uri + "/api", :times => 1)
-    assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
-    assert( File.exists? File.join(@root_dir, "etc", "server.pub") )
+    conf_file = File.join(@root_dir, "etc", "bixby.yml")
+    assert File.exists? conf_file
+    assert File.exists? File.join(@root_dir, "etc", "server.pub")
+
+    conf = File.read(conf_file)
+    assert conf
+    assert_includes conf, "access_key"
+    assert_includes conf, "secret_key"
+    assert_includes conf, "log_level"
+    assert_includes conf, "foo"
   end
 
   def test_missing_manager_uri
@@ -58,12 +68,16 @@ class TestApp < TestCase
 
   def test_setup_logger
     ARGV.clear
+    ENV.delete("BIXBY_DEBUG")
     ARGV << "--debug"
-    App.new.setup_logger
+    app = App.new
+    Bixby::Agent.setup_logger
     assert_equal 0, Logging::Logger.root.level
 
+    ENV.delete("BIXBY_DEBUG")
     ARGV.clear
-    App.new.setup_logger
+    app = App.new
+    Bixby::Agent.setup_logger
     assert_equal 2, Logging::Logger.root.level
   end
 

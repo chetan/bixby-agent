@@ -82,6 +82,9 @@ EOF
   def initialize
     super
     @argv = parse_options()
+
+    # crappy hack to expose debug flag to agent (temp? :)
+    ENV["BIXBY_DEBUG"] = "1" if @config[:debug]
   end
 
 end # CLI
