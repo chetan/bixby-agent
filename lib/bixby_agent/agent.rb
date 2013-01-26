@@ -14,6 +14,7 @@ class Agent
 
   DEFAULT_ROOT_DIR = "/opt/bixby"
 
+  include Bixby::Log
   include HttpClient
   include Config
   include Handshake

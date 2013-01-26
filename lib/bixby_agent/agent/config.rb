@@ -17,23 +17,6 @@ module Config
       File.join(config_dir, "bixby.yml")
     end
 
-    # Setup logging
-    #
-    # @param [Symbol] level       Log level to use (default = :warn)
-    def setup_logger(level=nil)
-      # set level: ENV flag overrides; default to warn
-      level = :debug if ENV["BIXBY_DEBUG"]
-      level ||= :warn
-
-      # TODO always use stdout for now
-      Logging.appenders.stdout(
-        :level  => level,
-        :layout => Logging.layouts.pattern(:pattern => '[%d] %-5l: %m\n')
-        )
-      Logging::Logger.root.add_appenders(Logging.appenders.stdout)
-      Logging::Logger.root.level = level
-    end
-
     def load_config(root_dir)
       self.agent_root = (root_dir.nil? ? (ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR) : root_dir)
       ENV["BIXBY_HOME"] = self.agent_root # make sure its set TODO (do we need this?)
@@ -47,8 +30,7 @@ module Config
           bad_config("corrupted file contents")
         end
         agent.new = false
-        setup_logger(agent.log_level)
-        agent.log = Logging.logger[agent]
+        Bixby::Log.setup_logger(agent.log_level)
         return agent
       rescue Exception => ex
         if ex.kind_of? SystemExit then

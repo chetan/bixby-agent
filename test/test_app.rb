@@ -66,27 +66,6 @@ class TestApp < TestCase
 
   end
 
-  def test_setup_logger
-    ARGV.clear
-    ENV.delete("BIXBY_DEBUG")
-    ARGV << "--debug"
-    app = App.new
-    Bixby::Agent.setup_logger
-    assert_equal 0, Logging::Logger.root.level # debug
-
-    ENV.delete("BIXBY_DEBUG")
-    ARGV.clear
-    app = App.new
-    Bixby::Agent.setup_logger
-    assert_equal 2, Logging::Logger.root.level # warn
-
-    ENV.delete("BIXBY_DEBUG")
-    ARGV.clear
-    setup_existing_agent()
-
-    assert_equal 1, Logging::Logger.root.level # info
-  end
-
 end
 
 end
