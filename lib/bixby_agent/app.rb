@@ -75,9 +75,18 @@ class App
     ::Thin::Logging.silent = true
 
     if not @config[:debug] then
+      daemon_dir = File.join(agent.root, "var")
+      if not File.directory? daemon_dir then
+        begin
+          Dir.mkdir(daemon_dir)
+        rescue Exception => ex
+          puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
+          exit 1
+        end
+      end
       Daemons.daemonize({
         :app_name   => "bixby_agent",
-        :dir        => File.join(agent.root, "var"),
+        :dir        => daemon_dir,
         :dir_mode   => :normal,
         :log_output => true
         })
