@@ -22,10 +22,10 @@ class App
     rescue Exception => ex
       if ex.message == "Missing manager URI" then
         # if unable to load from config and no uri passed, bail!
-        puts "ERROR: manager uri is required the first time you call me!"
-        puts
-        puts @opt_parser.help()
-        exit
+        $stderr.puts "ERROR: manager uri is required the first time you call me!"
+        $stderr.puts
+        $stderr.puts @opt_parser.help()
+        exit 1
       end
       raise ex
     end
@@ -38,10 +38,10 @@ class App
 
     if agent.new? then
       if (ret = agent.register_agent()).fail? then
-        puts "error: failed to register with manager!"
-        puts "reason:"
-        puts "  #{ret.message}"
-        exit(1)
+        $stderr.puts "error: failed to register with manager!"
+        $stderr.puts "reason:"
+        $stderr.puts "  #{ret.message}"
+        exit 1
       end
       agent.save_config()
     end
@@ -80,7 +80,7 @@ class App
         begin
           Dir.mkdir(daemon_dir)
         rescue Exception => ex
-          puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
+          $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
           exit 1
         end
       end

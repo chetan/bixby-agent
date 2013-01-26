@@ -42,10 +42,10 @@ module Config
 
     def bad_config(ex = nil)
       # TODO should force a reinstall/handshake?
-      puts "error loading config from #{config_file}"
-      puts "(#{ex})" if ex
-      puts "exiting"
-      exit
+      $stderr.puts "error loading config from #{config_file}"
+      $stderr.puts "(#{ex})" if ex
+      $stderr.puts "exiting"
+      exit 1
     end
 
   end # ClassMethods
