@@ -5,3 +5,4 @@ uuid: 839b20d8aab74902bd4aa846567abe23
 mac_address: 00:1f:5b:3d:6b:08
 access_key: "12345"
 secret_key: "my_voice_is_my_passport"
+log_level: info
