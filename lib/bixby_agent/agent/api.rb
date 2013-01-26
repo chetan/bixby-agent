@@ -15,6 +15,7 @@ class Agent
         post = json_req.to_json
         if crypto_enabled? and have_server_key? then
           req = HTTPI::Request.new(:url => uri, :body => post)
+          req.headers["Content-Type"] = "application/json"
           ApiAuth.sign!(req, access_key, secret_key)
           res = HTTPI.post(req).body
         else
