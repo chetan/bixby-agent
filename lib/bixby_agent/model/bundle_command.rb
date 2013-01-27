@@ -9,6 +9,7 @@ require 'mixlib/cli'
 module Bixby
 class BundleCommand
 
+  include Bixby::Log
   include BundleUtil
   include Mixlib::CLI
 
