@@ -16,7 +16,7 @@ module Bixby
         @root_dir = "/tmp/agent_test_temp"
         @port = 9999
 
-        BaseModule.manager_uri = @manager_uri
+        Bixby.manager_uri = @manager_uri
         @api_url = @manager_uri + "/api"
 
         `rm -rf #{@root_dir}`

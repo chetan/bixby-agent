@@ -10,7 +10,7 @@ class Agent
     # @param [JsonRequest] json_req
     # @return [JsonResponse]
     def exec_api(json_req)
-      uri = URI.join(BaseModule.manager_uri, "/api").to_s
+      uri = URI.join(Bixby.manager_uri, "/api").to_s
       begin
         post = json_req.to_json
         if crypto_enabled? and have_server_key? then
@@ -34,7 +34,7 @@ class Agent
     # @param [String] download_path     Absolute filename to download requested file to
     # @return [JsonResponse]
     def exec_api_download(json_req, download_path)
-      uri = URI.join(BaseModule.manager_uri, "/api").to_s
+      uri = URI.join(Bixby.manager_uri, "/api").to_s
       begin
         post = json_req.to_json
         if crypto_enabled? and have_server_key? then

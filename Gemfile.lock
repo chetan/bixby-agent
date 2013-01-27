@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 92ea3f0521e9f4c74297b84c330849affb0b6a43
+  revision: dd6cf3f7f152fa19609001b1147f8877c930f89e
   specs:
     bixby-common (0.3.4)
       httpi
@@ -70,7 +70,7 @@ GEM
     awesome_print (1.1.0)
     bahia (0.7.2)
       open4 (~> 1.3.0)
-    cane (2.5.0)
+    cane (2.5.2)
       parallel
     coderay (1.0.8)
     colorize (0.5.8)
@@ -81,10 +81,11 @@ GEM
     facter (1.6.17)
     git (1.2.5)
     growl (1.0.3)
-    guard (1.6.1)
+    guard (1.6.2)
       listen (>= 0.6.0)
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
+      terminal-table (>= 1.4.3)
       thor (>= 0.14.6)
     highline (1.6.15)
     hirb (0.7.1)
@@ -102,7 +103,7 @@ GEM
     mocha (0.13.2)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
-    oj (2.0.1)
+    oj (2.0.2)
     open4 (1.3.0)
     parallel (0.6.1)
     pry (0.9.11.4)
@@ -126,13 +127,14 @@ GEM
       hirb
       simplecov
     simplecov-html (0.7.1)
-    sinatra (1.3.3)
-      rack (~> 1.3, >= 1.3.6)
-      rack-protection (~> 1.2)
+    sinatra (1.3.4)
+      rack (~> 1.4)
+      rack-protection (~> 1.3)
       tilt (~> 1.3, >= 1.3.3)
     single_test (0.5.1)
       rake (> 0.9)
     slop (3.4.3)
+    terminal-table (1.4.5)
     thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
