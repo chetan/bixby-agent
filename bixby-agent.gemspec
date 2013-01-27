@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bixby-agent"
-  s.version = "0.1.3"
+  s.version = "0.1.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-01-25"
+  s.date = "2013-01-27"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -87,7 +87,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<uuidtools>, [">= 0"])
       s.add_runtime_dependency(%q<systemu>, [">= 0"])
       s.add_runtime_dependency(%q<logging>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<awesome_print>, [">= 0"])
@@ -120,7 +120,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<uuidtools>, [">= 0"])
       s.add_dependency(%q<systemu>, [">= 0"])
       s.add_dependency(%q<logging>, [">= 0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<awesome_print>, [">= 0"])
@@ -154,7 +154,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<uuidtools>, [">= 0"])
     s.add_dependency(%q<systemu>, [">= 0"])
     s.add_dependency(%q<logging>, [">= 0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<awesome_print>, [">= 0"])

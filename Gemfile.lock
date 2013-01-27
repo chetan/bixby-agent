@@ -15,9 +15,9 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: dd6cf3f7f152fa19609001b1147f8877c930f89e
+  revision: ebbc87d1178d7d2f02bc3be3a346511f90433a3e
   specs:
-    bixby-common (0.3.4)
+    bixby-common (0.3.5)
       httpi
       logging
       multi_json
