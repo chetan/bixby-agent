@@ -8,7 +8,7 @@ class GetBundle < TestCase
 
   def setup
     super
-    setup_test_bundle("local", "system/provisioning", "get_bundle.rb")
+    setup_test_bundle("vendor", "system/provisioning", "get_bundle.rb")
     @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
     Agent.stubs(:create).returns(@agent)
   end

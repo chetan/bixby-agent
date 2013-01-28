@@ -47,7 +47,7 @@ class Crypto < TestCase
   # that crypto routines are enabled.
   def test_api_call_with_crypto
 
-    setup_test_bundle("local", "system/provisioning", "get_bundle.rb")
+    setup_test_bundle("vendor", "system/provisioning", "get_bundle.rb")
     begin
       require @c.command_file
     rescue Exception => ex
