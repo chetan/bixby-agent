@@ -3,20 +3,26 @@ require "api-auth"
 
 module Bixby
 class Agent
-  module API
+
+  # Implements the Bixby client API
+  module Client
 
     # Execute the given API request on the manager
     #
     # @param [String] operation  Name of operation
     # @param [Array] params  Array of parameters; must ve valid JSON types
-    def api_call(op, params)
+    #
+    # @return [JsonResponse]
+    def exec(op, params)
       exec_api(JsonRequest.new(op, params))
     end
 
     # Execute the given API download request
     #
-    # @param [JsonRequest] json_req     Request to download a file
     # @param [String] download_path     Absolute filename to download requested file to
+    # @param [String] operation  Name of operation
+    # @param [Array] params  Array of parameters; must ve valid JSON types
+    #
     # @return [JsonResponse]
     def exec_download(download_path, op, params)
       exec_api_download(JsonRequest.new(op, params), download_path)
