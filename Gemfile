@@ -42,6 +42,9 @@ group :development, :test do
 
     # tools
     gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
+    gem 'rb-inotify', :require => false
+    gem 'rb-fsevent', :require => false
+    gem 'rb-fchange', :require => false
 
     # coverage
     gem "simplecov",:platforms => :mri_19
