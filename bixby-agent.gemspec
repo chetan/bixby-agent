@@ -9,12 +9,13 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-01-27"
+  s.date = "2013-01-29"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
   s.files = [
     ".document",
+    ".gitmodules",
     "Gemfile",
     "Gemfile.lock",
     "Rakefile",
@@ -36,8 +37,6 @@ Gem::Specification.new do |s|
     "lib/bixby_agent/model/bundle_util.rb",
     "lib/bixby_agent/server.rb",
     "lib/bixby_agent/version.rb",
-    "repo/system/provisioning/bin/get_bundle.rb",
-    "repo/system/provisioning/manifest.json",
     "tasks/cane.rake",
     "tasks/jeweler.rake",
     "tasks/rcov.rake",
@@ -102,6 +101,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<turn>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_development_dependency(%q<test_guard>, [">= 0"])
+      s.add_development_dependency(%q<rb-inotify>, [">= 0"])
+      s.add_development_dependency(%q<rb-fsevent>, [">= 0"])
+      s.add_development_dependency(%q<rb-fchange>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<cane>, [">= 0"])
@@ -135,6 +137,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<turn>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<test_guard>, [">= 0"])
+      s.add_dependency(%q<rb-inotify>, [">= 0"])
+      s.add_dependency(%q<rb-fsevent>, [">= 0"])
+      s.add_dependency(%q<rb-fchange>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<cane>, [">= 0"])
@@ -169,6 +174,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<turn>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<test_guard>, [">= 0"])
+    s.add_dependency(%q<rb-inotify>, [">= 0"])
+    s.add_dependency(%q<rb-fsevent>, [">= 0"])
+    s.add_dependency(%q<rb-fchange>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<cane>, [">= 0"])
