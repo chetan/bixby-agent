@@ -27,7 +27,7 @@ module Exec
     cmd.validate(digest)
 
     ret = execute(cmd)
-    @log.debug{ "ret: " + MultiJson.dump(ret) }
+    debug { "ret: " + MultiJson.dump(ret) }
     return ret
   end
 
@@ -40,24 +40,14 @@ module Exec
   #
   # @return [Array<FixNum, String, String>] status code, stdout, stderr
   def execute(spec)
-    if not (spec.stdin.nil? or spec.stdin.empty?) then
-      temp = Tempfile.new("input-")
-      temp << spec.stdin
-      temp.flush
-      temp.close
-      cmd = "sh -c 'cat #{temp.path} | #{spec.command_file}"
-    else
-      cmd = "sh -c '#{spec.command_file}"
-    end
-    cmd += spec.args ? " #{spec.args}'" : "'"
+    cmd = "#{spec.command_file} #{spec.args}"
+    debug { "cmd: #{cmd}" }
 
-    @log.debug{ "cmd: #{cmd}" }
-
-    # Cleanup the ENV before executing command
+    # Cleanup the ENV and execute
     rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
     old_env = {}
     rem.each{ |r| old_env[r] = ENV.delete(r) }
-    status, stdout, stderr = systemu(cmd)
+    status, stdout, stderr = systemu(cmd, :stdin => spec.stdin)
     old_env.each{ |k,v| ENV[k] = v } # reset the ENV
 
     return [ status.exitstatus, stdout, stderr ]
