@@ -1,6 +1,10 @@
 
-AGENT_ROOT = File.expand_path(File.join(File.dirname(__FILE__)))
-$:.unshift(AGENT_ROOT) if not $:.include? AGENT_ROOT
+# try to detect dev env
+path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+if File.directory? File.join(path, ".git") then
+  ENV["BIXBY_HOME"] = path
+  require "bundler/setup"
+end
 
 require "bixby_common"
 
