@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: ebbc87d1178d7d2f02bc3be3a346511f90433a3e
+  revision: e3e3e778abcd89c5416fda1e62f85422db9c4b13
   specs:
     bixby-common (0.3.5)
       httpi
@@ -111,7 +111,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.5.0)
+    rack (1.5.1)
     rack-protection (1.3.2)
       rack
     rack-test (0.6.2)

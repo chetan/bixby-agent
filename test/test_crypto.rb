@@ -50,7 +50,7 @@ class Crypto < TestCase
     setup_test_bundle("vendor", "system/provisioning", "get_bundle.rb")
     begin
       require @c.command_file
-    rescue Exception => ex
+    rescue Bixby::ConfigException
     end
     ENV["BIXBY_NOCRYPTO"] = "0"
     setup_existing_agent()

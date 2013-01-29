@@ -31,7 +31,7 @@ class Provisioning < TestCase
 
     Agent.stubs(:create).returns(@agent)
 
-    path = File.expand_path(File.dirname(__FILE__)) + "/support/test_bundle/bin"
+    path = File.join(@support_path, "test_bundle", "bin")
     sha = Digest::SHA2.new
 
     `mkdir -p #{@root_dir}/repo/support/test_bundle/`

@@ -10,6 +10,9 @@ module Bixby
         super
         WebMock.reset!
 
+        @git_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+        @support_path = File.join(@git_path, "test", "support")
+
         @manager_uri = "http://localhost:3000"
         @tenant = "pixelcop"
         @password = "foobar"
@@ -18,8 +21,10 @@ module Bixby
 
         Bixby.manager_uri = @manager_uri
         @api_url = @manager_uri + "/api"
-
         `rm -rf #{@root_dir}`
+
+        Dir.mkdir(@root_dir)
+        FileUtils.cp_r(File.join(@git_path, "repo"), @root_dir)
 
         ENV["BIXBY_NOCRYPTO"] = "1"
         ENV["BIXBY_HOME"] = @root_dir
@@ -33,7 +38,7 @@ module Bixby
 
       def setup_existing_agent
         ENV["BIXBY_HOME"] = @root_dir
-        src = File.expand_path(File.join(File.dirname(__FILE__), "support/root_dir"))
+        src = File.join(@support_path, "root_dir")
         dest = File.join(@root_dir, "etc")
         FileUtils.mkdir_p(dest)
         FileUtils.copy_entry(src, dest)
@@ -41,7 +46,7 @@ module Bixby
       end
 
       def setup_test_bundle(repo, bundle, command, digest=nil)
-        @bundle_path = File.expand_path(File.dirname(__FILE__)) + "/support/test_bundle"
+        @bundle_path = File.join(@support_path, "test_bundle")
         @c = CommandSpec.new({ :repo => repo, :bundle => bundle,
                 :command => command, :digest => digest })
       end
