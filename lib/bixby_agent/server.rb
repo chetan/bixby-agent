@@ -4,7 +4,7 @@ require 'sinatra/base'
 module Bixby
 class Server < Sinatra::Base
 
-  SUPPORTED_OPERATIONS = [ "exec" ]
+  SHELL_EXEC = "exec"
 
   DEFAULT_PORT = 18000
 
@@ -61,11 +61,11 @@ class Server < Sinatra::Base
 
     begin
       req = JsonRequest.from_json(body)
-    rescue Exception => ex
+    rescue Exception
       return JsonResponse.invalid_request
     end
 
-    if not SUPPORTED_OPERATIONS.include? req.operation then
+    if SHELL_EXEC != req.operation then
       return JsonResponse.invalid_request("unsupported operation: #{req.operation}")
     end
 
