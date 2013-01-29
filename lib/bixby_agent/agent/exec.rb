@@ -23,23 +23,9 @@ module Exec
   def exec(params)
     digest = params.delete("digest") || params.delete(:digest)
 
-    cmd = CommandSpec.new(params)
-    cmd.validate(digest)
+    spec = CommandSpec.new(params)
+    spec.validate(digest)
 
-    ret = execute(cmd)
-    debug { "ret: " + MultiJson.dump(ret) }
-    return ret
-  end
-
-
-  private
-
-  # Execute this command
-  #
-  # @param [CommandSpec] spec  command to execute
-  #
-  # @return [Array<FixNum, String, String>] status code, stdout, stderr
-  def execute(spec)
     cmd = "#{spec.command_file} #{spec.args}"
     debug { "cmd: #{cmd}" }
 
@@ -50,9 +36,10 @@ module Exec
     status, stdout, stderr = systemu(cmd, :stdin => spec.stdin)
     old_env.each{ |k,v| ENV[k] = v } # reset the ENV
 
-    return [ status.exitstatus, stdout, stderr ]
+    ret = [ status.exitstatus, stdout, stderr ]
+    debug { "ret: " + MultiJson.dump(ret) }
+    return ret
   end
-
 
 end # Exec
 
