@@ -22,14 +22,14 @@ class AgentExec < TestCase
   def test_exec_error
     # throws the first time
     assert_throws(BundleNotFound) do
-      @agent.exec(@c.to_hash)
+      @agent.shell_exec(@c.to_hash)
     end
   end
 
   def test_exec_pass
     setup_root()
     @c.args = "foo bar baz"
-    (status, stdout, stderr) = @agent.exec(@c.to_hash)
+    (status, stdout, stderr) = @agent.shell_exec(@c.to_hash)
     assert status
     assert status.kind_of? Fixnum
     assert_equal 0, status
@@ -43,7 +43,7 @@ class AgentExec < TestCase
     setup_root()
     @c.command = "cat"
     @c.stdin = "hi"
-    (status, stdout, stderr) = @agent.exec(@c.to_hash)
+    (status, stdout, stderr) = @agent.shell_exec(@c.to_hash)
     assert_equal 0, status
     assert_equal("hi", stdout)
     assert_equal("", stderr)

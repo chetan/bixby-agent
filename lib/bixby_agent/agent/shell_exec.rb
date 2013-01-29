@@ -4,7 +4,7 @@ require 'systemu'
 module Bixby
 class Agent
 
-module Exec
+module ShellExec
 
   # Shell exec a local command with the given params
   #
@@ -20,7 +20,7 @@ module Exec
   # @return [Array<FixNum, String, String>] status code, stdout, stderr
   # @raise [BundleNotFound] If bundle doesn't exist or digest does not match
   # @raise [CommandNotFound] If command doesn't exist
-  def exec(params)
+  def shell_exec(params)
     digest = params.delete("digest") || params.delete(:digest)
 
     spec = CommandSpec.new(params)

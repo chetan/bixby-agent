@@ -4,7 +4,7 @@ require 'sinatra/base'
 module Bixby
 class Server < Sinatra::Base
 
-  SHELL_EXEC = "exec"
+  SHELL_EXEC = "shell_exec"
 
   DEFAULT_PORT = 18000
 
@@ -34,6 +34,12 @@ class Server < Sinatra::Base
     return encrypt(res)
   end
 
+  # Encrypt the response
+  #
+  # @param [String] json      json response
+  #
+  # @return [String] base64 encrypted response when crypto is enabled,
+  #                  otherwise, plain json
   def encrypt(json)
     agent.crypto_enabled? ? agent.encrypt_for_server(json) : json
   end
@@ -77,7 +83,7 @@ class Server < Sinatra::Base
   # @return [String] JsonResponse.to_json
   def handle_exec(req)
     begin
-      status, stdout, stderr = agent.exec(req.params)
+      status, stdout, stderr = agent.shell_exec(req.params)
     rescue Exception => ex
       if ex.kind_of? BundleNotFound then
         return JsonResponse.bundle_not_found(ex.message)

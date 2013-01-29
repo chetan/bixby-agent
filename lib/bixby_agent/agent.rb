@@ -5,7 +5,7 @@ require "rbconfig"
 
 require "bixby_agent/config_exception"
 require "bixby_agent/agent/handshake"
-require "bixby_agent/agent/exec"
+require "bixby_agent/agent/shell_exec"
 require "bixby_agent/agent/api"
 require "bixby_agent/agent/config"
 
@@ -18,7 +18,7 @@ class Agent
   include HttpClient
   include Config
   include Handshake
-  include Exec
+  include ShellExec
   include API
 
   class << self
