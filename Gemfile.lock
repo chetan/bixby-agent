@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-client.git
-  revision: ba40c457f257453b082e2badba73c2f0198f7907
+  revision: 735b0e45a5f496c16a3ab07cf72cd6dd5de86814
   specs:
     bixby-client (0.0.0)
       api-auth
