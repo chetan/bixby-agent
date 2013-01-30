@@ -64,8 +64,7 @@ class Crypto < TestCase
     Agent.stubs(:create).returns(@agent)
 
     cmd = CommandSpec.new({ :repo => "support", :bundle => "test_bundle", :command => "echo" })
-    provisioner = Provision.new
-    ret = provisioner.list_files(cmd)
+    ret = Bixby::Repository.list_files(cmd)
     assert ret
     assert_kind_of Hash, ret
     assert_equal "bar", ret["foo"]

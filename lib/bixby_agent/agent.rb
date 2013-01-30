@@ -55,6 +55,7 @@ class Agent
     Bixby.repo_path = File.join(agent.agent_root, "repo")
     Bixby.agent = agent
     Bixby.manager_uri = agent.manager_uri
+    Bixby.client = Bixby::Client.new(agent.access_key, agent.secret_key)
 
     return agent
   end

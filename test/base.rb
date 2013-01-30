@@ -23,8 +23,9 @@ module Bixby
         @api_url = @manager_uri + "/api"
         `rm -rf #{@root_dir}`
 
-        Dir.mkdir(@root_dir)
-        FileUtils.cp_r(File.join(@git_path, "repo"), @root_dir)
+        vendor_path = File.join(@root_dir, "repo", "vendor")
+        `mkdir -p #{vendor_path}`
+        `cp -a #{File.join(@git_path, "repo/vendor/*")} #{vendor_path}`
 
         ENV["BIXBY_NOCRYPTO"] = "1"
         ENV["BIXBY_HOME"] = @root_dir

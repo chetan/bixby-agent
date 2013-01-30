@@ -19,8 +19,8 @@ class GetBundle < TestCase
     assert File.exists? @c.command_file
 
     begin
-        require @c.command_file
-    rescue Exception => ex
+      require @c.command_file
+    rescue Exception
     end
 
     # test our stub
@@ -39,7 +39,7 @@ class GetBundle < TestCase
 
     # setup our expectations on the run method
     ret_list = JsonResponse.from_json('{"status":"success","message":null,"data":[{"file":"bin/echo","digest":"abcd"}],"code":null}')
-    a.expects(:exec_api).once().returns(ret_list)
+    Bixby.client.expects(:exec_api).once().returns(ret_list)
     a.expects(:exec_api_download).once().with{ |req, filename|
         dir = File.dirname(filename)
         assert File.exists? dir

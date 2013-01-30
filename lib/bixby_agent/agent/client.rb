@@ -6,7 +6,7 @@ class Agent
   module Client
 
     def client
-      @client ||= Bixby::Client.new(access_key, secret_key)
+      Bixby.client
     end
 
     # Execute the given API request on the manager
@@ -23,7 +23,7 @@ class Agent
     # @param [String] download_path     Absolute filename to download requested file to
     # @return [JsonResponse]
     def exec_api_download(json_req, download_path)
-      client.exec_api_download(json_req, download_path)
+      Bixby.client.exec_api_download(json_req, download_path)
     end
 
   end # Client

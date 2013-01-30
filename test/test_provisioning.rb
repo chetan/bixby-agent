@@ -17,8 +17,7 @@ class Provisioning < TestCase
     Agent.stubs(:create).returns(@agent)
 
     cmd = CommandSpec.new({ :repo => "support", :bundle => "test_bundle", :command => "echo" })
-    provisioner = Provision.new
-    ret = provisioner.list_files(cmd)
+    Bixby::Repository.list_files(cmd)
 
     assert_requested(:post, @manager_uri + "/api", :times => 1) { |req|
       b = MultiJson.load(req.body)
