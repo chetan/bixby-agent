@@ -35,7 +35,7 @@ class Agent
   end
 
   attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password,
-                :log, :log_level, :access_key, :secret_key
+                :log, :log_level, :access_key, :secret_key, :client
 
   def self.create(uri = nil, tenant = nil, password = nil, root_dir = nil, port = nil, use_config = true)
 

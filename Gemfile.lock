@@ -14,8 +14,20 @@ GIT
     api-auth (1.0.1)
 
 GIT
+  remote: https://github.com/chetan/bixby-client.git
+  revision: ba40c457f257453b082e2badba73c2f0198f7907
+  specs:
+    bixby-client (0.0.0)
+      api-auth
+      bixby-common
+      curb
+      httpi
+      multi_json
+      oj
+
+GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: e3e3e778abcd89c5416fda1e62f85422db9c4b13
+  revision: 5f96b0cb0a6c05e134f28e21b42a9e205a636d91
   specs:
     bixby-common (0.3.5)
       httpi
@@ -159,6 +171,7 @@ DEPENDENCIES
   api-auth!
   awesome_print
   bahia
+  bixby-client!
   bixby-common!
   cane
   colorize
