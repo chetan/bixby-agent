@@ -19,9 +19,8 @@ module Handshake
   #
   # @return [JsonResponse] response from server
   def register_agent
-    params = [ @uuid, self.public_key.to_s, get_hostname(), @port, @tenant, @password ]
-    req = JsonRequest.new("inventory:register_agent", params)
-    ret = Bixby::Client.new(nil, nil).exec_api(req)
+    ret = Bixby::Inventory.register_agent(@uuid, self.public_key.to_s,
+            get_hostname(), @port, @tenant, @password)
 
     if ret.fail? then
       return ret
