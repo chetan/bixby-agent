@@ -7,6 +7,7 @@ if File.directory? File.join(path, ".git") then
 end
 
 require "bixby_common"
+require "bixby-client"
 
 require 'bixby_agent/model/bundle_command'
 require "bixby_agent/agent"

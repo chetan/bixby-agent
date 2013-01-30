@@ -5,7 +5,6 @@ require "rbconfig"
 require "bixby_agent/config_exception"
 require "bixby_agent/agent/handshake"
 require "bixby_agent/agent/shell_exec"
-require "bixby_agent/agent/client"
 require "bixby_agent/agent/config"
 
 module Bixby
@@ -14,11 +13,9 @@ class Agent
   DEFAULT_ROOT_DIR = "/opt/bixby"
 
   include Bixby::Log
-  include HttpClient
   include Config
   include Handshake
   include ShellExec
-  include Client
 
   class << self
     attr_accessor :agent_root
