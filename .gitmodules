@@ -1,3 +1,0 @@
-[submodule "repo/vendor"]
-	path = repo/vendor
-	url = https://github.com/chetan/bixby-repo.git
