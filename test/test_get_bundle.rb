@@ -40,7 +40,7 @@ class GetBundle < TestCase
     # setup our expectations on the run method
     ret_list = JsonResponse.from_json('{"status":"success","message":null,"data":[{"file":"bin/echo","digest":"abcd"}],"code":null}')
     Bixby.client.expects(:exec_api).once().returns(ret_list)
-    a.expects(:exec_api_download).once().with{ |req, filename|
+    Bixby.client.expects(:exec_api_download).once().with{ |req, filename|
         dir = File.dirname(filename)
         assert File.exists? dir
         assert File.directory? dir

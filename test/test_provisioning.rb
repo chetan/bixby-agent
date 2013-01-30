@@ -56,8 +56,7 @@ class Provisioning < TestCase
     digest_file = File.join(@root_dir, "repo", "support", "test_bundle", "digest")
     digest_mtime = File::Stat.new(digest_file).mtime.to_i
 
-    provisioner = Provision.new
-    provisioner.download_files(cmd, files)
+    Bixby::Repository.download_files(cmd, files)
 
     assert_requested(req1)
     assert_requested(req2)
