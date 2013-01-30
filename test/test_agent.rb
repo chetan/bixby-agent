@@ -6,7 +6,7 @@ module Test
 
 class TestAgent < TestCase
 
-	def setup
+  def setup
     super
     ENV["BIXBY_HOME"] = nil
   end
