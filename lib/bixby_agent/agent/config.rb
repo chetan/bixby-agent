@@ -71,12 +71,11 @@ module Config
   end
 
   def init_config_dir
-    if not File.exists? config_dir then
-      begin
-        FileUtils.mkdir_p(config_dir)
-      rescue Exception => ex
-        raise IOError.new(ex.message)
-      end
+    return if File.exists? config_dir
+    begin
+      FileUtils.mkdir_p(config_dir)
+    rescue Exception => ex
+      raise IOError.new(ex.message)
     end
   end
 
