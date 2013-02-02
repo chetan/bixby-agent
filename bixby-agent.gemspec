@@ -9,13 +9,12 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-01-29"
+  s.date = "2013-02-02"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
   s.files = [
     ".document",
-    ".gitmodules",
     "Gemfile",
     "Gemfile.lock",
     "Rakefile",
@@ -25,16 +24,13 @@ Gem::Specification.new do |s|
     "lib/bixby-agent.rb",
     "lib/bixby_agent.rb",
     "lib/bixby_agent/agent.rb",
-    "lib/bixby_agent/agent/api.rb",
     "lib/bixby_agent/agent/config.rb",
     "lib/bixby_agent/agent/crypto.rb",
-    "lib/bixby_agent/agent/exec.rb",
     "lib/bixby_agent/agent/handshake.rb",
+    "lib/bixby_agent/agent/shell_exec.rb",
     "lib/bixby_agent/app.rb",
     "lib/bixby_agent/cli.rb",
     "lib/bixby_agent/config_exception.rb",
-    "lib/bixby_agent/model/bundle_command.rb",
-    "lib/bixby_agent/model/bundle_util.rb",
     "lib/bixby_agent/server.rb",
     "lib/bixby_agent/version.rb",
     "tasks/cane.rake",
@@ -56,8 +52,6 @@ Gem::Specification.new do |s|
     "test/test_agent_exec.rb",
     "test/test_app.rb",
     "test/test_bixby_common.rb",
-    "test/test_bundle_command.rb",
-    "test/test_bundle_util.rb",
     "test/test_crypto.rb",
     "test/test_get_bundle.rb",
     "test/test_provisioning.rb",
@@ -73,6 +67,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<bixby-common>, [">= 0"])
+      s.add_runtime_dependency(%q<bixby-client>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, ["~> 1.3"])
       s.add_runtime_dependency(%q<thin>, [">= 0"])
       s.add_runtime_dependency(%q<api-auth>, [">= 0"])
@@ -109,6 +104,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<cane>, [">= 0"])
     else
       s.add_dependency(%q<bixby-common>, [">= 0"])
+      s.add_dependency(%q<bixby-client>, [">= 0"])
       s.add_dependency(%q<sinatra>, ["~> 1.3"])
       s.add_dependency(%q<thin>, [">= 0"])
       s.add_dependency(%q<api-auth>, [">= 0"])
@@ -146,6 +142,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<bixby-common>, [">= 0"])
+    s.add_dependency(%q<bixby-client>, [">= 0"])
     s.add_dependency(%q<sinatra>, ["~> 1.3"])
     s.add_dependency(%q<thin>, [">= 0"])
     s.add_dependency(%q<api-auth>, [">= 0"])
