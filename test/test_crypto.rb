@@ -51,6 +51,8 @@ class Crypto < TestCase
     begin
       require @c.command_file
     rescue Bixby::ConfigException
+    rescue SystemExit
+      # bundle is executed by default so we can ignore an expected exit
     end
     ENV["BIXBY_NOCRYPTO"] = "0"
     setup_existing_agent()
