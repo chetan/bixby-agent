@@ -19,7 +19,7 @@ module Config
 
     def load_config(root_dir)
       self.agent_root = (root_dir.nil? ? (ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR) : root_dir)
-      ENV["BIXBY_HOME"] = self.agent_root # make sure its set TODO (do we need this?)
+      ENV["BIXBY_HOME"] = self.agent_root # make sure its set
 
       return nil if not File.exists? config_file
 
