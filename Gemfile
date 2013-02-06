@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'bixby-common', :git => "https://github.com/chetan/bixby-common.git"
 gem 'bixby-client', :git => "https://github.com/chetan/bixby-client.git"

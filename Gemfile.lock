@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bblimke/webmock.git
-  revision: 2c596fa8ce9217a05ce2c188df8593431dc96796
+  revision: 4ce654be0ea1374ddc526f1f150ce3101d0eaed7
   specs:
     webmock (1.9.0)
       addressable (>= 2.2.7)
@@ -15,9 +15,9 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-client.git
-  revision: 735b0e45a5f496c16a3ab07cf72cd6dd5de86814
+  revision: a6f882dc8eeec4978c149b3f83be674199b676a8
   specs:
-    bixby-client (0.0.0)
+    bixby-client (0.1.0)
       api-auth
       bixby-common
       curb
@@ -27,9 +27,9 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 5f96b0cb0a6c05e134f28e21b42a9e205a636d91
+  revision: 3e054ea746aeff17e33b313bf831a77c1ff13222
   specs:
-    bixby-common (0.3.5)
+    bixby-common (0.3.6)
       httpi
       logging
       multi_json
@@ -75,7 +75,7 @@ GIT
       turn
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     addressable (2.3.2)
     ansi (1.4.3)
@@ -116,9 +116,9 @@ GEM
     mocha (0.13.2)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
-    oj (2.0.2)
+    oj (2.0.3)
     open4 (1.3.0)
-    parallel (0.6.1)
+    parallel (0.6.2)
     pry (0.9.11.4)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -135,7 +135,7 @@ GEM
     rb-inotify (0.9.0)
       ffi (>= 0.5.0)
     rcov (1.0.0)
-    rdoc (3.12)
+    rdoc (3.12.1)
       json (~> 1.4)
     simplecov (0.7.1)
       multi_json (~> 1.0)
@@ -162,7 +162,7 @@ GEM
     turn (0.9.6)
       ansi
     uuidtools (2.1.3)
-    yard (0.8.3)
+    yard (0.8.4.1)
 
 PLATFORMS
   ruby
