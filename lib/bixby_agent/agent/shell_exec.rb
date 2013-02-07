@@ -25,7 +25,7 @@ module ShellExec
     digest = params.delete("digest") || params.delete(:digest)
 
     spec = CommandSpec.new(params)
-    debug { "shell_exec:\n" + spec.to_s }
+    debug { "shell_exec:\n" + spec.to_s + "\n" }
     spec.validate(digest)
 
     cmd = "#{spec.command_file} #{spec.args}"

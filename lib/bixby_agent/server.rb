@@ -48,7 +48,6 @@ class Server < Sinatra::Base
       @log.debug { "request extraction failed" }
       return req
     end
-    @log.debug{ req.to_s }
 
     return handle_exec(req)
   end
@@ -82,7 +81,7 @@ class Server < Sinatra::Base
   def handle_exec(req)
     begin
       cmd_res = agent.shell_exec(req.params)
-      @log.debug { cmd_res.to_s + "\n---\n" }
+      @log.debug { cmd_res.to_s + "\n---\n\n\n" }
       return cmd_res.to_json_response
 
     rescue Exception => ex
