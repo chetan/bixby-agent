@@ -29,8 +29,6 @@ class Server < Sinatra::Base
 
   post '/*' do
     res = handle_request().to_json
-    @log.debug { res.to_s }
-    @log.debug { "--- response sent ---\n\n" }
     return encrypt(res)
   end
 
@@ -84,7 +82,7 @@ class Server < Sinatra::Base
   def handle_exec(req)
     begin
       cmd_res = agent.shell_exec(req.params)
-      @log.debug { cmd_res.to_s }
+      @log.debug { cmd_res.to_s + "\n---\n" }
       return cmd_res.to_json_response
 
     rescue Exception => ex
