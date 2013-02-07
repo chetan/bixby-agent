@@ -89,7 +89,7 @@ class Agent
     self_lib = File.expand_path(File.join(File.dirname(__FILE__), '../..', 'lib'))
     paths << self_lib if not paths.include? self_lib
     ENV["RUBYLIB"] = paths.join(":")
-    ENV["RUBYOPT"] = '-rbixby_agent'
+    ENV["RUBYOPT"] = '-rbixby-agent'
 
     # make sure the correct ruby version is on the path
     c = begin; ::RbConfig::CONFIG; rescue NameError; ::Config::CONFIG; end
