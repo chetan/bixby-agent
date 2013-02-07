@@ -83,7 +83,9 @@ class Server < Sinatra::Base
   # @return [String] JsonResponse.to_json
   def handle_exec(req)
     begin
-      status, stdout, stderr = agent.shell_exec(req.params)
+      cmd_res = agent.shell_exec(req.params)
+      return JsonResponse.new((cmd_res.status == 0 ? "success" : "fail"), nil, cmd_res)
+
     rescue Exception => ex
       if ex.kind_of? BundleNotFound then
         return JsonResponse.bundle_not_found(ex.message)
@@ -93,8 +95,6 @@ class Server < Sinatra::Base
       @log.error(ex)
       return JsonResponse.new("fail", ex.message, nil, 500)
     end
-    data = { :status => status, :stdout => stdout, :stderr => stderr }
-    return JsonResponse.new((status == 0 ? "success" : "fail"), nil, data)
   end
 
 end # Server

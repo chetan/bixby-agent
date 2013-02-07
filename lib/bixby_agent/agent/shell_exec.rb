@@ -17,17 +17,18 @@ module ShellExec
   # @option params [String] :digest       Expected bundle digest
   # @option params [Hash] :env            Hash of extra ENV key/values to pass to sub-shell
   #
-  # @return [Array<FixNum, String, String>] status code, stdout, stderr
+  # @return [CommandResponse]
+  #
   # @raise [BundleNotFound] If bundle doesn't exist or digest does not match
   # @raise [CommandNotFound] If command doesn't exist
   def shell_exec(params)
     digest = params.delete("digest") || params.delete(:digest)
 
     spec = CommandSpec.new(params)
+    debug { "shell_exec:\n" + spec.to_s }
     spec.validate(digest)
 
     cmd = "#{spec.command_file} #{spec.args}"
-    debug { "cmd: #{cmd}" }
 
     # Cleanup the ENV and execute
     rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
@@ -36,9 +37,9 @@ module ShellExec
     status, stdout, stderr = systemu(cmd, :stdin => spec.stdin)
     old_env.each{ |k,v| ENV[k] = v } # reset the ENV
 
-    ret = [ status.exitstatus, stdout, stderr ]
-    debug { "ret: " + MultiJson.dump(ret) }
-    return ret
+    return CommandResponse.new({ :status => status.exitstatus,
+                                 :stdout => stdout,
+                                 :stderr => stderr })
   end
 
 end # Exec

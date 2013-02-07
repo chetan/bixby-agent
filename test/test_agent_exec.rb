@@ -29,24 +29,25 @@ class AgentExec < TestCase
   def test_exec_pass
     setup_root()
     @c.args = "foo bar baz"
-    (status, stdout, stderr) = @agent.shell_exec(@c.to_hash)
-    assert status
-    assert status.kind_of? Fixnum
-    assert_equal 0, status
-    assert stdout
-    assert stderr
-    assert_equal("foo bar baz\n", stdout)
-    assert_equal("", stderr)
+    ret = @agent.shell_exec(@c.to_hash)
+    assert ret
+    assert_kind_of CommandResponse, ret
+    assert_kind_of Fixnum, ret.status
+    assert_equal 0, ret.status
+    assert ret.stdout
+    assert ret.stderr
+    assert_equal "foo bar baz\n", ret.stdout
+    assert_equal "", ret.stderr
   end
 
   def test_execute_stdin
     setup_root()
     @c.command = "cat"
     @c.stdin = "hi"
-    (status, stdout, stderr) = @agent.shell_exec(@c.to_hash)
-    assert_equal 0, status
-    assert_equal("hi", stdout)
-    assert_equal("", stderr)
+    ret = @agent.shell_exec(@c.to_hash)
+    assert_equal 0, ret.status
+    assert_equal "hi", ret.stdout
+    assert_equal "", ret.stderr
   end
 
 

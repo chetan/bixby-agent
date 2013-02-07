@@ -44,7 +44,7 @@ module Test
     end
 
     def test_exec
-      @agent.expects(:shell_exec).once().returns([0, "", ""])
+      @agent.expects(:shell_exec).once().returns(cmdres())
       post "/foobar", JsonRequest.new("shell_exec", {}).to_json
 
       assert_equal 200, last_response.status
@@ -54,7 +54,7 @@ module Test
     end
 
     def test_exec_fail
-      @agent.expects(:shell_exec).once().returns([2, "", ""])
+      @agent.expects(:shell_exec).once().returns(cmdres(2))
       post "/foobar", JsonRequest.new("shell_exec", {}).to_json
 
       assert_equal 200, last_response.status
@@ -65,7 +65,7 @@ module Test
 
     def test_exec_encrypted
       ENV["BIXBY_NOCRYPTO"] = "0"
-      @agent.expects(:shell_exec).once().returns([0, "", ""])
+      @agent.expects(:shell_exec).once().returns(cmdres())
       post "/foobar", encrypt_for_agent( JsonRequest.new("shell_exec", {}).to_json )
 
       assert_equal 200, last_response.status
@@ -73,6 +73,13 @@ module Test
       res = JsonResponse.from_json(json)
       assert res.success?
       assert_equal 0, res.data["status"]
+    end
+
+
+    private
+
+    def cmdres(status=0, stdout="", stderr="")
+      CommandResponse.new({:status => status, :stdout => stdout, :stderr => stderr})
     end
 
   end
