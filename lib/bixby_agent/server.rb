@@ -80,11 +80,12 @@ class Server < Sinatra::Base
 
   # Handle the exec request and return the response
   #
-  # @return [String] JsonResponse.to_json
+  # @return [JsonResponse]
   def handle_exec(req)
     begin
       cmd_res = agent.shell_exec(req.params)
-      return JsonResponse.new((cmd_res.status == 0 ? "success" : "fail"), nil, cmd_res)
+      @log.debug { cmd_res.to_s }
+      return cmd_res.to_json_response
 
     rescue Exception => ex
       if ex.kind_of? BundleNotFound then
