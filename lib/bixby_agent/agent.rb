@@ -8,6 +8,11 @@ require "bixby_agent/agent/shell_exec"
 require "bixby_agent/agent/config"
 
 module Bixby
+
+class << self
+  attr_accessor :agent
+end
+
 class Agent
 
   DEFAULT_ROOT_DIR = "/opt/bixby"
@@ -16,20 +21,6 @@ class Agent
   include Config
   include Handshake
   include ShellExec
-
-  class << self
-    attr_accessor :agent_root
-    alias_method :root, :agent_root
-  end
-
-  def agent_root
-    self.class.agent_root
-  end
-  alias_method :root, :agent_root
-
-  def agent_root=(path)
-    self.class.agent_root = path
-  end
 
   attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password,
                 :log_level, :access_key, :secret_key, :client
@@ -49,7 +40,6 @@ class Agent
     end
 
     # pass config to some modules
-    Bixby.repo_path = File.join(agent.agent_root, "repo")
     Bixby.agent = agent
     Bixby.manager_uri = agent.manager_uri
     Bixby.client = Bixby::Client.new(agent.access_key, agent.secret_key)
@@ -66,7 +56,6 @@ class Agent
     @manager_uri = uri
     @tenant = tenant
     @password = password
-    @agent_root = root_dir.nil? ? DEFAULT_ROOT_DIR : root_dir
 
     @uuid = create_uuid()
     @mac_address = get_mac_address()

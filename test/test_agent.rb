@@ -37,7 +37,7 @@ class TestAgent < TestCase
     assert(!@agent.new?)
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
-    assert_equal @root_dir, @agent.agent_root
+    assert_equal @root_dir, Bixby.root
   end
 
   def test_create_missing_manager_uri
@@ -67,7 +67,7 @@ class TestAgent < TestCase
     response = @agent.register_agent
     assert response.status == "success"
 
-    key_file = File.join(@agent.agent_root, "etc", "server.pub")
+    key_file = Bixby.path("etc", "server.pub")
     assert File.exists? key_file
     assert File.read(key_file).include? "PUBLIC KEY"
 

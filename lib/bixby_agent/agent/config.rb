@@ -10,7 +10,7 @@ module Config
   module ClassMethods
 
     def config_dir
-      File.join(self.agent_root, "etc")
+      Bixby.path("etc")
     end
 
     def config_file
@@ -18,8 +18,8 @@ module Config
     end
 
     def load_config(root_dir)
-      self.agent_root = (root_dir.nil? ? (ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR) : root_dir)
-      ENV["BIXBY_HOME"] = self.agent_root # make sure its set
+      # make sure BIXBY_HOME is set correctly
+      ENV["BIXBY_HOME"] = root_dir || ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR
 
       return nil if not File.exists? config_file
 
