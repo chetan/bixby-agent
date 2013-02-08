@@ -18,6 +18,9 @@ class TestAgent < TestCase
     assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
+
+    # make sure logger was setup properly
+    assert Logging::Logger.root.level > 1
   end
 
   def test_load_existing_agent

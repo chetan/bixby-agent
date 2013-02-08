@@ -48,6 +48,7 @@ class Agent
   end
 
   def initialize(uri, tenant = nil, password = nil, root_dir = nil, port = nil)
+    Bixby::Log.setup_logger()
     @new = true
 
     @port = port
