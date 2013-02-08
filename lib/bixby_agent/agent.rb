@@ -65,6 +65,17 @@ class Agent
   # Setup the environment for shelling out. Makes sure the correct Ruby
   # version is on the path and that bixby-agent will be loaded by default
   def self.setup_env
+    # make sure the correct ruby version is on the path
+    c = begin; ::RbConfig::CONFIG; rescue NameError; ::Config::CONFIG; end
+    ruby_dir = File.expand_path(c['bindir'])
+
+    shell = Mixlib::ShellOut.new("which ruby")
+    shell.run_command
+    if not $?.success? or File.dirname(shell.stdout.strip) != ruby_dir then
+      ENV["PATH"] = ruby_dir + File::PATH_SEPARATOR + ENV["PATH"]
+    end
+
+    # create RUBYLIB paths
     paths = []
     if ENV.include? "RUBYLIB" and not ENV["RUBYLIB"].empty? then
       paths = ENV["RUBYLIB"].split(/:/)
@@ -76,17 +87,9 @@ class Agent
     }
     self_lib = File.expand_path(File.join(File.dirname(__FILE__), '../..', 'lib'))
     paths << self_lib if not paths.include? self_lib
+
     ENV["RUBYLIB"] = paths.join(":")
     ENV["RUBYOPT"] = '-rbixby-client/script'
-
-    # make sure the correct ruby version is on the path
-    c = begin; ::RbConfig::CONFIG; rescue NameError; ::Config::CONFIG; end
-    ruby_dir = File.expand_path(c['bindir'])
-    stdout = `which ruby` # don't use systemu here to avoid recursive issues
-    if not $?.success? or File.dirname(stdout.strip) != ruby_dir then
-      ENV["PATH"] = ruby_dir + File::PATH_SEPARATOR + ENV["PATH"]
-    end
-
   end
 
 end # Agent

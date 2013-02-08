@@ -15,9 +15,9 @@ gem 'httpi',        :git => "https://github.com/chetan/httpi.git",
 gem 'curb'
 gem 'facter'
 gem 'mixlib-cli'
+gem 'mixlib-shellout'
 gem 'highline'
 gem 'uuidtools'
-gem 'systemu', :git => "https://github.com/chetan/systemu.git", :branch => "forkbomb"
 gem 'logging'
 
 group :development, :test do

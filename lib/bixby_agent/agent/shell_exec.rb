@@ -1,5 +1,5 @@
 
-require 'systemu'
+require 'mixlib/shellout'
 
 module Bixby
 class Agent
@@ -34,12 +34,15 @@ module ShellExec
     rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
     old_env = {}
     rem.each{ |r| old_env[r] = ENV.delete(r) }
-    status, stdout, stderr = systemu(cmd, :stdin => spec.stdin)
+
+    shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin)
+    shell.run_command
+
     old_env.each{ |k,v| ENV[k] = v } # reset the ENV
 
-    return CommandResponse.new({ :status => status.exitstatus,
-                                 :stdout => stdout,
-                                 :stderr => stderr })
+    return CommandResponse.new({ :status => shell.exitstatus,
+                                 :stdout => shell.stdout,
+                                 :stderr => shell.stderr })
   end
 
 end # Exec

@@ -15,25 +15,25 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-client.git
-  revision: 03f4562b2fdd724eb937ca16a03c1b71ae05871d
+  revision: ff2805cef494c2d8b6b59a24a2ca022d75d4f27e
   specs:
     bixby-client (0.1.0)
       api-auth
       bixby-common
       curb
       httpi
+      mixlib-shellout
       multi_json
       oj
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 7d016e8dfd45efc76055a2caea28ff2695d05b0e
+  revision: abc5720e28d2b597f4945c14f30fa81c23946fb9
   specs:
     bixby-common (0.3.6)
       httpi
       logging
       multi_json
-      systemu
 
 GIT
   remote: https://github.com/chetan/httpi.git
@@ -53,13 +53,6 @@ GIT
       git (>= 1.2.5)
       rake
       rdoc
-
-GIT
-  remote: https://github.com/chetan/systemu.git
-  revision: cb6524a4c50213bec52262f6c0f090e11bb3a586
-  branch: forkbomb
-  specs:
-    systemu (2.5.2)
 
 GIT
   remote: https://github.com/chetan/test_guard.git
@@ -111,8 +104,9 @@ GEM
     lumberjack (1.0.2)
     metaclass (0.0.1)
     method_source (0.8.1)
-    minitest (4.5.0)
+    minitest (4.6.0)
     mixlib-cli (1.3.0)
+    mixlib-shellout (1.1.0)
     mocha (0.13.2)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
@@ -123,7 +117,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.5.1)
+    rack (1.5.2)
     rack-protection (1.3.2)
       rack
     rack-test (0.6.2)
@@ -186,6 +180,7 @@ DEPENDENCIES
   logging
   minitest
   mixlib-cli
+  mixlib-shellout
   mocha
   multi_json
   oj
@@ -197,7 +192,6 @@ DEPENDENCIES
   rcov
   simplecov
   sinatra (~> 1.3)
-  systemu!
   test_guard!
   thin
   turn
