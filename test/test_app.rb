@@ -31,12 +31,19 @@ class TestApp < TestCase
     assert File.exists? conf_file
     assert File.exists? File.join(@root_dir, "etc", "server.pub")
 
+    # verify yaml config file
     conf = File.read(conf_file)
     assert conf
+    assert_includes conf, "uuid"
+    assert_includes conf, "mac_address"
     assert_includes conf, "access_key"
     assert_includes conf, "secret_key"
     assert_includes conf, "log_level"
+    Bixby::Agent::Config::KEYS.each{ |k| assert_includes conf, k }
+
     assert_includes conf, "foo"
+    assert_includes conf, "bar"
+    assert_kind_of Hash, YAML.load(conf)
   end
 
   def test_missing_manager_uri

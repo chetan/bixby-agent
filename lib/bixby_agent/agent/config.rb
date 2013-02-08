@@ -7,6 +7,8 @@ class Agent
 
 module Config
 
+  KEYS = %w{ port manager_uri uuid mac_address access_key secret_key log_level }
+
   module ClassMethods
 
     def config_dir
@@ -25,13 +27,21 @@ module Config
 
       # load it!
       begin
-        agent = YAML.load_file(config_file)
-        if not agent.kind_of? Agent then
+        config = YAML.load_file(config_file)
+        if not config.kind_of? Hash or config.empty? then
           bad_config("corrupted file contents")
         end
+        Bixby::Log.setup_logger(config["log_level"])
+
+        agent = Agent.allocate
+        KEYS.each do |k|
+          m = "#{k}=".to_sym
+          agent.send(m, config[k]) if agent.respond_to? m
+        end
         agent.new = false
-        Bixby::Log.setup_logger(agent.log_level)
+
         return agent
+
       rescue Exception => ex
         if ex.kind_of? SystemExit then
           raise ex
@@ -81,19 +91,13 @@ module Config
 
   def save_config
     init_config_dir()
-    File.open(config_file, 'w') { |out| out.write(self.to_yaml) }
-  end
-
-  def to_yaml_properties
-    %w{
-      @port
-      @manager_uri
-      @uuid
-      @mac_address
-      @access_key
-      @secret_key
-      @log_level
-    }
+    config = {}
+    KEYS.each do |k|
+      m = k.to_sym
+      config[k] = self.send(m) if self.respond_to? m
+    end
+    config["log_level"] = Logging::Logger.root.level
+    File.open(config_file, 'w') { |out| out.write YAML.dump(config) }
   end
 
 end # Config
