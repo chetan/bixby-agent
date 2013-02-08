@@ -61,7 +61,8 @@ EOF
   option :debug,
       :long           => "--debug",
       :description    => "Enable debugging messages",
-      :boolean        => true
+      :boolean        => true,
+      :proc           => Proc.new { ENV["BIXBY_DEBUG"] = "1" }
 
   option :help,
       :short          => "-h",
@@ -82,9 +83,6 @@ EOF
   def initialize
     super
     @argv = parse_options()
-
-    # crappy hack to expose debug flag to agent (temp? :)
-    ENV["BIXBY_DEBUG"] = "1" if @config[:debug]
   end
 
 end # CLI
