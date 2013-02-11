@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-client.git
-  revision: 196a11bd2df7ba73c36a0447028173d14d0b9ccf
+  revision: 689218e997a430d59dbcbaf5eddbd8ab6c511fd3
   specs:
     bixby-client (0.1.0)
       api-auth
@@ -28,9 +28,9 @@ GIT
 
 GIT
   remote: https://github.com/chetan/bixby-common.git
-  revision: 056be138cf7e6addd155a97a0ad9bdce245024a3
+  revision: 8ed5975701bc112e6c749a6f15b08336c9b8b7cc
   specs:
-    bixby-common (0.3.6)
+    bixby-common (0.3.7)
       httpi
       logging
       multi_json
