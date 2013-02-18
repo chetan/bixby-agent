@@ -1,43 +1,113 @@
 #!/usr/bin/env bash
 
-set -e
+# fetch and install the correct package
 
-# helpers
-uname=$(uname)
+# package repository
+url="http://s3.bixby.io"
 
-is_mac() {
-  [[ $uname == "Darwin" ]]
+# seed with current build version
+bixby_version="0.1.8-1"
+
+function is_64() {
+  [[ `uname -p` == "x86_64" ]]
 }
 
-is_centos() {
-  [[ -f /etc/centos-release ]]
+function as_root() {
+  if [[ `whoami` == root ]]; then
+    $*
+  else
+    sudo env PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" $*
+  fi
 }
 
-is_ubuntu() {
-  [[ -f /etc/lsb-release ]] &&
-    GREP_OPTIONS="" \grep "DISTRIB_ID=Ubuntu" /etc/lsb-release >/dev/null
-}
-
-# install deps
-if [[ is_ubuntu ]]; then
-  DEBIAN_FRONTEND=noninteractive
-  apt-get -yqq install build-essential ruby rubygems curl libcurl4-openssl-dev libopenssl-ruby > /dev/null
-elif [[ is_centos ]]; then
-  yum -q install ruby ruby-devel curl-devel rdoc ri zlib zlib-devel
+if [[ -f /etc/issue ]]; then
+  issue=`cat /etc/issue`
 fi
 
-# grab bixby
-wget -q http://192.168.80.99/~chetan/bixby/bixby-agent.tar.gz
-tar -xzf bixby-agent.tar.gz
-cd bixby/
+if [[ $issue =~ ^"CentOS" ]]; then
 
-# fix rubygems
-gem install -q vendor/cache/rubygems-update*.gem --no-ri --no-rdoc > /dev/null
-ruby /var/lib/gems/1.8/gems/rubygems-update-*/setup.rb > /dev/null
+  pkg="bixby-${bixby_version}"
 
-# install gems
-bin/bundle install --deployment --local --without development test > /dev/null
+  if [[ $issue =~ " 5" ]]; then
+    pkg="$pkg.el5"
+  elif [[ $issue =~ " 6" ]]; then
+    pkg="$pkg.el6"
+  else
+    echo "ERROR: only Centos 5 & 6 are currently supported!"
+    exit 1
+  fi
 
-# move into place
-cd ..
-mv bixby /opt/
+  if is_64; then
+    pkg="$pkg.x86_64"
+  else
+    pkg="$pkg.i686"
+  fi
+  pkg="$pkg.rpm"
+
+  # install or upgrade
+  if [[ ! `yum -q info bixby 2>/dev/null` ]]; then
+    cmd="install"
+  else
+    cmd="upgrade"
+  fi
+  as_root yum -y $cmd $url/$pkg
+  ret=$?
+  if [[ $ret -ne 0 ]]; then
+    echo "ERROR: installing $pkg: $ret"
+    exit 1
+  fi
+
+
+elif [[ $issue =~ ^"Ubuntu" ]]; then
+
+  pkg="bixby_${bixby_version}.ubuntu"
+
+  if [[ $issue =~ "10.04" ]]; then
+    pkg="$pkg.10.04"
+  elif [[ $issue =~ "12.04" ]]; then
+    pkg="$pkg.12.04"
+  else
+    echo "ERROR: only Ubuntu 10.04 & 12.04 are currently supported!"
+    exit 1
+
+  fi
+
+  if is_64; then
+    pkg="${pkg}_amd64"
+  else
+    pkg="${pkg}_i386"
+  fi
+  pkg="$pkg.deb"
+
+  cd /tmp
+  wget "$url/$pkg"
+  as_root dpkg -i $pkg
+  if [[ $? -ne 0 ]]; then
+    echo "ERROR: installing $pkg"
+    exit 1
+  fi
+  rm -f /tmp/$pkg
+  cd -
+
+else
+    echo
+    echo "ERROR: only Ubuntu and CentOS are currently supported!"
+    echo
+    exit 1
+fi
+
+tenant="<TENANT>"
+if [[ -n "$1" ]]; then
+  tenant="$1"
+fi
+
+mgr_url="<MANAGER URL>"
+if [[ -n "$2" ]]; then
+  mgr_url="$2"
+fi
+
+echo
+echo
+echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
+echo "sudo /opt/bixby/bin/bixby-agent -t ${tenant} -P ${mgr_url}"
+echo
