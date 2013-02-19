@@ -63,7 +63,7 @@ class App
     ::Thin::Logging.silent = true
 
     if not @config[:debug] then
-      daemon_dir = File.join(agent.root, "var")
+      daemon_dir = File.join(Bixby.root, "var")
       if not File.directory? daemon_dir then
         begin
           Dir.mkdir(daemon_dir)

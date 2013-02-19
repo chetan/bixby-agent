@@ -23,8 +23,15 @@ class TestApp < TestCase
     stub_request(:post, "http://localhost:3000/api").
       to_return(:status => 200, :body => response_str)
 
-    app = App.new
-    app.load_agent()
+    # stub out daemons & sinatra server
+    Daemons.expects(:daemonize).once().with{ |opts|
+      opts.kind_of?(Hash) && opts[:app_name] == "bixby_agent" &&
+        opts[:dir] == File.join(@root_dir, "var")
+    }
+
+    Bixby::Server.expects(:run!).once()
+
+    app = App.new.run!
 
     assert_requested(:post, @manager_uri + "/api", :times => 1)
     conf_file = File.join(@root_dir, "etc", "bixby.yml")
