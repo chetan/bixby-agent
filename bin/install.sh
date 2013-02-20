@@ -109,5 +109,5 @@ fi
 echo
 echo
 echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
-echo "sudo /opt/bixby/bin/bixby-agent -t ${tenant} -P ${mgr_url}"
+echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} -- ${mgr_url}"
 echo
