@@ -6,7 +6,7 @@
 url="https://s3.bixby.io"
 
 # seed with current build version
-bixby_version="0.1.8-1"
+bixby_version=`\\curl -sL $url/latest`
 
 function is_64() {
   [[ `uname -p` == "x86_64" ]]
