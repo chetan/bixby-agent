@@ -3,7 +3,7 @@
 # fetch and install the correct package
 
 # package repository
-url="http://s3.bixby.io"
+url="https://s3.bixby.io"
 
 # seed with current build version
 bixby_version="0.1.8-1"
