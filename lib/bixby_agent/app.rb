@@ -72,6 +72,19 @@ class App
           exit 1
         end
       end
+
+      # Copied from daemons. We hit a bug where closing FDs failed,
+      # probably related to prompting for a password. So close them
+      # all cleanly before daemonizing.
+      ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
+      ios.each do |io|
+        next if io.fileno < 3
+        begin
+          io.close
+        rescue Exception
+        end
+      end
+
       Daemons.daemonize({
         :app_name   => "bixby_agent",
         :dir        => daemon_dir,
