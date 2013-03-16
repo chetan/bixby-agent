@@ -17,13 +17,21 @@ module CLI
   end
 
   banner <<-EOF
-Usage: #{$0}
+Usage: #{$0} <command>
 
 Run bixby-agent as a background daemon.
 
-Register with manager:
+Where <command> is one of:
+  start         start an instance of the application
+  stop          stop all instances of the application
+  restart       stop all instances and restart them afterwards
+  run           start the application and stay on top
+  zap           set the application to a stopped state
+  status        show status (PID) of application instances
 
-  #{$0} [-p PORT] -t TENANT -P PASSWORD <manager url>
+To register with the manager:
+
+  #{$0} -t TENANT -P [PASSWORD] <manager url>
 
 Options:
 
