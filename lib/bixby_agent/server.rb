@@ -86,8 +86,10 @@ class Server < Sinatra::Base
 
     rescue Exception => ex
       if ex.kind_of? BundleNotFound then
+        @log.debug(ex)
         return JsonResponse.bundle_not_found(ex.message)
       elsif ex.kind_of? CommandNotFound then
+        @log.debug(ex)
         return JsonResponse.command_not_found(ex.message)
       end
       @log.error(ex)
