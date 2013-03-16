@@ -62,38 +62,46 @@ class App
 
     ::Thin::Logging.silent = true
 
-    if not @config[:debug] then
-      daemon_dir = File.join(Bixby.root, "var")
-      if not File.directory? daemon_dir then
-        begin
-          Dir.mkdir(daemon_dir)
-        rescue Exception => ex
-          $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
-          exit 1
-        end
-      end
-
-      # Copied from daemons. We hit a bug where closing FDs failed,
-      # probably related to prompting for a password. So close them
-      # all cleanly before daemonizing.
-      ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
-      ios.each do |io|
-        next if io.fileno < 3
-        begin
-          io.close
-        rescue Exception
-        end
-      end
-
-      Daemons.daemonize({
-        :app_name   => "bixby_agent",
-        :dir        => daemon_dir,
-        :dir_mode   => :normal,
-        :log_output => true
-        })
+    if @config[:debug] then
+      return Server.run!
     end
 
-    Server.run!
+    daemon_dir = File.join(Bixby.root, "var")
+    if not File.directory? daemon_dir then
+      begin
+        Dir.mkdir(daemon_dir)
+      rescue Exception => ex
+        $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
+        exit 1
+      end
+    end
+
+    # Copied from daemons. We hit a bug where closing FDs failed,
+    # probably related to prompting for a password. So close them
+    # all cleanly before daemonizing.
+    ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
+    ios.each do |io|
+      next if io.fileno < 3
+      begin
+        io.close
+      rescue Exception
+      end
+    end
+
+    daemon_opts = {
+      :dir        => daemon_dir,
+      :dir_mode   => :normal,
+      :log_output => true
+    }
+
+    if ARGV.empty? then
+      ARGV << "start"
+    end
+
+    Daemons.run_proc("bixby-agent", daemon_opts) do
+      Server.run!
+    end
+
   end
 
 end # App
