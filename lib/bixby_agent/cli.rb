@@ -22,12 +22,11 @@ Usage: #{$0} <command>
 Run bixby-agent as a background daemon.
 
 Where <command> is one of:
-  start         start an instance of the application
-  stop          stop all instances of the application
-  restart       stop all instances and restart them afterwards
-  run           start the application and stay on top
-  zap           set the application to a stopped state
-  status        show status (PID) of application instances
+  start         start the agent
+  stop          stop the agent
+  restart       stop and start the agent
+  zap           reset the PID file
+  status        show status (PID) of the agent
 
 To register with the manager:
 
