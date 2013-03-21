@@ -24,12 +24,10 @@ class TestApp < TestCase
       to_return(:status => 200, :body => response_str)
 
     # stub out daemons & sinatra server
-    Daemons.expects(:daemonize).once().with{ |opts|
-      opts.kind_of?(Hash) && opts[:app_name] == "bixby_agent" &&
+    Daemons.expects(:run_proc).once().with{ |name,opts|
+      name == "bixby-agent" && opts.kind_of?(Hash) &&
         opts[:dir] == File.join(@root_dir, "var")
     }
-
-    Bixby::Server.expects(:run!).once()
 
     app = App.new.run!
 
