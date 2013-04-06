@@ -32,7 +32,7 @@ module Config
           bad_config("corrupted file contents")
         end
 
-        Bixby::Log.setup_logger(config["log_level"])
+        Bixby::Log.setup_logger(:level => config["log_level"])
         ENV["BIXBY_DEBUG"] = "1" if config["log_level"].strip.downcase == "debug"
 
         agent = Agent.allocate

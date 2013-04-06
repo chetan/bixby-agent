@@ -14,7 +14,7 @@ class Server < Sinatra::Base
 
   def initialize
     super
-    Bixby::Log.setup_logger(Logging.appenders["file"].level)
+    Bixby::Log.setup_logger(:level => Logging.appenders["file"].level)
     @log = Logging.logger[self]
     @log.add_appenders("file") if @log.appenders.empty?
     @log.additive = false
