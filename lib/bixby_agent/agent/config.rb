@@ -31,9 +31,9 @@ module Config
         if not config.kind_of? Hash or config.empty? then
           bad_config("corrupted file contents")
         end
+        Bixby::Log.setup_logger(config["log_level"])
 
         agent = Agent.allocate
-        agent.setup_logger(config["log_level"])
         KEYS.each do |k|
           m = "#{k}=".to_sym
           agent.send(m, config[k]) if agent.respond_to? m
