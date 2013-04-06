@@ -31,7 +31,9 @@ module Config
         if not config.kind_of? Hash or config.empty? then
           bad_config("corrupted file contents")
         end
+
         Bixby::Log.setup_logger(config["log_level"])
+        ENV["BIXBY_DEBUG"] = "1" if config["log_level"].strip.downcase == "debug"
 
         agent = Agent.allocate
         KEYS.each do |k|
