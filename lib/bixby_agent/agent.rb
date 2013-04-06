@@ -48,7 +48,7 @@ class Agent
   end
 
   def initialize(uri, tenant = nil, password = nil, root_dir = nil, port = nil)
-    Bixby::Log.setup_logger()
+    setup_logger()
     @new = true
 
     @port = port
@@ -90,6 +90,35 @@ class Agent
 
     ENV["RUBYLIB"] = paths.join(":")
     ENV["RUBYOPT"] = '-rbixby-client/script'
+  end
+
+  # Setup logging
+  #
+  # @param [Symbol] level       Log level to use (default = :warn)
+  # @param [String] pattern     Log pattern
+  def setup_logger(level=nil, pattern=nil)
+    # set level: ENV flag overrides; default to warn
+    level = :debug if ENV["BIXBY_DEBUG"]
+    level ||= :warn
+
+    pattern ||= '%.1l, [%d] %5l -- %c: %m\n'
+
+    FileUtils.mkdir_p(Bixby.path("var"))
+
+    # TODO always use stdout for now
+    Logging.appenders.rolling_file("file",
+      :filename      => Bixby.path("var", "bixby-agent.log"),
+      :keep          => 7,
+      :roll_by       => 'date',
+      :age           => 'daily',
+      :truncate      => false,
+      :auto_flushing => true,
+      :level         => level,
+      :layout        => Logging.layouts.pattern(:pattern => pattern)
+      )
+
+    Logging::Logger.root.add_appenders("file")
+    Logging::Logger.root.level = level
   end
 
 end # Agent

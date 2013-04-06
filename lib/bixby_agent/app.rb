@@ -17,6 +17,10 @@ class App
     tenant   = @config[:tenant]
     password = @config[:password]
 
+    if @config[:debug] then
+      ENV["BIXBY_DEBUG"] = "1"
+    end
+
     begin
       agent = Agent.create(uri, tenant, password, root_dir, port)
     rescue Exception => ex
