@@ -63,7 +63,7 @@ class TestAgent < TestCase
 
     # stub out http request
     stub_request(:post, "#{@manager_uri}/api").with { |req|
-      req.body =~ /inventory:register_agent/ and req.body =~ /9999,"pixelcop"/
+      req.body =~ /inventory:register_agent/ and req.body =~ /"port":9999,"tenant":"pixelcop"/
 
     }.to_return(:body => response_str, :status => 200)
 
