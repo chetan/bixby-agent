@@ -36,7 +36,6 @@ class App
 
     if not agent.new? and agent.mac_changed? then
       # loaded from config and mac has changed
-      agent.deregister_agent()
       agent = Agent.create(uri, tenant, password, root_dir, false)
     end
 

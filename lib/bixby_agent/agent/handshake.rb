@@ -11,10 +11,6 @@ module Handshake
 
   include Crypto
 
-  def deregister_agent
-    # TODO send dereg request
-  end
-
   # Register the agent with the server
   #
   # @return [JsonResponse] response from server
