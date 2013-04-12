@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'bixby-common', :git => "https://github.com/chetan/bixby-common.git"
-gem 'bixby-client', :git => "https://github.com/chetan/bixby-client.git"
+gem 'bixby-common'
+gem 'bixby-client'
 # gem 'bixby-common', :path => "../common"
 # gem 'bixby-client', :path => "../client"
 
