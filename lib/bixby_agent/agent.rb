@@ -25,18 +25,19 @@ class Agent
   attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password,
                 :access_key, :secret_key, :client
 
-  def self.create(uri = nil, tenant = nil, password = nil, root_dir = nil, port = nil, use_config = true)
+  def self.create(opts={}, use_config = true)
 
-    agent = load_config(root_dir) if use_config
+    agent = load_config(opts[:root_dir]) if use_config
 
+    uri = opts[:uri]
     if agent.nil? and (uri.nil? or URI.parse(uri).nil?) then
       raise ConfigException, "Missing manager URI", caller
     end
 
     if agent.nil? then
       # create a new one if unable to load
-      uri = uri.gsub(%r{/$}, '') # remove trailing slash
-      agent = new(uri, tenant, password, root_dir, port)
+      opts[:uri] = uri.gsub(%r{/$}, '') # remove trailing slash
+      agent = new(opts)
     end
 
     # pass config to some modules
@@ -47,14 +48,15 @@ class Agent
     return agent
   end
 
-  def initialize(uri, tenant = nil, password = nil, root_dir = nil, port = nil)
+  def initialize(opts)
+    #uri, tenant = nil, password = nil, root_dir = nil, port = nil
     Bixby::Log.setup_logger()
     @new = true
 
-    @port = port
-    @manager_uri = uri
-    @tenant = tenant
-    @password = password
+    @port = opts[:port]
+    @manager_uri = opts[:uri]
+    @tenant = opts[:tenant]
+    @password = opts[:password]
 
     @uuid = create_uuid()
     @mac_address = get_mac_address()

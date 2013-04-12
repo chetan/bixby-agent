@@ -12,7 +12,7 @@ class TestAgent < TestCase
   end
 
   def test_create_new_agent
-    @agent = create_agent()
+    @agent = create_new_agent()
     @agent.save_config()
     assert(@agent.new?)
     assert( File.exists? File.join(@root_dir, "etc", "bixby.yml") )
@@ -25,7 +25,7 @@ class TestAgent < TestCase
 
   def test_load_existing_agent
     setup_existing_agent()
-    @agent = create_agent()
+    @agent = create_new_agent()
     assert(!@agent.new?)
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
@@ -46,12 +46,12 @@ class TestAgent < TestCase
   def test_create_missing_manager_uri
     @manager_uri = nil
     assert_throws(ConfigException) do
-      @agent = create_agent()
+      @agent = create_new_agent()
     end
   end
 
   def test_register_with_manager
-    @agent = create_agent()
+    @agent = create_new_agent()
 
     response_str = MultiJson.dump({
                       :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
@@ -91,10 +91,6 @@ class TestAgent < TestCase
 
   def config_file
     File.join(@root_dir, "etc", "bixby.yml")
-  end
-
-  def create_agent
-    @agent = Agent.create(@manager_uri, @tenant, @password, @root_dir, @port)
   end
 
 end

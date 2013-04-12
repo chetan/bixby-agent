@@ -11,18 +11,18 @@ class App
   include CLI
 
   def load_agent
-    uri = @argv.empty? ? nil : @argv.shift
-    root_dir = @config[:directory]
-    port     = @config[:port]
-    tenant   = @config[:tenant]
-    password = @config[:password]
+    opts = {
+      :uri       => @argv.empty? ? nil : @argv.shift,
+      :root__dir => @config[:directory]
+    }
+    %w{port tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
 
     if @config[:debug] then
       ENV["BIXBY_DEBUG"] = "1"
     end
 
     begin
-      agent = Agent.create(uri, tenant, password, root_dir, port)
+      agent = Agent.create(opts)
     rescue Exception => ex
       if ex.message == "Missing manager URI" then
         # if unable to load from config and no uri passed, bail!
@@ -36,7 +36,7 @@ class App
 
     if not agent.new? and agent.mac_changed? then
       # loaded from config and mac has changed
-      agent = Agent.create(uri, tenant, password, root_dir, false)
+      agent = Agent.create(opts, false)
     end
 
     if agent.new? then
