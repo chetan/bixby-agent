@@ -14,14 +14,15 @@ module Handshake
   # Register the agent with the server
   #
   # @return [JsonResponse] response from server
-  def register_agent
+  def register_agent(tags=nil)
     ret = Bixby::Inventory.register_agent({
       :uuid       => @uuid,
       :public_key => self.public_key.to_s,
       :hostname   => get_hostname(),
       :port       => @port,
       :tenant     => @tenant,
-      :password   => @password
+      :password   => @password,
+      :tags       => tags
       })
 
     if ret.fail? then

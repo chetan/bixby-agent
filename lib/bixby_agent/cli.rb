@@ -53,17 +53,21 @@ EOF
                            end
                          }
 
+  option :tags,
+      :long           => "--tags TAGS",
+      :description    => "Comma separated tags to assign to this host (optional)"
+
   option :directory,
       :short          => "-d DIRECTORY",
       :long           => "--directory DIRECTORY",
       :default        => "/opt/bixby",
-      :description    => "Root directory for Bixby (default: /opt/bixby)"
+      :description    => "Root directory for Bixby (optional, default: /opt/bixby)"
 
   option :port,
       :short          => "-p PORT",
       :long           => "--port PORT",
       :default        => Bixby::Server::DEFAULT_PORT,
-      :description    => "Port agent will listen on (default: #{Bixby::Server::DEFAULT_PORT})"
+      :description    => "Port agent will listen on (optional, default: #{Bixby::Server::DEFAULT_PORT})"
 
   option :debug,
       :long           => "--debug",

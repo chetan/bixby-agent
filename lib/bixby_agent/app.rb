@@ -40,7 +40,7 @@ class App
     end
 
     if agent.new? then
-      if (ret = agent.register_agent()).fail? then
+      if (ret = agent.register_agent(@config[:tags])).fail? then
         $stderr.puts "error: failed to register with manager!"
         $stderr.puts "reason:"
         $stderr.puts "  #{ret.message}"
