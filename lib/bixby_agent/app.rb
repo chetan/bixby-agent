@@ -34,10 +34,13 @@ class App
       raise ex
     end
 
-    if not agent.new? and agent.mac_changed? then
-      # loaded from config and mac has changed
-      agent = Agent.create(opts, false)
-    end
+    # TODO disable mac detection for now; it doesn't work in certain cases
+    #      e.g., when you stop/start an instance on EC2 a new mac is issued
+    #
+    # if not agent.new? and agent.mac_changed? then
+    #   # loaded from config and mac has changed
+    #   agent = Agent.create(opts, false)
+    # end
 
     if agent.new? then
       if (ret = agent.register_agent(@config[:tags])).fail? then
