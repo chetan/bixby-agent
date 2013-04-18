@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bixby-agent"
-  s.version = "0.1.12"
+  s.version = "0.1.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-04-06"
+  s.date = "2013-04-18"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
