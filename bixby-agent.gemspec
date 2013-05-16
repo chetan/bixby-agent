@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bixby-agent"
-  s.version = "0.1.13"
+  s.version = "0.1.14"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-04-18"
+  s.date = "2013-05-16"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -75,7 +75,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<oj>, [">= 0"])
       s.add_runtime_dependency(%q<httpi>, [">= 0"])
       s.add_runtime_dependency(%q<curb>, [">= 0"])
-      s.add_runtime_dependency(%q<facter>, [">= 0"])
+      s.add_runtime_dependency(%q<facter>, ["~> 1.6.0"])
       s.add_runtime_dependency(%q<mixlib-cli>, [">= 0"])
       s.add_runtime_dependency(%q<mixlib-shellout>, [">= 0"])
       s.add_runtime_dependency(%q<highline>, [">= 0"])
@@ -92,7 +92,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bahia>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
-      s.add_development_dependency(%q<minitest>, [">= 0"])
+      s.add_development_dependency(%q<minitest>, ["~> 4.7"])
       s.add_development_dependency(%q<turn>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_development_dependency(%q<test_guard>, [">= 0"])
@@ -112,7 +112,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<oj>, [">= 0"])
       s.add_dependency(%q<httpi>, [">= 0"])
       s.add_dependency(%q<curb>, [">= 0"])
-      s.add_dependency(%q<facter>, [">= 0"])
+      s.add_dependency(%q<facter>, ["~> 1.6.0"])
       s.add_dependency(%q<mixlib-cli>, [">= 0"])
       s.add_dependency(%q<mixlib-shellout>, [">= 0"])
       s.add_dependency(%q<highline>, [">= 0"])
@@ -129,7 +129,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bahia>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
-      s.add_dependency(%q<minitest>, [">= 0"])
+      s.add_dependency(%q<minitest>, ["~> 4.7"])
       s.add_dependency(%q<turn>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<test_guard>, [">= 0"])
@@ -150,7 +150,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<oj>, [">= 0"])
     s.add_dependency(%q<httpi>, [">= 0"])
     s.add_dependency(%q<curb>, [">= 0"])
-    s.add_dependency(%q<facter>, [">= 0"])
+    s.add_dependency(%q<facter>, ["~> 1.6.0"])
     s.add_dependency(%q<mixlib-cli>, [">= 0"])
     s.add_dependency(%q<mixlib-shellout>, [">= 0"])
     s.add_dependency(%q<highline>, [">= 0"])
@@ -167,7 +167,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bahia>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
-    s.add_dependency(%q<minitest>, [">= 0"])
+    s.add_dependency(%q<minitest>, ["~> 4.7"])
     s.add_dependency(%q<turn>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<test_guard>, [">= 0"])
