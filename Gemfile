@@ -13,7 +13,7 @@ gem 'oj'
 gem 'httpi',        :git => "https://github.com/chetan/httpi.git",
                     :branch => "chunked_responses"
 gem 'curb'
-gem 'facter'
+gem 'facter', '~> 1.6.0'
 gem 'mixlib-cli'
 gem 'mixlib-shellout'
 gem 'highline'
@@ -36,9 +36,9 @@ group :development, :test do
 
     # test frameworks
     gem "bahia"
-    gem 'webmock', :git => 'https://github.com/bblimke/webmock.git'
+    gem 'webmock'
     gem 'mocha'
-    gem "minitest"
+    gem "minitest", "~> 4.7"
     gem "turn"
 
     gem "rack-test"
