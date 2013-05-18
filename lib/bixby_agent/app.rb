@@ -59,6 +59,7 @@ class App
     agent = load_agent()
 
     Server.agent = agent
+    Server.debug = @config[:debug]
     Server.set :bind, "0.0.0.0"
     Server.set :port, agent.port
     Server.disable :protection

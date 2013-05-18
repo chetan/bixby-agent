@@ -9,7 +9,7 @@ class Server < Sinatra::Base
   DEFAULT_PORT = 18000
 
   class << self
-    attr_accessor :agent
+    attr_accessor :agent, :debug
   end
 
   def initialize
@@ -18,6 +18,15 @@ class Server < Sinatra::Base
     @log = Logging.logger[self]
     @log.add_appenders("file") if @log.appenders.empty?
     @log.additive = false
+
+    if self.class.debug then
+      Logging.appenders.stdout( 'stdout',
+        :auto_flushing => true,
+        :layout => Logging.appenders["file"].layout
+      )
+      @log.add_appenders("stdout")
+    end
+
   end
 
   def agent
