@@ -13,7 +13,7 @@ class App
   def load_agent
     opts = {
       :uri       => @argv.empty? ? nil : @argv.shift,
-      :root__dir => @config[:directory]
+      :root_dir  => @config[:directory]
     }
     %w{port tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
 
