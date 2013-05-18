@@ -32,6 +32,8 @@ class Agent
     if agent.nil? then
       # create a new one if unable to load
 
+      $stderr.puts "Unable to load agent from BIXBY_HOME=#{ENV['BIXBY_HOME']}"
+
       uri = opts[:uri]
       begin
         if uri.nil? or URI.parse(uri).nil? or URI.join(uri, "/api").nil? then

@@ -43,6 +43,7 @@ class App
     # end
 
     if agent.new? then
+      $stdout.puts "Going to register with manager: #{Bixby.manager_uri}"
       if (ret = agent.register_agent(@config[:tags])).fail? then
         $stderr.puts "error: failed to register with manager!"
         $stderr.puts "reason:"
