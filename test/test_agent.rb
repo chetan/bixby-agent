@@ -50,6 +50,13 @@ class TestAgent < TestCase
     end
   end
 
+  def test_create_with_bad_manager_uri
+    @manager_uri = "asdf"
+    assert_throws(ConfigException) do
+      @agent = create_new_agent()
+    end
+  end
+
   def test_register_with_manager
     @agent = create_new_agent()
 

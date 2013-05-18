@@ -29,14 +29,18 @@ class Agent
 
     agent = load_config(opts[:root_dir]) if use_config
 
-    uri = opts[:uri]
-    if agent.nil? and (uri.nil? or URI.parse(uri).nil?) then
-      raise ConfigException, "Missing manager URI", caller
-    end
-
     if agent.nil? then
       # create a new one if unable to load
-      opts[:uri] = uri.gsub(%r{/$}, '') # remove trailing slash
+
+      uri = opts[:uri]
+      begin
+        if uri.nil? or URI.parse(uri).nil? or URI.join(uri, "/api").nil? then
+          raise ConfigException, "Missing manager URI", caller
+        end
+      rescue URI::Error => ex
+        raise ConfigException.new(ex)
+      end
+
       agent = new(opts)
     end
 
