@@ -19,6 +19,21 @@ class Server < Sinatra::Base
     @log.add_appenders("file") if @log.appenders.empty?
     @log.additive = false
 
+    # filter sinatra/rack/thin from stacktraces
+    layout = Bixby::Log::FilteringLayout.new(:pattern => Logging.appenders["file"].layout.pattern)
+    layout.set_filter do |ex|
+      server = false
+      ex.backtrace.reject{ |s|
+        if server or s.include? "/lib/sinatra/" then
+          server = true
+          true
+        else
+          false
+        end
+      }
+    end
+    Logging.appenders["file"].layout = layout
+
     if self.class.debug then
       Logging.appenders.stdout( 'stdout',
         :auto_flushing => true,

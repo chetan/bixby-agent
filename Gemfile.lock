@@ -55,7 +55,7 @@ GEM
       mixlib-shellout
       multi_json
       oj
-    bixby-common (0.3.10)
+    bixby-common (0.3.11)
       httpi
       logging
       multi_json
