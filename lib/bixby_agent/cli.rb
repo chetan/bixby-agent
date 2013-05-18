@@ -60,7 +60,6 @@ EOF
   option :directory,
       :short          => "-d DIRECTORY",
       :long           => "--directory DIRECTORY",
-      :default        => "/opt/bixby",
       :description    => "Root directory for Bixby (optional, default: /opt/bixby)"
 
   option :port,
