@@ -24,9 +24,9 @@ class App
     begin
       agent = Agent.create(opts)
     rescue Exception => ex
-      if ex.message == "Missing manager URI" then
-        # if unable to load from config and no uri passed, bail!
-        $stderr.puts "ERROR: manager uri is required the first time you call me!"
+      if ex.message =~ /manager URI/ then
+        # if unable to load from config and no/bad uri passed, bail!
+        $stderr.puts "ERROR: a valid manager URI is required on first run"
         $stderr.puts
         $stderr.puts @opt_parser.help()
         exit 1

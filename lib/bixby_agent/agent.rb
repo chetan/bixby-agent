@@ -40,7 +40,7 @@ class Agent
           raise ConfigException, "Missing manager URI", caller
         end
       rescue URI::Error => ex
-        raise ConfigException.new(ex)
+        raise ConfigException, "Bad manager URI: '#{uri}'"
       end
 
       agent = new(opts)
