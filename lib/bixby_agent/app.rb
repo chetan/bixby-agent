@@ -51,6 +51,7 @@ class App
         exit 1
       end
       agent.save_config()
+      ARGV.clear # make sure it's empty so daemon starts properly
     end
     agent
   end
