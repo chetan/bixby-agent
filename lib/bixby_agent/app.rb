@@ -52,6 +52,7 @@ class App
       end
       agent.save_config()
       ARGV.clear # make sure it's empty so daemon starts properly
+      $stdout.puts "Registration successful; launching agent into background"
     end
     agent
   end

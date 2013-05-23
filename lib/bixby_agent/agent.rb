@@ -32,7 +32,9 @@ class Agent
     if agent.nil? then
       # create a new one if unable to load
 
-      $stderr.puts "Unable to load agent from BIXBY_HOME=#{ENV['BIXBY_HOME']}"
+      if File.exists? config_file then
+        $stderr.puts "Unable to load agent from BIXBY_HOME=#{ENV['BIXBY_HOME']}; going to initialize"
+      end
 
       uri = opts[:uri]
       begin
