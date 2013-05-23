@@ -99,15 +99,22 @@ fi
 tenant="<TENANT>"
 if [[ -n "$1" ]]; then
   tenant="$1"
+else
+  tenant="<tenant>"
 fi
 
 mgr_url="<MANAGER URL>"
 if [[ -n "$2" ]]; then
   mgr_url="$2"
+else
+  mgr_url="<manager url>"
 fi
 
 echo
 echo
 echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
 echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} -- ${mgr_url}"
+echo
+echo "or optionally add some tags while registering:"
+echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} --tags tag1,tag2 -- ${mgr_url}"
 echo
