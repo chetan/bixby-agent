@@ -52,7 +52,7 @@ class App
       end
       agent.save_config()
       ARGV.clear # make sure it's empty so daemon starts properly
-      $stdout.puts "Registration successful; launching bixby-agent into background"
+      $stdout.puts "Registration successful; launching bixby-agent into background on port #{agent.port}"
     end
     agent
   end
