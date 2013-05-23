@@ -118,3 +118,6 @@ echo
 echo "or optionally add some tags while registering:"
 echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} --tags tag1,tag2 -- ${mgr_url}"
 echo
+echo "or to see all available options:"
+echo "/opt/bixby/bin/bixby-agent --help"
+echo
