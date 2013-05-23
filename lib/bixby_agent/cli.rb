@@ -49,7 +49,7 @@ EOF
                            if c then
                              c
                            else
-                             HighLine.new.ask("Enter password: ") { |q| q.echo = "*" }
+                             HighLine.new.ask("Enter agent registration password: ") { |q| q.echo = "*" }
                            end
                          }
 
