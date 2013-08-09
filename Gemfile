@@ -5,8 +5,9 @@ gem 'bixby-client'
 # gem 'bixby-common', :path => "../common"
 # gem 'bixby-client', :path => "../client"
 
+gem 'daemons'
 gem 'sinatra', '~> 1.3'
-gem 'thin'
+gem 'puma'
 gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "non_rails"
 gem 'multi_json'
 gem 'oj'

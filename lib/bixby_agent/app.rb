@@ -3,7 +3,7 @@ require 'bixby_agent/server'
 require 'bixby_agent/cli'
 
 require 'daemons'
-require 'thin'
+require 'puma'
 
 module Bixby
 class App
@@ -70,8 +70,6 @@ class App
     # like "#{Agent.root}/logs/access|error.log"
     # Server.disable :logging
     # Server.disable :dump_errors
-
-    ::Thin::Logging.silent = true
 
     if @config[:debug] then
       return Server.run!
