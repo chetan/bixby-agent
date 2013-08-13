@@ -2,7 +2,7 @@
 require 'facter'
 require 'uuidtools'
 
-require "bixby_agent/agent/crypto"
+require "bixby-agent/agent/crypto"
 
 module Bixby
 class Agent

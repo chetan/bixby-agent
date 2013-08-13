@@ -16,7 +16,7 @@ end
 
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..", "lib")))
 
-require 'bixby_agent'
-require 'bixby_agent/app'
+require 'bixby-agent'
+require 'bixby-agent/app'
 
 Bixby::App.new.run!

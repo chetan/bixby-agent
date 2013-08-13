@@ -1,6 +1,6 @@
 
-require 'bixby_agent/server'
-require 'bixby_agent/cli'
+require 'bixby-agent/server'
+require 'bixby-agent/cli'
 
 require 'daemons'
 require 'puma'

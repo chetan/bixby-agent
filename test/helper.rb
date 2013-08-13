@@ -20,7 +20,7 @@ require 'mocha/setup'
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 ENV["RUBYLIB"] = $:.first
-require 'bixby_agent'
+require 'bixby-agent'
 
 require "base"
 Dir.glob(File.dirname(__FILE__) + "/../lib/**/*.rb").each{ |f| require f }

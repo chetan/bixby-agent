@@ -2,10 +2,10 @@
 require "uri"
 require "rbconfig"
 
-require "bixby_agent/config_exception"
-require "bixby_agent/agent/handshake"
-require "bixby_agent/agent/shell_exec"
-require "bixby_agent/agent/config"
+require "bixby-agent/config_exception"
+require "bixby-agent/agent/handshake"
+require "bixby-agent/agent/shell_exec"
+require "bixby-agent/agent/config"
 
 module Bixby
 
