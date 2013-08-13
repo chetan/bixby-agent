@@ -22,7 +22,8 @@ module Handshake
       :port       => @port,
       :tenant     => @tenant,
       :password   => @password,
-      :tags       => tags
+      :tags       => tags,
+      :version    => Bixby::Agent::VERSION
       })
 
     if ret.fail? then
