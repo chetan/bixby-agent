@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bixby-agent"
-  s.version = "0.1.17"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-08-13"
+  s.date = "2013-08-24"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/bixby-agent/agent/crypto.rb",
     "lib/bixby-agent/agent/handshake.rb",
     "lib/bixby-agent/agent/shell_exec.rb",
+    "lib/bixby-agent/agent_handler.rb",
     "lib/bixby-agent/app.rb",
     "lib/bixby-agent/cli.rb",
     "lib/bixby-agent/config_exception.rb",
