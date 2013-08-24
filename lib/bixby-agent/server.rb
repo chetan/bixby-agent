@@ -12,6 +12,19 @@ class Server < Sinatra::Base
     attr_accessor :agent, :debug
   end
 
+  # Configure various server settings
+  def self.configure(agent)
+    Server.agent = agent
+    Server.debug = @config[:debug]
+    Server.set :bind, "0.0.0.0"
+    Server.set :port, agent.port
+    Server.disable :protection
+    # should probably just redirect these somewhere,
+    # like "#{Agent.root}/logs/access|error.log"
+    # Server.disable :logging
+    # Server.disable :dump_errors
+  end
+
   def initialize
     super
     Bixby::Log.setup_logger(:level => Logging.appenders["file"].level)
@@ -76,7 +89,7 @@ class Server < Sinatra::Base
       return req
     end
 
-    return AgentHandler.new(request, agent).handle(req)
+    return AgentHandler.new(request).handle(req)
   end
 
   def extract_valid_request

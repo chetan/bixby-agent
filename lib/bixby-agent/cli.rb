@@ -62,12 +62,6 @@ EOF
       :long           => "--directory DIRECTORY",
       :description    => "Root directory for Bixby (optional, default: /opt/bixby)"
 
-  option :port,
-      :short          => "-p PORT",
-      :long           => "--port PORT",
-      :default        => Bixby::Server::DEFAULT_PORT,
-      :description    => "Port agent will listen on (optional, default: #{Bixby::Server::DEFAULT_PORT})"
-
   option :debug,
       :long           => "--debug",
       :description    => "Enable debugging messages",

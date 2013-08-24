@@ -2,6 +2,8 @@
 require 'helper'
 require 'rack/test'
 
+require "bixby-agent/server"
+
 module Bixby
 module Test
 

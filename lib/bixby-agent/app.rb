@@ -1,5 +1,5 @@
 
-require 'bixby-agent/server'
+require 'bixby-agent/agent_handler'
 require 'bixby-agent/cli'
 
 require 'daemons'
@@ -10,6 +10,10 @@ class App
 
   include CLI
 
+  # Load Agent
+  #
+  # Load the agent from $BIXBY_HOME. If no existing configuration was found,
+  # try to register with the server if we have the correct parameters.
   def load_agent
     opts = {
       :uri       => @argv.empty? ? nil : @argv.shift,
@@ -57,22 +61,22 @@ class App
     agent
   end
 
+  # Run the agent app!
+  #
+  # This is the main method. Will boot and configure the agent, connect to the
+  # server and start the daemon.
   def run!
 
     agent = load_agent()
 
-    Server.agent = agent
-    Server.debug = @config[:debug]
-    Server.set :bind, "0.0.0.0"
-    Server.set :port, agent.port
-    Server.disable :protection
-    # should probably just redirect these somewhere,
-    # like "#{Agent.root}/logs/access|error.log"
-    # Server.disable :logging
-    # Server.disable :dump_errors
-
     if @config[:debug] then
-      return Server.run!
+      Logging::Logger.root.add_appenders("stdout")
+      Kernel.trap("INT") do
+        @client.stop()
+        puts
+        puts "exiting on ^C"
+      end
+      return start_websocket_client()
     end
 
     daemon_dir = File.join(Bixby.root, "var")
@@ -108,9 +112,26 @@ class App
     end
 
     Daemons.run_proc("bixby-agent", daemon_opts) do
-      Server.run!
+      start_websocket_client()
     end
 
+  end
+
+  # Open the WebSocket channel with the Manager
+  #
+  # NOTE: this call will not return!
+  def start_websocket_client
+    uri = Bixby.agent.manager_uri
+    if uri !~ /^ws:/ then
+      # silently upgrade uri
+      uri = URI.parse(uri)
+      uri.scheme = "ws"
+      uri.path = "/wsapi"
+      Bixby.agent.manager_uri = uri.to_s
+      Bixby.agent.save_config()
+    end
+    @client = Bixby::WebSocket::Client.new(uri.to_s, AgentHandler)
+    @client.start
   end
 
 end # App

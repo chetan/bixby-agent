@@ -6,15 +6,14 @@ module Bixby
     include Bixby::Log
     # include Bixby::CryptoUti
 
-    def initialize(request, agent)
+    def initialize(request)
       @request = request
-      @agent = agent
     end
 
     def handle(json_req)
 
       begin
-        cmd_res = @agent.shell_exec(json_req.params)
+        cmd_res = Bixby.agent.shell_exec(json_req.params)
         log.debug { cmd_res.to_s + "\n---\n\n\n" }
         return cmd_res.to_json_response
 
