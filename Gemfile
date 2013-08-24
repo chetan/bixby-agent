@@ -8,7 +8,7 @@ gem 'bixby-client'
 gem 'daemons'
 gem 'sinatra', '~> 1.3'
 gem 'puma'
-gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "non_rails"
+gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "bixby"
 gem 'multi_json'
 gem 'oj'
 gem 'httpi',        :git => "https://github.com/chetan/httpi.git",
