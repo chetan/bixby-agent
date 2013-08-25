@@ -5,6 +5,7 @@ gem 'bixby-client'
 # gem 'bixby-common', :path => "../common"
 # gem 'bixby-client', :path => "../client"
 
+gem 'god'
 gem 'daemons'
 gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "bixby"
 gem 'multi_json'
