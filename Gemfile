@@ -6,8 +6,6 @@ gem 'bixby-client'
 # gem 'bixby-client', :path => "../client"
 
 gem 'daemons'
-gem 'sinatra', '~> 1.3'
-gem 'puma'
 gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "bixby"
 gem 'multi_json'
 gem 'oj'
@@ -22,6 +20,10 @@ gem 'uuidtools'
 gem 'logging'
 
 group :development, :test do
+
+    # deprecated webserver
+    gem 'sinatra', '~> 1.3'
+    gem 'puma'
 
     # packaging
     gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
