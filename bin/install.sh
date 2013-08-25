@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
-# fetch and install the correct package
 
+# Bixby Agent install script
+#
+# Usage: \curl -sL https://get.bixby.io | bash -s [<tenant> <manager url>]
+#
+# Currently supported platforms:
+#
+#   Ubuntu 10.04, 12.04
+#   CentOS or RHEL 5, 6
+#   x86 and x64
+
+
+
+################################################################################
 # package repository
 url="https://s3.bixby.io"
 
