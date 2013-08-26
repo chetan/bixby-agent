@@ -10,8 +10,7 @@ gem 'daemons'
 gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "bixby"
 gem 'multi_json'
 gem 'oj'
-gem 'httpi',        :git => "https://github.com/chetan/httpi.git",
-                    :branch => "chunked_responses"
+gem 'httpi'
 gem 'curb'
 gem 'facter', '~> 1.6.0'
 gem 'mixlib-cli'

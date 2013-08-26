@@ -6,14 +6,6 @@ GIT
     api-auth (1.0.3)
 
 GIT
-  remote: https://github.com/chetan/httpi.git
-  revision: f6e49303fee6778c714bcc556fa5f9247bc3a3f3
-  branch: chunked_responses
-  specs:
-    httpi (2.0.0)
-      rack
-
-GIT
   remote: https://github.com/chetan/jeweler.git
   revision: 9b8b2376c79299b823a5e9aafae3d647df943b6f
   branch: bixby
@@ -113,6 +105,9 @@ GEM
     highline (1.6.19)
     hirb (0.7.1)
     httpauth (0.2.0)
+    httpi (2.1.0)
+      rack
+      rubyntlm (~> 0.3.2)
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
@@ -168,6 +163,7 @@ GEM
     rcov (1.0.0)
     rdoc (4.0.1)
       json (~> 1.4)
+    rubyntlm (0.3.4)
     safe_yaml (0.9.5)
     simplecov (0.7.1)
       multi_json (~> 1.0)
@@ -214,7 +210,7 @@ DEPENDENCIES
   guard
   highline
   hirb
-  httpi!
+  httpi
   jeweler!
   logging
   minitest (~> 4.7)
