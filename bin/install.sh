@@ -16,9 +16,14 @@
 ################################################################################
 # package repository
 url="https://s3.bixby.io"
+latest="latest"
+
+if [[ "$BETA" == "1" ]]; then
+  latest="latest-beta"
+fi
 
 # seed with current build version
-bixby_version=`\\curl -sL $url/latest`
+bixby_version=`\\curl -sL $url/$latest`
 
 function is_64() {
   [[ `uname -p` == "x86_64" ]]
@@ -38,6 +43,13 @@ fi
 
 if [[ $issue =~ ^"CentOS" ]]; then
 
+  # check if upgrade
+  rpm -qa bixby | grep bixby >/dev/null
+  if [[ $? -eq 0 && -f /opt/bixby/etc/bixby.yml ]]; then
+    UPGRADE=1
+  fi
+
+  # select package
   pkg="bixby-${bixby_version}"
 
   if [[ $issue =~ " 5" ]]; then
@@ -56,7 +68,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
   fi
   pkg="$pkg.rpm"
 
-  # install or upgrade
+  # download and install
   if [[ ! `yum -q info bixby 2>/dev/null` ]]; then
     cmd="install"
   else
@@ -69,9 +81,15 @@ if [[ $issue =~ ^"CentOS" ]]; then
     exit 1
   fi
 
-
 elif [[ $issue =~ ^"Ubuntu" ]]; then
 
+  # check if upgrade
+  dpkg -l bixby >/dev/null 2>&1
+  if [[ $? -eq 0 && -f /opt/bixby/etc/bixby.yml ]]; then
+    UPGRADE=1
+  fi
+
+  # select package
   pkg="bixby_${bixby_version}.ubuntu"
 
   if [[ $issue =~ "10.04" ]]; then
@@ -91,6 +109,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   fi
   pkg="$pkg.deb"
 
+  # download and install
   cd /tmp
   wget "$url/$pkg"
   as_root dpkg -i $pkg
@@ -108,18 +127,21 @@ else
     exit 1
 fi
 
+
+if [[ "$UPGRADE" == "1" ]]; then
+  echo "bixby upgraded to ${bixby_version}"
+  exit
+fi
+
+
 tenant="<TENANT>"
 if [[ -n "$1" ]]; then
   tenant="$1"
-else
-  tenant="<tenant>"
 fi
 
 mgr_url="<MANAGER URL>"
 if [[ -n "$2" ]]; then
   mgr_url="$2"
-else
-  mgr_url="<manager url>"
 fi
 
 echo
