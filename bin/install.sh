@@ -119,7 +119,8 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
 
   # download and install
   cd /tmp
-  wget $(escape_url "$url/$pkg")
+  echo "downloading $url/$pkg ..."
+  curl -L# $(escape_url "$url/$pkg") -o "$pkg"
   as_root dpkg -i $pkg
   if [[ $? -ne 0 ]]; then
     echo "ERROR: installing $pkg"
