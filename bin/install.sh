@@ -23,7 +23,8 @@ if [[ "$BETA" == "1" ]]; then
 fi
 
 # seed with current build version
-bixby_version=`\\curl -sL $url/$latest`
+# beta builds may have a + char which needs to be replaced
+bixby_version=`\\curl -sL $url/$latest | sed -e 's/\+/%2B/'`
 
 function is_64() {
   [[ `uname -p` == "x86_64" ]]
