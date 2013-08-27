@@ -4,6 +4,9 @@
 # Bixby Agent install script
 #
 # Usage: \curl -sL https://get.bixby.io | bash -s [<tenant> <manager url>]
+# Beta:  \curl -sL https://get.bixby.io | BETA=1 bash -s [<tenant> <manager url>]
+#
+# Params can be excluded when upgrading
 #
 # Currently supported platforms:
 #
@@ -23,8 +26,7 @@ if [[ "$BETA" == "1" ]]; then
 fi
 
 # seed with current build version
-# beta builds may have a + char which needs to be replaced
-bixby_version=`\\curl -sL $url/$latest | sed -e 's/\+/%2B/'`
+bixby_version=`\\curl -sL $url/$latest`
 
 function is_64() {
   [[ `uname -p` == "x86_64" ]]
@@ -36,6 +38,11 @@ function as_root() {
   else
     sudo env PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" $*
   fi
+}
+
+function escape_url() {
+  # beta builds may have a + char which needs to be replaced
+  echo $1 | sed -e 's/\+/%2B/'
 }
 
 if [[ -f /etc/issue ]]; then
@@ -75,7 +82,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
   else
     cmd="upgrade"
   fi
-  as_root yum -y $cmd $url/$pkg
+  as_root yum -y $cmd $(escape_url $url/$pkg)
   ret=$?
   if [[ $ret -ne 0 ]]; then
     echo "ERROR: installing $pkg: $ret"
@@ -112,7 +119,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
 
   # download and install
   cd /tmp
-  wget "$url/$pkg"
+  wget $(escape_url "$url/$pkg")
   as_root dpkg -i $pkg
   if [[ $? -ne 0 ]]; then
     echo "ERROR: installing $pkg"
@@ -130,6 +137,7 @@ fi
 
 
 if [[ "$UPGRADE" == "1" ]]; then
+  echo
   echo "bixby upgraded to ${bixby_version}"
   exit
 fi
