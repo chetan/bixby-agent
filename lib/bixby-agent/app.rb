@@ -3,7 +3,6 @@ require 'bixby-agent/agent_handler'
 require 'bixby-agent/cli'
 
 require 'daemons'
-require 'puma'
 
 module Bixby
 class App
