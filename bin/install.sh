@@ -45,6 +45,13 @@ function escape_url() {
   echo $1 | sed -e 's/\+/%2B/'
 }
 
+# Test for interactive shell
+function is_interactive() {
+  # check for 'i' flag in bash env
+  # http://stackoverflow.com/a/16935422/102920
+  [[ ${-#*i} != ${-} ]]
+}
+
 if [[ -f /etc/issue ]]; then
   issue=`cat /etc/issue`
 fi
@@ -119,8 +126,14 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
 
   # download and install
   cd /tmp
+
   echo "downloading $url/$pkg ..."
-  curl -L# $(escape_url "$url/$pkg") -o "$pkg"
+  if is_interactive; then
+    curl -L# $(escape_url "$url/$pkg") -o "$pkg"
+  else
+    curl -sL $(escape_url "$url/$pkg") -o "$pkg"
+  fi
+
   as_root dpkg -i $pkg
   if [[ $? -ne 0 ]]; then
     echo "ERROR: installing $pkg"
