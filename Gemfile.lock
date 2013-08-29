@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/chetan/api_auth.git
-  revision: eea13ad54cca87de133c80be6aff96cb21a21601
+  revision: 86a79ca157402bd1c12d683a6b9948564b493443
   branch: bixby
   specs:
     api-auth (1.0.3)
@@ -51,7 +51,7 @@ GEM
       mixlib-shellout
       multi_json
       oj
-    bixby-common (0.4.1)
+    bixby-common (0.4.2)
       api-auth
       faye-websocket
       httpi
