@@ -120,16 +120,7 @@ class App
   #
   # NOTE: this call will not return!
   def start_websocket_client
-    uri = Bixby.agent.manager_uri
-    if uri !~ /^ws:/ then
-      # silently upgrade uri
-      uri = URI.parse(uri)
-      uri.scheme = "ws"
-      uri.path = "/wsapi"
-      Bixby.agent.manager_uri = uri.to_s
-      Bixby.agent.save_config()
-    end
-    @client = Bixby::WebSocket::Client.new(uri.to_s, AgentHandler)
+    @client = Bixby::WebSocket::Client.new(Bixby.agent.manager_ws_uri, AgentHandler)
     @client.start
   end
 
