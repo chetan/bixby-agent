@@ -1,0 +1,58 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          bixby-god
+# Required-Start:    $local_fs $remote_fs $syslog $named $network $time
+# Required-Stop:     $local_fs $remote_fs $syslog $named $network
+# Should-Start:
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/Stop the bixby god daemon
+### END INIT INFO
+
+# processname: god
+# pidfile: /opt/bixby/var/bixby-god.pid
+
+NAME=bixby-god
+DESC=bixby-god
+
+export BIXBY_HOME=/opt/bixby
+GOD_PORT=18165 # actually used in unix socket name
+GOD_CONF="-c $BIXBY_HOME/etc/bixby.god"
+GOD_PID=$BIXBY_HOME/var/bixby-god.pid
+GOD_BIN="$BIXBY_HOME/embedded/bin/god -P $GOD_PID -p $GOD_PORT --log-level debug"
+
+start() {
+  $GOD_BIN $GOD_CONF
+  echo "* Started bixby"
+}
+stop () {
+  $GOD_BIN terminate >/dev/null
+  echo "* Stopped bixby"
+}
+
+case $1 in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+restart)
+        stop
+        start
+        ;;
+status)
+        $GOD_BIN status
+        if [[ $? -eq 1 ]]; then
+          echo "Not running"
+        fi
+;;
+*)
+  echo "Usage: $NAME {start|stop|restart|status}" >&2
+  exit 1
+  ;;
+esac
+
+exit 0

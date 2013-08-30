@@ -9,6 +9,9 @@ vendor/cache/
 .yardoc/
 doc/
 
-etc
+etc/bixby.yml
+etc/id_rsa
+etc/server.pub
 var
 repo
+
