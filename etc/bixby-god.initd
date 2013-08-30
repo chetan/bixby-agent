@@ -14,8 +14,8 @@
 # processname: god
 # pidfile: /opt/bixby/var/bixby-god.pid
 
-NAME=bixby-god
-DESC=bixby-god
+NAME=bixby
+DESC=bixby
 
 export BIXBY_HOME=/opt/bixby
 GOD_PORT=18165 # actually used in unix socket name
