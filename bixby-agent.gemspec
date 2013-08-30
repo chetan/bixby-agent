@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-08-25"
+  s.date = "2013-08-30"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -24,8 +24,10 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/bixby-agent",
-    "bin/bixby-agent.initd",
     "bixby-agent.gemspec",
+    "etc/bixby-god.initd",
+    "etc/bixby.god",
+    "etc/god.d/bixby-agent.god",
     "lib/bixby-agent.rb",
     "lib/bixby-agent/agent.rb",
     "lib/bixby-agent/agent/config.rb",
@@ -74,6 +76,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<bixby-common>, [">= 0"])
       s.add_runtime_dependency(%q<bixby-client>, [">= 0"])
+      s.add_runtime_dependency(%q<god>, [">= 0"])
       s.add_runtime_dependency(%q<daemons>, [">= 0"])
       s.add_runtime_dependency(%q<api-auth>, [">= 0"])
       s.add_runtime_dependency(%q<multi_json>, [">= 0"])
@@ -112,6 +115,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<bixby-common>, [">= 0"])
       s.add_dependency(%q<bixby-client>, [">= 0"])
+      s.add_dependency(%q<god>, [">= 0"])
       s.add_dependency(%q<daemons>, [">= 0"])
       s.add_dependency(%q<api-auth>, [">= 0"])
       s.add_dependency(%q<multi_json>, [">= 0"])
@@ -151,6 +155,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<bixby-common>, [">= 0"])
     s.add_dependency(%q<bixby-client>, [">= 0"])
+    s.add_dependency(%q<god>, [">= 0"])
     s.add_dependency(%q<daemons>, [">= 0"])
     s.add_dependency(%q<api-auth>, [">= 0"])
     s.add_dependency(%q<multi_json>, [">= 0"])
