@@ -21,10 +21,6 @@ gem 'logging'
 
 group :development, :test do
 
-    # deprecated webserver
-    gem 'sinatra', '~> 1.3'
-    gem 'puma'
-
     # packaging
     gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
     gem 'yard', '~> 0.7'
@@ -43,8 +39,6 @@ group :development, :test do
     gem 'mocha'
     gem "minitest", "~> 4.7"
     gem "turn"
-
-    gem "rack-test"
 
     # tools
     gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
