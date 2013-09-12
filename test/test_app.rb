@@ -6,6 +6,10 @@ module Test
 
 class TestApp < TestCase
 
+  def teardown
+    ENV["BIXBY_DEBUG"] = "0"
+  end
+
   def test_load_agent
     ARGV.clear
     ARGV << "-d"
@@ -49,6 +53,32 @@ class TestApp < TestCase
     assert_includes conf, "foo"
     assert_includes conf, "bar"
     assert_kind_of Hash, YAML.load(conf)
+  end
+
+  def test_run_agent
+
+    ARGV.clear
+    ARGV << "--debug"
+    ARGV << "-d"
+    ARGV << @root_dir
+    ARGV << @manager_uri
+
+    Bixby::WebSocket::Client.any_instance.expects(:start).once()
+
+    response_str = MultiJson.dump({
+                      :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
+                                :access_key => "foo",
+                                :secret_key => "bar"},
+                      :code    => nil,
+                      :status  => "success",
+                      :message => nil })
+
+    stub_request(:post, "http://localhost:3000/api").
+      to_return(:status => 200, :body => response_str)
+
+    App.new.run!
+
+    assert_equal "1", ENV["BIXBY_DEBUG"]
   end
 
   def test_missing_manager_uri

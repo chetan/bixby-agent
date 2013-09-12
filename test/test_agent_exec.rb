@@ -13,12 +13,6 @@ class AgentExec < TestCase
     @agent = create_new_agent()
   end
 
-  def setup_root
-    # copy repo to path
-    `mkdir -p #{@root_dir}/repo/support`
-    `cp -a #{@bundle_path} #{@root_dir}/repo/support/`
-  end
-
   def test_exec_error
     # throws the first time
     assert_throws(BundleNotFound) do

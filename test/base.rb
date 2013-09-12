@@ -35,6 +35,7 @@ module Bixby
       def teardown
         `rm -rf #{@root_dir}`
         @agent = nil
+        ENV["BIXBY_HOME"] = nil
       end
 
       def setup_existing_agent
@@ -44,6 +45,12 @@ module Bixby
         FileUtils.mkdir_p(dest)
         FileUtils.copy_entry(src, dest)
         @agent = Agent.create
+      end
+
+      def setup_root
+        # copy repo to path
+        `mkdir -p #{@root_dir}/repo/support`
+        `cp -a #{@bundle_path} #{@root_dir}/repo/support/`
       end
 
       def setup_test_bundle(repo, bundle, command, digest=nil)
