@@ -36,6 +36,8 @@ Options:
 
 EOF
 
+  # :nocov:
+
   option :tenant,
       :short          => "-t TENANT",
       :long           => "--tenant TENANT",
@@ -83,6 +85,7 @@ EOF
       :proc           => Proc.new { puts "Bixby v" + Bixby::Agent::VERSION },
       :exit           => 0
 
+  # :nocov:
 
   def initialize
     super
