@@ -64,6 +64,7 @@ class TestClient < TestCase
     super
     EM.stub!
     setup_existing_agent()
+    Logging.logger[Bixby::WebSocket::Client].level = 5
   end
 
   def teardown
