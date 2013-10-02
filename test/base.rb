@@ -4,7 +4,7 @@ require 'helper'
 module Bixby
   module Test
 
-    class TestCase < MiniTest::Unit::TestCase
+    class TestCase < Micron::TestCase
 
       def setup
         super

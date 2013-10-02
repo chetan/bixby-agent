@@ -9,7 +9,7 @@ rescue Bundler::BundlerError => e
 end
 
 require 'test_guard'
-TestGuard.load_simplecov()
+require 'micron/minitest'
 
 # load curb first so webmock can stub it out as necessary
 require 'curb'
@@ -24,4 +24,7 @@ require 'bixby-agent'
 
 require "base"
 Dir.glob(File.dirname(__FILE__) + "/../lib/**/*.rb").each{ |f| require f }
-MiniTest::Unit.autorun
+
+EasyCov.path = "coverage"
+EasyCov.filters << EasyCov::IGNORE_GEMS << EasyCov::IGNORE_STDLIB
+EasyCov.start

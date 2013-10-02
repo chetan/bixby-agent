@@ -34,13 +34,12 @@ group :development, :test do
     gem 'hirb'
 
     # test frameworks
-    gem "bahia"
-    gem 'webmock'
-    gem 'mocha'
-    gem "minitest", "~> 4.7"
-    gem "turn"
+    gem "bahia",   :require => false
+    gem 'webmock', :require => false
+    gem 'mocha',   :require => false
 
     # tools
+    gem "micron", :github => "chetan/micron"
     gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
     gem 'rb-inotify', :require => false
     gem 'rb-fsevent', :require => false

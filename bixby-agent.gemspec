@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-09-27"
+  s.date = "2013-10-02"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -67,7 +67,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/chetan/bixby-agent"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.1.0"
+  s.rubygems_version = "2.1.5"
   s.summary = "Bixby Agent"
 
   if s.respond_to? :specification_version then
@@ -100,8 +100,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bahia>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
-      s.add_development_dependency(%q<minitest>, ["~> 4.7"])
-      s.add_development_dependency(%q<turn>, [">= 0"])
       s.add_development_dependency(%q<test_guard>, [">= 0"])
       s.add_development_dependency(%q<rb-inotify>, [">= 0"])
       s.add_development_dependency(%q<rb-fsevent>, [">= 0"])
@@ -136,8 +134,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bahia>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
-      s.add_dependency(%q<minitest>, ["~> 4.7"])
-      s.add_dependency(%q<turn>, [">= 0"])
       s.add_dependency(%q<test_guard>, [">= 0"])
       s.add_dependency(%q<rb-inotify>, [">= 0"])
       s.add_dependency(%q<rb-fsevent>, [">= 0"])
@@ -173,8 +169,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bahia>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
-    s.add_dependency(%q<minitest>, ["~> 4.7"])
-    s.add_dependency(%q<turn>, [">= 0"])
     s.add_dependency(%q<test_guard>, [">= 0"])
     s.add_dependency(%q<rb-inotify>, [">= 0"])
     s.add_dependency(%q<rb-fsevent>, [">= 0"])
