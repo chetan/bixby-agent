@@ -23,6 +23,8 @@ class AgentExec < TestCase
   def test_exec_pass
     setup_root()
     @c.args = "foo bar baz"
+    @c.user = `whoami`.strip
+    @c.group = `groups`.strip.split(/ /).first
     ret = @agent.shell_exec(@c.to_hash)
     assert ret
     assert_kind_of CommandResponse, ret
