@@ -16,7 +16,7 @@ module Bixby
         @manager_uri = "http://localhost:3000"
         @tenant = "pixelcop"
         @password = "foobar"
-        @root_dir = "/tmp/agent_test_temp"
+        @root_dir = Dir.mktmpdir("bixby-agent-test-")
         @port = 9999
 
         Bixby.manager_uri = @manager_uri
