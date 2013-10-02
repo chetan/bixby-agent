@@ -37,9 +37,9 @@ module ShellExec
     cmd = "#{spec.command_file} #{spec.args}"
 
     # Cleanup the ENV and execute
-    rem = [ "BUNDLE_BIN_PATH", "BUNDLE_GEMFILE" ] # "RUBYOPT"
     old_env = {}
-    rem.each{ |r| old_env[r] = ENV.delete(r) }
+    %W{BUNDLE_BIN_PATH BUNDLE_GEMFILE}.each{ |r|
+      old_env[r] = ENV.delete(r) if ENV.include?(r) }
 
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
                                       :user  => get_id(spec.user, "user"),
