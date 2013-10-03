@@ -47,7 +47,6 @@ group :development, :test do
 
     # coverage
     gem "simplecov",:platforms => :mri_19
-    gem "rcov", :platforms => :mri_18
 
     # quality
     gem "cane", :platforms => :mri_19
