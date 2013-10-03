@@ -1,15 +1,5 @@
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+require "micron/rake"
+Micron::Rake.new do |task|
 end
-
 task :default => :test
-
-begin
-  require 'single_test/tasks'
-
-rescue LoadError
-  warn "single_test not available"
-end
