@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chetan/micron.git
-  revision: 9d5bc007c74a4264c9f101b7ca275f4c6db4ba45
+  revision: 14442584d89b503d6691ac15e0dba38b207b100a
   specs:
     micron (0.1.0)
       colorize
@@ -31,22 +31,20 @@ GIT
 
 GIT
   remote: https://github.com/chetan/test_guard.git
-  revision: 72fade8f2fda1747ece442aee40be53d5cb293c9
+  revision: 9c2fdd4ba874d8593ad4d70c0f2dd6b141061fed
   specs:
     test_guard (0.2.1)
       awesome_print
+      easycov
       growl
       listen
       simplecov
       simplecov-console
-      single_test
-      turn
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.5)
-    ansi (1.4.3)
     awesome_print (1.2.0)
     bahia (0.7.2)
       open4 (~> 1.3.0)
@@ -58,7 +56,7 @@ GEM
       mixlib-shellout
       multi_json
       oj
-    bixby-common (0.4.5)
+    bixby-common (0.4.6)
       api-auth
       faye-websocket
       httpi
@@ -72,9 +70,9 @@ GEM
     colorize (0.6.0)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
-    curb (0.8.4)
+    curb (0.8.5)
     daemons (1.1.9)
-    easycov (0.1.1)
+    easycov (0.2.0)
       multi_json
       simplecov
     eventmachine (1.0.3)
@@ -94,11 +92,11 @@ GEM
       multi_json (~> 1.4)
       nokogiri (~> 1.5.2)
       oauth2
-    god (0.13.2)
+    god (0.13.3)
     growl (1.0.3)
-    guard (1.8.2)
+    guard (1.8.3)
       formatador (>= 0.2.4)
-      listen (>= 1.0.0)
+      listen (~> 1.3)
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
       thor (>= 0.14.6)
@@ -141,7 +139,7 @@ GEM
       rack (~> 1.2)
     oj (2.1.4)
     open4 (1.3.0)
-    parallel (0.8.2)
+    parallel (0.8.4)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -159,7 +157,7 @@ GEM
     rdoc (4.0.1)
       json (~> 1.4)
     rubyntlm (0.3.4)
-    safe_yaml (0.9.5)
+    safe_yaml (0.9.7)
     semver2 (3.3.2)
     simplecov (0.7.1)
       multi_json (~> 1.0)
@@ -169,18 +167,14 @@ GEM
       hirb
       simplecov
     simplecov-html (0.7.1)
-    single_test (0.6.0)
-      rake
     slop (3.4.6)
     thor (0.18.1)
-    turn (0.9.6)
-      ansi
     uuidtools (2.1.4)
-    webmock (1.13.0)
+    webmock (1.14.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket-driver (0.3.0)
-    yard (0.8.7.1)
+    yard (0.8.7.2)
 
 PLATFORMS
   ruby
