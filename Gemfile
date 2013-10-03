@@ -46,8 +46,8 @@ group :development, :test do
     gem 'rb-fchange', :require => false
 
     # coverage
-    gem "simplecov",:platforms => :mri_19
+    gem "simplecov",:platforms => [:mri_19, :mri_20]
 
     # quality
-    gem "cane", :platforms => :mri_19
+    gem "cane", :platforms => [:mri_19, :mri_20]
 end
