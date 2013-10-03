@@ -38,8 +38,8 @@ module ShellExec
       old_env[r] = ENV.delete(r) if ENV.include?(r) }
 
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
-                                      :user  => spec.user,
-                                      :group => spec.group)
+                                      :user  => (spec.user || default_uid),
+                                      :group => (spec.group || default_gid))
 
     shell.run_command
 
@@ -48,6 +48,31 @@ module ShellExec
     return CommandResponse.new({ :status => shell.exitstatus,
                                  :stdout => shell.stdout,
                                  :stderr => shell.stderr })
+  end
+
+
+  private
+
+  # Return uid of 'bixby' user, if it exists
+  #
+  # @return [Fixnum]
+  def default_uid
+    begin
+      return Etc.getpwnam("bixby").uid
+    rescue ArgumentError
+    end
+    return nil
+  end
+
+  # Return uid of 'bixby' group, if it exists
+  #
+  # @return [Fixnum]
+  def default_gid
+    begin
+      return Etc.getgrnam("bixby").gid
+    rescue ArgumentError
+    end
+    return nil
   end
 
 end # Exec
