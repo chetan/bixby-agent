@@ -1,4 +1,5 @@
 language: ruby
+before_script: "./bin/ci_setup.sh"
 script: "bundle exec micron test/"
 
 rvm:
