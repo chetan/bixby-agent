@@ -1,0 +1,10 @@
+language: ruby
+script: "bundle exec micron test/"
+
+rvm:
+  - 2.0.0
+  - 1.9.3
+
+branches:
+  only:
+    - master
