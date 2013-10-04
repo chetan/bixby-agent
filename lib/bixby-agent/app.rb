@@ -1,4 +1,5 @@
 
+require 'bixby-agent/websocket/client'
 require 'bixby-agent/agent_handler'
 require 'bixby-agent/cli'
 
