@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-10-02"
+  s.date = "2013-10-05"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -19,12 +19,15 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE",
     "Rakefile",
     "VERSION",
     "bin/bixby-agent",
+    "bin/ci_after.sh",
+    "bin/ci_setup.sh",
     "bixby-agent.gemspec",
     "etc/bixby-god.initd",
     "etc/bixby.god",
@@ -42,8 +45,8 @@ Gem::Specification.new do |s|
     "lib/bixby-agent/version.rb",
     "lib/bixby-agent/websocket/client.rb",
     "tasks/cane.rake",
+    "tasks/coverage.rake",
     "tasks/jeweler.rake",
-    "tasks/rcov.rake",
     "tasks/test.rake",
     "tasks/yard.rake",
     "test/base.rb",
@@ -106,7 +109,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rb-fsevent>, [">= 0"])
       s.add_development_dependency(%q<rb-fchange>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<cane>, [">= 0"])
     else
       s.add_dependency(%q<bixby-common>, [">= 0"])
@@ -141,7 +143,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rb-fsevent>, [">= 0"])
       s.add_dependency(%q<rb-fchange>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
-      s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<cane>, [">= 0"])
     end
   else
@@ -177,7 +178,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rb-fsevent>, [">= 0"])
     s.add_dependency(%q<rb-fchange>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
-    s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<cane>, [">= 0"])
   end
 end
