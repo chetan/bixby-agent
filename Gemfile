@@ -28,7 +28,6 @@ group :development, :test do
     # debugging
     gem 'pry'
     gem 'awesome_print'
-    gem 'guard'
     gem 'colorize'
     gem 'growl'
     gem 'hirb'
@@ -39,6 +38,7 @@ group :development, :test do
     gem 'mocha',   :require => false
 
     # tools
+    gem "coveralls", :require => false
     gem "micron", :github => "chetan/micron"
     gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
     gem 'rb-inotify', :require => false

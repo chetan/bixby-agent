@@ -1,7 +1,9 @@
 language: ruby
 before_script: "./bin/ci_setup.sh"
 script: "bundle exec micron test/"
-after_script: "./bin/ci_after.sh"
+after_script:
+  - "rake coverage"
+  - "rake coveralls"
 
 rvm:
   - 2.0.0

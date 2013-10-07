@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chetan Sarva"]
-  s.date = "2013-10-05"
+  s.date = "2013-10-07"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/bixby-agent",
-    "bin/ci_after.sh",
     "bin/ci_setup.sh",
     "bixby-agent.gemspec",
     "etc/bixby-god.initd",
@@ -46,6 +45,7 @@ Gem::Specification.new do |s|
     "lib/bixby-agent/websocket/client.rb",
     "tasks/cane.rake",
     "tasks/coverage.rake",
+    "tasks/coveralls.rake",
     "tasks/jeweler.rake",
     "tasks/test.rake",
     "tasks/yard.rake",
@@ -96,13 +96,13 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<awesome_print>, [">= 0"])
-      s.add_development_dependency(%q<guard>, [">= 0"])
       s.add_development_dependency(%q<colorize>, [">= 0"])
       s.add_development_dependency(%q<growl>, [">= 0"])
       s.add_development_dependency(%q<hirb>, [">= 0"])
       s.add_development_dependency(%q<bahia>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
+      s.add_development_dependency(%q<coveralls>, [">= 0"])
       s.add_development_dependency(%q<micron>, [">= 0"])
       s.add_development_dependency(%q<test_guard>, [">= 0"])
       s.add_development_dependency(%q<rb-inotify>, [">= 0"])
@@ -130,13 +130,13 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<awesome_print>, [">= 0"])
-      s.add_dependency(%q<guard>, [">= 0"])
       s.add_dependency(%q<colorize>, [">= 0"])
       s.add_dependency(%q<growl>, [">= 0"])
       s.add_dependency(%q<hirb>, [">= 0"])
       s.add_dependency(%q<bahia>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
+      s.add_dependency(%q<coveralls>, [">= 0"])
       s.add_dependency(%q<micron>, [">= 0"])
       s.add_dependency(%q<test_guard>, [">= 0"])
       s.add_dependency(%q<rb-inotify>, [">= 0"])
@@ -165,13 +165,13 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<awesome_print>, [">= 0"])
-    s.add_dependency(%q<guard>, [">= 0"])
     s.add_dependency(%q<colorize>, [">= 0"])
     s.add_dependency(%q<growl>, [">= 0"])
     s.add_dependency(%q<hirb>, [">= 0"])
     s.add_dependency(%q<bahia>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
+    s.add_dependency(%q<coveralls>, [">= 0"])
     s.add_dependency(%q<micron>, [">= 0"])
     s.add_dependency(%q<test_guard>, [">= 0"])
     s.add_dependency(%q<rb-inotify>, [">= 0"])
