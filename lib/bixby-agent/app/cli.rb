@@ -96,6 +96,8 @@ EOF
   def initialize
     super
     @argv = parse_options()
+    ARGV.clear << @argv
+    ARGV.flatten!
   end
 
 end # CLI

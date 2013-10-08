@@ -21,7 +21,7 @@ module Config
 
     def load_config(root_dir)
       # make sure BIXBY_HOME is set correctly
-      ENV["BIXBY_HOME"] = root_dir || ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR
+      ENV["BIXBY_HOME"] = File.expand_path(root_dir || ENV["BIXBY_HOME"] || Agent::DEFAULT_ROOT_DIR)
 
       return nil if not File.exists? config_file
 
@@ -33,7 +33,7 @@ module Config
         end
 
         log_level = config["log_level"]
-        log_level = log_level.strip.downcase if log_level.kind_of? String 
+        log_level = log_level.strip.downcase if log_level.kind_of? String
         Bixby::Log.setup_logger(:level => log_level)
         ENV["BIXBY_DEBUG"] = "1" if log_level == 0 || log_level == "debug"
 
