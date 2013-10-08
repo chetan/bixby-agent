@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chetan/micron.git
-  revision: 12c431e9abfe91bbae5c257892c331dd5aa99c33
+  revision: fc5e67200e33eebd25dfe0661cc88a631ebfea2f
   specs:
     micron (0.1.0)
       colorize
