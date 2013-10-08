@@ -39,11 +39,13 @@ EOF
   # :nocov:
 
   option :tenant,
+      :on             => :head,
       :short          => "-t TENANT",
       :long           => "--tenant TENANT",
       :description    => "Tenant name"
 
   option :password,
+      :on             => :head,
       :short          => "-P [PASSWORD]",
       :long           => "--password [PASSWORD]",
       :description    => "Agent registration password (prompt if not supplied)",
@@ -56,6 +58,7 @@ EOF
                          }
 
   option :tags,
+      :on             => :head,
       :long           => "--tags TAGS",
       :description    => "Comma separated tags to assign to this host (optional)"
 
@@ -65,12 +68,14 @@ EOF
       :description    => "Root directory for Bixby (optional, default: /opt/bixby)"
 
   option :debug,
+      :on             => :tail,
       :long           => "--debug",
-      :description    => "Enable debugging messages",
+      :description    => "Enable debug mode (don't daemonize, extra logging)",
       :boolean        => true,
       :proc           => Proc.new { ENV["BIXBY_DEBUG"] = "1" }
 
   option :help,
+      :on             => :tail,
       :short          => "-h",
       :long           => "--help",
       :description    => "Print this help",
@@ -79,6 +84,7 @@ EOF
       :exit           => 0
 
   option :version,
+      :on             => :tail,
       :short          => "-v",
       :long           => "--version",
       :description    => "Show version",
