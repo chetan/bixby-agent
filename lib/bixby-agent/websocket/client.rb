@@ -55,16 +55,15 @@ module Bixby
 
         ws.on :open do |e|
           begin
-            log.info "connected to manager at #{@url}"
+            log.debug "connected to manager, authenticating"
 
             # send a connection request
-            Thread.new do
-              # use thread to avoid deadlocking in execute()
-              id = SecureRandom.uuid
-              json_req = JsonRequest.new("", "")
-              signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
-              ret = api.execute(Request.new(signed_req, id, "connect"))
+            id = SecureRandom.uuid
+            json_req = JsonRequest.new("", "")
+            signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
+            api.execute_async(Request.new(signed_req, id, "connect")) do |ret|
               if ret.success? then
+                log.info "connected to manager at #{@url}"
                 api.open(e)
                 @tries = 0
 
@@ -75,7 +74,6 @@ module Bixby
                 exit 1 # bail out since we failed to connect, nothing to do
               end
             end
-
 
           rescue Exception => ex
             log.error ex
@@ -91,8 +89,9 @@ module Bixby
         end
 
         ws.on(:close, &lambda { |e|
-          return if @exiting or not EM.reactor_running?
           begin
+            api.close(e)
+            return if @exiting or not EM.reactor_running?
             if api.connected? then
               log.info "lost connection to manager"
             else
