@@ -19,7 +19,6 @@ module Handshake
       :uuid       => @uuid,
       :public_key => self.public_key.to_s,
       :hostname   => get_hostname(),
-      :port       => @port,
       :tenant     => @tenant,
       :password   => @password,
       :tags       => tags,

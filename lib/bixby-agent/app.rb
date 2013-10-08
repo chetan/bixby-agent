@@ -19,7 +19,7 @@ class App
       :uri       => @argv.empty? ? nil : @argv.shift,
       :root_dir  => @config[:directory]
     }
-    %w{port tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
+    %w{tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
 
     if @config[:debug] then
       ENV["BIXBY_DEBUG"] = "1"
@@ -56,7 +56,7 @@ class App
       end
       agent.save_config()
       ARGV.clear # make sure it's empty so daemon starts properly
-      $stdout.puts "Registration successful; launching bixby-agent into background on port #{agent.port}"
+      $stdout.puts "Registration successful; launching bixby-agent into background"
     end
     agent
   end

@@ -22,7 +22,7 @@ class Agent
   include Handshake
   include ShellExec
 
-  attr_accessor :port, :manager_uri, :uuid, :mac_address, :tenant, :password,
+  attr_accessor :manager_uri, :uuid, :mac_address, :tenant, :password,
                 :access_key, :secret_key, :client
 
   def self.create(opts={}, use_config = true)
@@ -57,11 +57,10 @@ class Agent
   end
 
   def initialize(opts)
-    #uri, tenant = nil, password = nil, root_dir = nil, port = nil
+    #uri, tenant = nil, password = nil, root_dir = nil
     Bixby::Log.setup_logger()
     @new = true
 
-    @port = opts[:port]
     @manager_uri = opts[:uri]
     @tenant = opts[:tenant]
     @password = opts[:password]

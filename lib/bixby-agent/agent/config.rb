@@ -7,7 +7,7 @@ class Agent
 
 module Config
 
-  KEYS = %w{ port manager_uri uuid mac_address access_key secret_key log_level }
+  KEYS = %w{ manager_uri uuid mac_address access_key secret_key log_level }
 
   module ClassMethods
 
