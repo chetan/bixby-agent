@@ -1,22 +1,15 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-# borrowed this from facter:
-#
-# Bundler and rubygems maintain a set of directories from which to
-# load gems. If Bundler is loaded, let it determine what can be
-# loaded. If it's not loaded, then use rubygems. But do this before
-# loading any bixby code, so that our gem loading system is sane.
-if not defined? ::Bundler
-  begin
-    require 'rubygems'
-  rescue LoadError
+begin
+  require 'bixby-agent'
+  require 'bixby-agent/app'
+rescue LoadError => ex
+  if ex.message =~ /bixby-agent/ then
+    STDERR.puts "Unable to load bixby-agent gem! If in dev environment, you must run via bundle exec"
+    exit 1
   end
+  raise ex
 end
-
-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..", "lib")))
-
-require 'bixby-agent'
-require 'bixby-agent/app'
 
 Bixby::App.new.run!

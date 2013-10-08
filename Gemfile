@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+group :self do
+  gem 'bixby-agent', :path => "."
+end
+
 gem 'bixby-common'
 gem 'bixby-client'
 # gem 'bixby-common', :path => "../common"

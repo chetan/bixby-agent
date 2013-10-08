@@ -41,6 +41,26 @@ GIT
       simplecov
       simplecov-console
 
+PATH
+  remote: .
+  specs:
+    bixby-agent (0.2.0)
+      api-auth
+      bixby-client
+      bixby-common
+      curb
+      daemons
+      facter (~> 1.6.0)
+      god
+      highline
+      httpi
+      logging
+      mixlib-cli
+      mixlib-shellout
+      multi_json
+      oj
+      uuidtools
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -189,6 +209,7 @@ DEPENDENCIES
   api-auth!
   awesome_print
   bahia
+  bixby-agent!
   bixby-client
   bixby-common
   cane
