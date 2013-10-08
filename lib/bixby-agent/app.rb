@@ -66,9 +66,10 @@ class App
   # This is the main method. Will boot and configure the agent, connect to the
   # server and start the daemon.
   def run!
-
+    # load agent from config or cli opts
     agent = load_agent()
 
+    # debug mode, stay in front
     if @config[:debug] then
       Logging::Logger.root.add_appenders("stdout")
       Kernel.trap("INT") do
@@ -79,6 +80,19 @@ class App
       return start_websocket_client()
     end
 
+    # validate ARGV
+    if ARGV.empty? then
+      ARGV << "start"
+    else
+      if not %w{start stop restart zap status}.include? ARGV.first then
+        $stderr.puts "ERROR: invalid command '#{ARGV.first}'"
+        $stderr.puts
+        $stderr.puts @opt_parser.help()
+        exit 1
+      end
+    end
+
+    # start daemon
     daemon_dir = File.join(Bixby.root, "var")
     if not File.directory? daemon_dir then
       begin
@@ -106,10 +120,6 @@ class App
       :dir_mode   => :normal,
       :log_output => true
     }
-
-    if ARGV.empty? then
-      ARGV << "start"
-    end
 
     Daemons.run_proc("bixby-agent", daemon_opts) do
       start_websocket_client()
