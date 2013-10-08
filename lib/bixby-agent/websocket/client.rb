@@ -32,7 +32,7 @@ module Bixby
           # :nocov:
         end
 
-        logger.debug "connecting to #{@url}"
+        log.debug "connecting to #{@url}"
         EM.run {
           connect()
         }
@@ -55,7 +55,7 @@ module Bixby
 
         ws.on :open do |e|
           begin
-            logger.info "connected to manager at #{@url}"
+            log.info "connected to manager at #{@url}"
             api.open(e)
             @tries = 0
 
@@ -69,7 +69,7 @@ module Bixby
             }
 
           rescue Exception => ex
-            logger.error ex
+            log.error ex
           end
         end
 
@@ -77,23 +77,23 @@ module Bixby
           begin
             api.message(e)
           rescue Exception => ex
-            logger.error ex
+            log.error ex
           end
         end
 
         ws.on :close do |e|
           begin
             if api.connected? then
-              logger.info "lost connection to manager"
+              log.info "lost connection to manager"
             else
-              logger.debug "failed to connect"
+              log.debug "failed to connect"
             end
             api.close(e)
             if backoff() then
               connect()
             end
           rescue Exception => ex
-            logger.error ex
+            log.error ex
           end
         end
       end
@@ -109,16 +109,16 @@ module Bixby
 
         @tries += 1
         if @tries == 1 then
-          logger.debug "retrying immediately"
+          log.debug "retrying immediately"
 
         # :nocov:
         elsif @tries == 2 then
-          logger.debug "retrying every 1 sec"
+          log.debug "retrying every 1 sec"
           sleep 1
         elsif @tries <= 30 then
           sleep 1
         elsif @tries == 31 then
-          logger.debug "retrying every 5 sec"
+          log.debug "retrying every 5 sec"
           sleep 5
         else
           sleep 5
