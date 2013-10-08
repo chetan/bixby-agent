@@ -56,17 +56,26 @@ module Bixby
         ws.on :open do |e|
           begin
             log.info "connected to manager at #{@url}"
-            api.open(e)
-            @tries = 0
 
             # send a connection request
-            id = SecureRandom.uuid
-            json_req = JsonRequest.new("", "")
-            signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
-            connect_req = Request.new(signed_req, id, "connect")
-            EM.next_tick {
-              ws.send(connect_req.to_wire)
-            }
+            Thread.new do
+              # use thread to avoid deadlocking in execute()
+              id = SecureRandom.uuid
+              json_req = JsonRequest.new("", "")
+              signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
+              ret = api.execute(Request.new(signed_req, id, "connect"))
+              if ret.success? then
+                api.open(e)
+                @tries = 0
+
+              else
+                log.error "error: #{ret.code} #{ret.message}"
+                log.error "exiting since we failed to auth"
+                @exiting = true
+                exit 1 # bail out since we failed to connect, nothing to do
+              end
+            end
+
 
           rescue Exception => ex
             log.error ex
@@ -81,7 +90,8 @@ module Bixby
           end
         end
 
-        ws.on :close do |e|
+        ws.on(:close, &lambda { |e|
+          return if @exiting or not EM.reactor_running?
           begin
             if api.connected? then
               log.info "lost connection to manager"
@@ -95,7 +105,7 @@ module Bixby
           rescue Exception => ex
             log.error ex
           end
-        end
+        })
       end
 
       # Delay reconnection by a slowly increasing interval
@@ -103,7 +113,7 @@ module Bixby
 
         if @exiting or not EM.reactor_running? then
           # shutting down, don't try to reconnect
-          puts "not retrying"
+          log.debug "not retrying since we are shutting down"
           return false
         end
 
