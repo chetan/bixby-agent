@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/chetan/api_auth.git
-  revision: 86a79ca157402bd1c12d683a6b9948564b493443
+  revision: 2440c3a1d23b95977185ce25210c86cbeded7cee
   branch: bixby
   specs:
     api-auth (1.0.3)
