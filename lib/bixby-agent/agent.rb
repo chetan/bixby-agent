@@ -107,7 +107,7 @@ class Agent
   def manager_ws_uri
     # convert manager uri to websocket
     uri = URI.parse(manager_uri)
-    uri.scheme = "ws"
+    uri.scheme = (uri.scheme == "https" ? "wss" : "ws")
     uri.path = "/wsapi"
     return uri.to_s
   end
