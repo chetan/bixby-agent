@@ -163,11 +163,10 @@ class App
   # probably related to prompting for a password. So close them
   # all cleanly before daemonizing.
   def close_fds
-    ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
-    ios.each do |io|
-      next if io.fileno < 3 # don't close stdin/out/err
+    # don't close stdin/out/err (0/1/2)
+    3.upto(8192).each do |i|
       begin
-        io.close
+        IO.for_fd(i).close
       rescue Exception
       end
     end
