@@ -97,6 +97,16 @@ class App
     if not File.directory? daemon_dir then
       begin
         Dir.mkdir(daemon_dir)
+        if Process.uid == 0 then
+          begin
+            uid = Etc.getpwnam("bixby").uid
+            gid = Etc.getgrnam("bixby").gid
+            # user/group exists, chown
+            File.chown(uid, gid, daemon_dir)
+            File.chown(uid, gid, Bixby.path("etc"))
+          rescue ArgumentError
+          end
+        end
       rescue Exception => ex
         $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
         exit 1
