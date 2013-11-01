@@ -82,40 +82,12 @@ class App
       return start_websocket_client()
     end
 
-    # validate ARGV
-    if ARGV.empty? then
-      ARGV << "start"
-    else
-      if not %w{start stop restart zap status}.include? ARGV.first then
-        $stderr.puts "ERROR: invalid command '#{ARGV.first}'"
-        $stderr.puts
-        $stderr.puts @opt_parser.help()
-        exit 1
-      end
-    end
+    validate_argv()
 
     # start daemon
     daemon_dir = Bixby.path("var")
-    if not File.directory? daemon_dir then
-      begin
-        Dir.mkdir(daemon_dir)
-      rescue Exception => ex
-        $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
-        exit 1
-      end
-    end
-
-    # Copied from daemons. We hit a bug where closing FDs failed,
-    # probably related to prompting for a password. So close them
-    # all cleanly before daemonizing.
-    ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
-    ios.each do |io|
-      next if io.fileno < 3
-      begin
-        io.close
-      rescue Exception
-      end
-    end
+    ensure_state_dir(daemon_dir)
+    close_fds()
 
     daemon_opts = {
       :dir        => daemon_dir,
@@ -126,7 +98,6 @@ class App
     Daemons.run_proc("bixby-agent", daemon_opts) do
       start_websocket_client()
     end
-
   end
 
   # Open the WebSocket channel with the Manager
@@ -148,6 +119,57 @@ class App
       # user/group exists, chown
       File.chown(uid, gid, daemon_dir, Bixby.path("etc"))
     rescue ArgumentError
+    end
+  end
+
+  # Validate ARGV
+  #
+  # If empty, default to "start", otherwise make sure we have a valid option
+  # for daemons.
+  #
+  # @raise [SystemExit] on invalid arg
+  def validate_argv
+    if ARGV.empty? then
+      ARGV << "start"
+    else
+      if not %w{start stop restart zap status}.include? ARGV.first then
+        $stderr.puts "ERROR: invalid command '#{ARGV.first}'"
+        $stderr.puts
+        $stderr.puts @opt_parser.help()
+        exit 1
+      end
+    end
+  end
+
+  # Ensure that the var dir exists and is writable
+  #
+  # @raise [SystemExit] on error
+  def ensure_state_dir(daemon_dir)
+    if not File.directory? daemon_dir then
+      begin
+        Dir.mkdir(daemon_dir)
+      rescue Exception => ex
+        $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
+        exit 1
+      end
+    end
+    if not File.writable? daemon_dir then
+      $stderr.puts "State dir is not writable: #{daemon_dir}"
+      exit 1
+    end
+  end
+
+  # Copied from daemons gem. We hit a bug where closing FDs failed,
+  # probably related to prompting for a password. So close them
+  # all cleanly before daemonizing.
+  def close_fds
+    ios = Array.new(8192) {|i| IO.for_fd(i) rescue nil}.compact
+    ios.each do |io|
+      next if io.fileno < 3 # don't close stdin/out/err
+      begin
+        io.close
+      rescue Exception
+      end
     end
   end
 
