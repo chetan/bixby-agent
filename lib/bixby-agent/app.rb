@@ -116,7 +116,7 @@ class App
       uid = Etc.getpwnam("bixby").uid
       gid = Etc.getgrnam("bixby").gid
       # user/group exists, chown
-      File.chown(uid, gid, daemon_dir, Bixby.path("etc"))
+      File.chown(uid, gid, Bixby.path("var"), Bixby.path("etc"))
     rescue ArgumentError
     end
   end
