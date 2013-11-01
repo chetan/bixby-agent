@@ -93,7 +93,7 @@ class App
     end
 
     # start daemon
-    daemon_dir = File.join(Bixby.root, "var")
+    daemon_dir = Bixby.path("var")
     if not File.directory? daemon_dir then
       begin
         Dir.mkdir(daemon_dir)
