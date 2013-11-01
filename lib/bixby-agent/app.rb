@@ -69,6 +69,8 @@ class App
     # load agent from config or cli opts
     agent = load_agent()
 
+    fix_ownership()
+
     # debug mode, stay in front
     if @config[:debug] then
       Logging::Logger.root.add_appenders("stdout")
@@ -97,16 +99,6 @@ class App
     if not File.directory? daemon_dir then
       begin
         Dir.mkdir(daemon_dir)
-        if Process.uid == 0 then
-          begin
-            uid = Etc.getpwnam("bixby").uid
-            gid = Etc.getgrnam("bixby").gid
-            # user/group exists, chown
-            File.chown(uid, gid, daemon_dir)
-            File.chown(uid, gid, Bixby.path("etc"))
-          rescue ArgumentError
-          end
-        end
       rescue Exception => ex
         $stderr.puts "Failed to create state dir: #{daemon_dir}; message:\n" + ex.message
         exit 1
@@ -145,6 +137,18 @@ class App
     Bixby::Log.setup_logger(:level => Logging.appenders["file"].level)
     @client = Bixby::WebSocket::Client.new(Bixby.agent.manager_ws_uri, AgentHandler)
     @client.start
+  end
+
+  # If running as root, fix ownership of var and etc dirs
+  def fix_ownership
+    return if Process.uid != 0
+    begin
+      uid = Etc.getpwnam("bixby").uid
+      gid = Etc.getgrnam("bixby").gid
+      # user/group exists, chown
+      File.chown(uid, gid, daemon_dir, Bixby.path("etc"))
+    rescue ArgumentError
+    end
   end
 
 end # App
