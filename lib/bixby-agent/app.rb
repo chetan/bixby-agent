@@ -82,9 +82,8 @@ class App
       return start_websocket_client()
     end
 
-    validate_argv()
-
     # start daemon
+    validate_argv()
     daemon_dir = Bixby.path("var")
     ensure_state_dir(daemon_dir)
     close_fds()
