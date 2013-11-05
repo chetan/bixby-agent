@@ -1,4 +1,9 @@
 language: ruby
+before_install:
+  - "curl -sL https://s3.bixby.io/wad > ~/wad"
+  - "chmod +x ~/wad"
+install:
+  - "~/wad"
 before_script: "./bin/ci_setup.sh"
 script: "bundle exec micron test/"
 after_script:
@@ -12,3 +17,9 @@ rvm:
 branches:
   only:
     - master
+
+env:
+  global:
+    - S3_REGION="us-east-1"
+    - S3_BUCKET_NAME="io.bixby.gemcache.wad.agent"
+    - secure: lu64MFbDbbPVJXsSdwu/nuwrkIaUY3sDZmLx3XvWt3AArd7IoFPztmNfq8+PtqM0FVF40mp5rYPs5tsAldhYc1LG0bQLrIuXd2nL5N7FyZ63wbKWACTOrZ/lVqmzW1f0RahP7ZPshdYTTZqBORkBtPn47AQUxK+Unsd+zuNt7pU=
