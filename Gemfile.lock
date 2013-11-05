@@ -111,7 +111,7 @@ GEM
     faye-websocket (0.7.0)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.3.0)
-    ffi (1.9.2)
+    ffi (1.9.3)
     fuzzy_file_finder (1.0.4)
     git (1.2.6)
     github_api (0.10.1)
