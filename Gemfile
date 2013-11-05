@@ -23,35 +23,35 @@ gem 'highline'
 gem 'uuidtools'
 gem 'logging'
 
-group :development, :test do
+group :development do
+  # packaging
+  gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
+  gem 'yard', '~> 0.7'
 
-    # packaging
-    gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
-    gem 'yard', '~> 0.7'
+  # debugging
+  gem 'pry'
+  gem 'awesome_print'
+  gem 'colorize'
+  gem 'growl'
+  gem 'hirb'
 
-    # debugging
-    gem 'pry'
-    gem 'awesome_print'
-    gem 'colorize'
-    gem 'growl'
-    gem 'hirb'
+  # tools
+  gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
 
-    # test frameworks
-    gem "bahia",   :require => false
-    gem 'webmock', :require => false
-    gem 'mocha',   :require => false
+  # quality
+  gem "cane", :platforms => [:mri_19, :mri_20]
+end
 
-    # tools
-    gem "coveralls", :require => false
-    gem "micron", :github => "chetan/micron"
-    gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
-    gem 'rb-inotify', :require => false
-    gem 'rb-fsevent', :require => false
-    gem 'rb-fchange', :require => false
+group :test do
+  # test frameworks
+  gem 'webmock', :require => false
+  gem 'mocha',   :require => false
 
-    # coverage
-    gem "simplecov",:platforms => [:mri_19, :mri_20]
-
-    # quality
-    gem "cane", :platforms => [:mri_19, :mri_20]
+  # tools
+  gem "simplecov", :platforms => [:mri_19, :mri_20]
+  gem "coveralls", :require => false
+  gem "micron", :github => "chetan/micron"
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
 end
