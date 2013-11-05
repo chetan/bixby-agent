@@ -22,4 +22,4 @@ env:
   global:
     - S3_REGION="us-east-1"
     - S3_BUCKET_NAME="io.bixby.gemcache.wad.agent"
-    - secure: lu64MFbDbbPVJXsSdwu/nuwrkIaUY3sDZmLx3XvWt3AArd7IoFPztmNfq8+PtqM0FVF40mp5rYPs5tsAldhYc1LG0bQLrIuXd2nL5N7FyZ63wbKWACTOrZ/lVqmzW1f0RahP7ZPshdYTTZqBORkBtPn47AQUxK+Unsd+zuNt7pU=
+    - secure: bnMJOHx5QrfTgOcxg0glw5x9mDoAJ0kKWILQaFCqwORwiJE4nh/3jYsx/uifVmSqOMXqY/9ozBwYrWeG6krPdcFCPS6mq4dVWsbtgQa31x9IWhjUg5lOt0MCrGXpq1JOD3CFIxnQ2f77hl0TzxutIfAtO023ad598+5/FVviyik=
