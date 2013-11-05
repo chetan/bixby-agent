@@ -8,7 +8,6 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
-require 'test_guard'
 require 'micron/minitest'
 
 # load curb first so webmock can stub it out as necessary
