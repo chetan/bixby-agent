@@ -1,6 +1,7 @@
 /.rb*
 .DS_Store
 features_rcov
+*.gem
 pkg/
 coverage/
 .rvmrc
