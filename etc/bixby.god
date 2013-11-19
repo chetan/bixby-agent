@@ -9,8 +9,8 @@
 #
 # see also: http://godrb.com/
 
-BIXBY_HOME = ENV["BIXBY_HOME"]
-BIXBY_RUN  = File.join(BIXBY_HOME, "bin", "bixby")
+BIXBY_HOME   = ENV["BIXBY_HOME"] || "/opt/bixby"
+BIXBY_CLIENT = File.join(BIXBY_HOME, "bin", "bixby")
 
 God.pid_file_directory = File.join(BIXBY_HOME, "var", "pids")
 
