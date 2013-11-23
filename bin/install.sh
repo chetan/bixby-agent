@@ -89,7 +89,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
   else
     cmd="upgrade"
   fi
-  as_root yum -y $cmd $(escape_url $url/$pkg)
+  as_root yum -y $cmd $(escape_url $url/agent/$pkg)
   ret=$?
   if [[ $ret -ne 0 ]]; then
     echo "ERROR: installing $pkg: $ret"
@@ -127,11 +127,11 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   # download and install
   cd /tmp
 
-  echo "downloading $url/$pkg ..."
+  echo "downloading $url/agent/$pkg ..."
   if is_interactive; then
-    curl -L# $(escape_url "$url/$pkg") -o "$pkg"
+    curl -L# $(escape_url "$url/agent/$pkg") -o "$pkg"
   else
-    curl -sL $(escape_url "$url/$pkg") -o "$pkg"
+    curl -sL $(escape_url "$url/agent/$pkg") -o "$pkg"
   fi
 
   as_root dpkg -i $pkg
