@@ -4,7 +4,7 @@ God.watch do |w|
   w.name     = "bixby-agent"
   w.group    = "bixby"
   w.log      = "#{BIXBY_HOME}/var/god.#{w.name}.log"
-  w.pid_file = "#{BIXBY_HOME}/var/pids/#{w.name}.pid"
+  w.pid_file = "#{BIXBY_HOME}/var/#{w.name}.pid"
 
   w.interval = 30.seconds
 
