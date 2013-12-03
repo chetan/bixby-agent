@@ -55,9 +55,11 @@ status)
         if [[ $? -eq 1 ]]; then
           echo "Not running"
         fi
+god)
+        $GOD_BIN ${@:2}
 ;;
 *)
-  echo "Usage: $NAME {start|stop|restart|status}" >&2
+  echo "Usage: $NAME {start|stop|restart|status|reload|god}" >&2
   exit 1
   ;;
 esac
