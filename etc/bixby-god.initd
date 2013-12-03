@@ -27,9 +27,12 @@ start() {
   $GOD_BIN $GOD_CONF
   echo "* Started bixby"
 }
-stop () {
+stop() {
   $GOD_BIN terminate >/dev/null
   echo "* Stopped bixby"
+}
+quit() {
+  $GOD_BIN quit >/dev/null
 }
 
 case $1 in
@@ -41,6 +44,10 @@ stop)
         ;;
 restart)
         stop
+        start
+        ;;
+reload)
+        quit
         start
         ;;
 status)
