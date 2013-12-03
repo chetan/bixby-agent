@@ -11,6 +11,12 @@ class TestAgent < TestCase
     ENV["BIXBY_HOME"] = nil
   end
 
+  def teardown
+    super
+    ENV["BIXBY_HOME"] = nil
+    ENV["BIXBY_LOG"] = nil
+  end
+
   def test_create_new_agent
     @agent = create_new_agent()
     @agent.save_config()
@@ -19,8 +25,7 @@ class TestAgent < TestCase
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
 
-    # make sure logger was setup properly
-    assert Logging::Logger.root.level > 1
+    assert_equal 2, Logging::Logger.root.level # default is warn
   end
 
   def test_load_existing_agent
@@ -29,6 +34,19 @@ class TestAgent < TestCase
     assert(!@agent.new?)
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
+
+    assert_equal 1, Logging::Logger.root.level # info level is in yaml
+  end
+
+  def test_load_existing_agent_override_log
+    ENV["BIXBY_LOG"] = "debug"
+    setup_existing_agent()
+    @agent = create_new_agent()
+    assert(!@agent.new?)
+    assert ENV["BIXBY_HOME"]
+    assert_equal ENV["BIXBY_HOME"], @root_dir
+
+    assert_equal 0, Logging::Logger.root.level
   end
 
   def test_load_existing_agent_using_env
