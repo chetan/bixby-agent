@@ -21,10 +21,6 @@ class App
     }
     %w{tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
 
-    if @config[:debug] then
-      ENV["BIXBY_DEBUG"] = "1"
-    end
-
     begin
       agent = Agent.create(opts)
     rescue Exception => ex

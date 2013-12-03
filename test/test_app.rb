@@ -7,7 +7,7 @@ module Test
 class TestApp < TestCase
 
   def teardown
-    ENV["BIXBY_DEBUG"] = "0"
+    ENV["BIXBY_LOG"] = nil
   end
 
   def test_load_agent
@@ -78,7 +78,7 @@ class TestApp < TestCase
 
     App.new.run!
 
-    assert_equal "1", ENV["BIXBY_DEBUG"]
+    assert_equal "debug", ENV["BIXBY_LOG"]
   end
 
   def test_missing_manager_uri

@@ -35,7 +35,6 @@ module Config
         log_level = config["log_level"]
         log_level = log_level.strip.downcase if log_level.kind_of? String
         Bixby::Log.setup_logger(:level => log_level)
-        ENV["BIXBY_DEBUG"] = "1" if log_level == 0 || log_level == "debug"
 
         agent = Agent.allocate
         KEYS.each do |k|

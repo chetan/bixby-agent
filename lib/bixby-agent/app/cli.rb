@@ -72,7 +72,7 @@ EOF
       :long           => "--debug",
       :description    => "Enable debug mode (don't daemonize, extra logging)",
       :boolean        => true,
-      :proc           => Proc.new { ENV["BIXBY_DEBUG"] = "1" }
+      :proc           => Proc.new { ENV["BIXBY_LOG"] = "debug" }
 
   option :help,
       :on             => :tail,
