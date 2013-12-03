@@ -51,10 +51,13 @@ reload)
         start
         ;;
 status)
-        $GOD_BIN status
+        $GOD_BIN status >/dev/null 2>&1
         if [[ $? -eq 1 ]]; then
           echo "Not running"
+        else
+          $GOD_BIN status
         fi
+        ;;
 god)
         $GOD_BIN ${@:2}
 ;;
