@@ -91,7 +91,7 @@ module ShellExec
 
     if group then
       begin
-        return Etc.getgrnam(group).uid
+        return Etc.getgrnam(group).gid
       rescue ArgumentError => ex
         logger.warn("Group '#{group}' was invalid: #{ex.message}")
       end
