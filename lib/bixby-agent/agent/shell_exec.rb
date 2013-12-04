@@ -39,8 +39,8 @@ module ShellExec
 
     logger.debug("exec: #{cmd}")
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
-                                      :user  => (spec.user || default_uid),
-                                      :group => (spec.group || default_gid))
+                                      :user  => uid(spec.user),
+                                      :group => gid(spec.group))
 
     shell.run_command
 
@@ -56,8 +56,22 @@ module ShellExec
 
   # Return uid of 'bixby' user, if it exists
   #
+  # @param [String] user        username to run as [Optional, default=bixby]
   # @return [Fixnum]
-  def default_uid
+  def uid(user)
+    if Process.uid != 0 then
+      logger.warn("Can't change effective uid unless running as root")
+      return nil
+    end
+
+    if user then
+      begin
+        return Etc.getpwnam(user).uid
+      rescue ArgumentError => ex
+        logger.warn("Username '#{user}' was invalid: #{ex.message}")
+      end
+    end
+
     begin
       return Etc.getpwnam("bixby").uid
     rescue ArgumentError
@@ -67,8 +81,22 @@ module ShellExec
 
   # Return uid of 'bixby' group, if it exists
   #
+  # @param [String] group         group to run as [Optional, default=bixby]
   # @return [Fixnum]
-  def default_gid
+  def gid(group)
+    if Process.uid != 0 then
+      logger.warn("Can't change effective gid unless running as root")
+      return nil
+    end
+
+    if group then
+      begin
+        return Etc.getgrnam(group).uid
+      rescue ArgumentError => ex
+        logger.warn("Group '#{group}' was invalid: #{ex.message}")
+      end
+    end
+
     begin
       return Etc.getgrnam("bixby").gid
     rescue ArgumentError
