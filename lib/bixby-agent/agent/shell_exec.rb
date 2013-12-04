@@ -37,6 +37,7 @@ module ShellExec
     %W{BUNDLE_BIN_PATH BUNDLE_GEMFILE}.each{ |r|
       old_env[r] = ENV.delete(r) if ENV.include?(r) }
 
+    logger.debug("exec: #{cmd}")
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
                                       :user  => (spec.user || default_uid),
                                       :group => (spec.group || default_gid))
