@@ -91,6 +91,7 @@ class App
     }
 
     Daemons.run_proc("bixby-agent", daemon_opts) do
+      Logging.logger.root.clear_appenders
       start_websocket_client()
     end
   end
