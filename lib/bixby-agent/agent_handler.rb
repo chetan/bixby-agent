@@ -19,11 +19,11 @@ module Bixby
 
       rescue Exception => ex
         if ex.kind_of? BundleNotFound then
-          log.debug(ex)
+          log.debug(ex.message)
           return JsonResponse.bundle_not_found(ex.message)
 
         elsif ex.kind_of? CommandNotFound then
-          log.debug(ex)
+          log.debug(ex.message)
           return JsonResponse.command_not_found(ex.message)
         end
 
