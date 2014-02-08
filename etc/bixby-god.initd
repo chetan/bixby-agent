@@ -21,7 +21,7 @@ export BIXBY_HOME=/opt/bixby
 GOD_PORT=18165 # actually used in unix socket name
 GOD_CONF="-c $BIXBY_HOME/etc/bixby.god"
 GOD_PID=$BIXBY_HOME/var/bixby-god.pid
-GOD_BIN="$BIXBY_HOME/embedded/bin/god -P $GOD_PID -p $GOD_PORT --log-level debug"
+GOD_BIN="$BIXBY_HOME/embedded/bin/god -P $GOD_PID -p $GOD_PORT"
 
 start() {
   $GOD_BIN $GOD_CONF
