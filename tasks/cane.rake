@@ -11,5 +11,4 @@ begin
 
   task :default => :quality
 rescue LoadError
-  warn "cane not available, quality task not provided."
 end
