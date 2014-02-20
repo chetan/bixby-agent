@@ -15,5 +15,6 @@ etc/id_rsa
 etc/server.pub
 etc/monitoring/
 var
+log
 repo
 
