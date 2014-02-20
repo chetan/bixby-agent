@@ -90,9 +90,10 @@ module Bixby
 
         ws.on(:close, &lambda { |e|
           begin
+            was_connected = api.connected?
             api.close(e)
             return if @exiting or not EM.reactor_running?
-            if api.connected? then
+            if was_connected then
               log.info "lost connection to manager"
             else
               log.debug "failed to connect"
