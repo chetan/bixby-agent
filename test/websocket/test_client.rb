@@ -45,7 +45,7 @@ class TestClient < TestCase
   def test_connect_and_reconnect
 
     @fake_ws = FakeClient.new
-    Faye::WebSocket::Client.expects(:new).with("http://localhost", nil, :ping => 60).returns(@fake_ws).times(2)
+    Faye::WebSocket::Client.expects(:new).with("http://localhost", nil, :ping => 59).returns(@fake_ws).times(2)
     @client = Bixby::WebSocket::Client.new("http://localhost", TestHandler)
     @client.start
 
@@ -76,7 +76,7 @@ class TestClient < TestCase
 
   def test_message
     @fake_ws = FakeClient.new
-    Faye::WebSocket::Client.expects(:new).with("http://localhost", nil, :ping => 60).returns(@fake_ws)
+    Faye::WebSocket::Client.expects(:new).with("http://localhost", nil, :ping => 59).returns(@fake_ws)
     @client = Bixby::WebSocket::Client.new("http://localhost", TestHandler)
     @client.start
 
