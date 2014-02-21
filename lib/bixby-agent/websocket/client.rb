@@ -63,7 +63,7 @@ module Bixby
             signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
             api.execute_async(Request.new(signed_req, id, "connect")) do |ret|
               if ret.success? then
-                log.info "connected to manager at #{@url}"
+                log.info "Successfully connected to manager at #{@url}"
                 api.open(e)
                 @tries = 0
 

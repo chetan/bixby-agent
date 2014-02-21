@@ -9,6 +9,7 @@ module Bixby
 class App
 
   include CLI
+  include Bixby::Log
 
   # Load Agent
   #
@@ -70,6 +71,7 @@ class App
     # debug mode, stay in front
     if @config[:debug] then
       Logging::Logger.root.add_appenders("stdout")
+      logger.info "Started Bixby Agent"
       Kernel.trap("INT") do
         @client.stop()
         puts
