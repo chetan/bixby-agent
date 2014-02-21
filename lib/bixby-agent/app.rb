@@ -71,12 +71,6 @@ class App
     # debug mode, stay in front
     if @config[:debug] then
       Logging::Logger.root.add_appenders("stdout")
-      logger.info "Started Bixby Agent"
-      Kernel.trap("INT") do
-        @client.stop()
-        puts
-        puts "exiting on ^C"
-      end
       return start_websocket_client()
     end
 
@@ -89,7 +83,8 @@ class App
     daemon_opts = {
       :dir        => daemon_dir,
       :dir_mode   => :normal,
-      :log_output => true
+      :log_output => true,
+      :stop_proc  => lambda { logger.info "Agent shutdown on service stop command" }
     }
 
     Daemons.run_proc("bixby-agent", daemon_opts) do
@@ -104,8 +99,21 @@ class App
   def start_websocket_client
     # make sure log level is still set correctly here
     Bixby::Log.setup_logger(:level => Logging.appenders["file"].level)
+    logger.info "Started Bixby Agent"
     @client = Bixby::WebSocket::Client.new(Bixby.agent.manager_ws_uri, AgentHandler)
+    trap_signals()
     @client.start
+  end
+
+  def trap_signals
+    %w{INT QUIT TERM}.each do |sig|
+      Kernel.trap(sig) do
+        @client.stop()
+        puts # to get a blank line after the ^C in the term
+        reason = sig + (sig == "INT" ? " (^C)" : "")
+        logger.warn  "caught #{reason} signal; exiting"
+      end
+    end
   end
 
   # If running as root, fix ownership of var and etc dirs
