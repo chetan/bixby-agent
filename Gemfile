@@ -42,7 +42,7 @@ group :development do
   gem "cane", :platforms => [:mri_19, :mri_20]
 end
 
-group :test do
+group :development, :test do
   # test frameworks
   gem 'webmock', :require => false
   gem 'mocha',   :require => false
