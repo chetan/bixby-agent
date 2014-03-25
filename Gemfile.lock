@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chetan/micron.git
-  revision: 9290253b06d11b1b8d92c3f5152533809ae3a58f
+  revision: 17e46aaf88e16870fa4ac0374016434823c2c46e
   specs:
     micron (0.5.0)
       ansi
@@ -16,16 +16,16 @@ GIT
 
 GIT
   remote: https://github.com/chetan/jeweler.git
-  revision: 70c60f425247adae6eeafd30b39d4db5dfe90979
+  revision: b1f048d0ee6bc9febbcadb52b75b77e734782eb4
   branch: bixby
   specs:
-    jeweler (1.8.8)
+    jeweler (2.0.1)
       builder
-      bundler (~> 1.0)
+      bundler (>= 1.0)
       git (>= 1.2.5)
-      github_api (= 0.10.1)
+      github_api
       highline (>= 1.6.15)
-      nokogiri (= 1.5.10)
+      nokogiri (>= 1.5.10)
       rake
       rdoc
 
@@ -44,7 +44,7 @@ GIT
 PATH
   remote: .
   specs:
-    bixby-agent (0.2.2)
+    bixby-agent (0.2.3)
       api-auth
       bixby-client
       bixby-common
@@ -64,7 +64,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.5)
+    addressable (2.3.6)
     ansi (1.4.3)
     awesome_print (1.2.0)
     bixby-client (0.4.1)
@@ -76,7 +76,7 @@ GEM
       mixlib-shellout
       multi_json
       oj
-    bixby-common (0.4.10)
+    bixby-common (0.4.12)
       api-auth
       faye-websocket
       httpi
@@ -92,7 +92,7 @@ GEM
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
     coderay (1.1.0)
-    colorize (0.6.0)
+    colorize (0.7.0)
     coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
@@ -103,6 +103,7 @@ GEM
       safe_yaml (~> 1.0.0)
     curb (0.8.5)
     daemons (1.1.9)
+    descendants_tracker (0.0.3)
     docile (1.1.3)
     easycov (0.4.0)
       multi_json
@@ -111,25 +112,26 @@ GEM
       simplecov-html
     eventmachine (1.0.3)
     facter (1.6.18)
-    faraday (0.8.9)
-      multipart-post (~> 1.2.0)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     faye-websocket (0.7.2)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.3.1)
     ffi (1.9.3)
     fuzzy_file_finder (1.0.4)
     git (1.2.6)
-    github_api (0.10.1)
-      addressable
-      faraday (~> 0.8.1)
+    github_api (0.11.3)
+      addressable (~> 2.3)
+      descendants_tracker (~> 0.0.1)
+      faraday (~> 0.8, < 0.10)
       hashie (>= 1.2)
-      multi_json (~> 1.4)
-      nokogiri (~> 1.5.2)
+      multi_json (>= 1.7.5, < 2.0)
+      nokogiri (~> 1.6.0)
       oauth2
-    god (0.13.3)
+    god (0.13.4)
     growl (1.0.3)
     hashie (2.0.5)
-    highline (1.6.20)
+    highline (1.6.21)
     hirb (0.7.1)
     hitimes (1.2.1)
     httpi (2.1.0)
@@ -138,7 +140,7 @@ GEM
     json (1.8.1)
     jwt (0.1.11)
       multi_json (>= 1.5)
-    listen (2.5.0)
+    listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
       rb-fsevent (>= 0.9.3)
@@ -149,30 +151,32 @@ GEM
       multi_json (>= 1.8.4)
     metaclass (0.0.4)
     method_source (0.8.2)
-    mime-types (2.1)
+    mime-types (2.2)
+    mini_portile (0.5.3)
     mixlib-cli (1.4.0)
     mixlib-shellout (1.3.0)
     mocha (1.0.0)
       metaclass (~> 0.0.1)
-    multi_json (1.8.4)
+    multi_json (1.9.2)
     multi_xml (0.5.5)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
     nio4r (1.0.0)
-    nokogiri (1.5.10)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
     oauth2 (0.9.3)
       faraday (>= 0.8, < 0.10)
       jwt (~> 0.1.8)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (~> 1.2)
-    oj (2.5.5)
-    parallel (0.9.2)
+    oj (2.6.1)
+    parallel (1.0.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
     rack (1.5.2)
-    rake (10.1.1)
+    rake (10.2.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.9.4)
@@ -194,18 +198,18 @@ GEM
       hirb
       simplecov
     simplecov-html (0.8.0)
-    slop (3.4.7)
+    slop (3.5.0)
     term-ansicolor (1.3.0)
       tins (~> 1.0)
-    thor (0.18.1)
+    thor (0.19.1)
     timers (1.1.0)
-    tins (1.0.0)
+    tins (1.0.1)
     uuidtools (2.1.4)
-    webmock (1.17.3)
+    webmock (1.17.4)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket-driver (0.3.2)
-    yard (0.8.7.3)
+    yard (0.8.7.4)
 
 PLATFORMS
   ruby
