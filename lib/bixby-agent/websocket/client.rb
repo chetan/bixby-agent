@@ -50,6 +50,9 @@ module Bixby
       # the connection open forever, reconnecting as needed.
       def connect
 
+        # Ping is set to 55 sec to workaround issues with certain gateway devices which have a hard
+        # 60 sec timeout, like the AWS ELB:
+        # http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ts-elb-healthcheck.html
         @ws = Faye::WebSocket::Client.new(@url, nil, :ping => 55)
         @api = Bixby::WebSocket::APIChannel.new(@ws, @handler)
 
