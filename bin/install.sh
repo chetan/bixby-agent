@@ -104,7 +104,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+\.[0-9]+)/; print $1')
 
   supported_versions="10.04 12.04 13.04 13.10"
-  if [[ ! `echo $supported_versions | grep $ver >/dev/null` ]]; then
+  if [[ 0 -ne `echo $supported_versions | grep $ver >/dev/null` ]]; then
     echo "ERROR: Only the following versions of Ubuntu are currently supported by this installer:"
     echo $supported_versions
     exit 1
