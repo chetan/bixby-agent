@@ -57,6 +57,14 @@ if [[ -f /etc/issue ]]; then
 fi
 
 if [[ $issue =~ ^"CentOS" ]]; then
+  # e.g., CentOS release 5.10
+
+  # grab cent ver
+  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+)\.[0-9]+/; print $1')
+  if [[ $ver != "5" && $ver != "6" ]]; then
+    echo "ERROR: only Centos 5 & 6 are currently supported!"
+    exit 1
+  fi
 
   # check if upgrade
   rpm -qa bixby | grep bixby >/dev/null
@@ -65,16 +73,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
   fi
 
   # select package
-  pkg="bixby-${bixby_version}"
-
-  if [[ $issue =~ " 5" ]]; then
-    pkg="$pkg.el5"
-  elif [[ $issue =~ " 6" ]]; then
-    pkg="$pkg.el6"
-  else
-    echo "ERROR: only Centos 5 & 6 are currently supported!"
-    exit 1
-  fi
+  pkg="bixby-${bixby_version}.el$ver"
 
   if is_64; then
     pkg="$pkg.x86_64"
@@ -82,6 +81,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
     pkg="$pkg.i686"
   fi
   pkg="$pkg.rpm"
+  pkg_url="$url/agent/centos/$ver/$pkg"
 
   # download and install
   if [[ ! `yum -q info bixby 2>/dev/null` ]]; then
@@ -89,7 +89,8 @@ if [[ $issue =~ ^"CentOS" ]]; then
   else
     cmd="upgrade"
   fi
-  as_root yum -y $cmd $(escape_url $url/agent/$pkg)
+
+  as_root yum -y $cmd $(escape_url $pkg_url)
   ret=$?
   if [[ $ret -ne 0 ]]; then
     echo "ERROR: installing $pkg: $ret"
@@ -97,6 +98,17 @@ if [[ $issue =~ ^"CentOS" ]]; then
   fi
 
 elif [[ $issue =~ ^"Ubuntu" ]]; then
+  # e.g., Ubuntu 13.04
+
+  # grab ubuntu ver
+  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+\.[0-9]+)/; print $1')
+
+  supported_versions="10.04 12.04 13.04 13.10"
+  if [ ! `echo $supported_versions | grep $ver >/dev/null` ]]; then
+    echo "ERROR: Only the following versions of Ubuntu are currently supported by this installer:"
+    echo $supported_versions
+    exit 1
+  fi
 
   # check if upgrade
   dpkg -l bixby >/dev/null 2>&1
@@ -105,33 +117,23 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   fi
 
   # select package
-  pkg="bixby_${bixby_version}.ubuntu"
-
-  if [[ $issue =~ "10.04" ]]; then
-    pkg="$pkg.10.04"
-  elif [[ $issue =~ "12.04" ]]; then
-    pkg="$pkg.12.04"
-  else
-    echo "ERROR: only Ubuntu 10.04 & 12.04 are currently supported!"
-    exit 1
-
-  fi
-
+  pkg="bixby_${bixby_version}"
   if is_64; then
     pkg="${pkg}_amd64"
   else
     pkg="${pkg}_i386"
   fi
   pkg="$pkg.deb"
+  pkg_url="$url/agent/ubuntu/$ver/$pkg"
 
   # download and install
   cd /tmp
 
-  echo "downloading $url/agent/$pkg ..."
+  echo "downloading $pkg_url ..."
   if is_interactive; then
-    curl -L# $(escape_url "$url/agent/$pkg") -o "$pkg"
+    curl -L# $(escape_url "$pkg_url") -o "$pkg"
   else
-    curl -sL $(escape_url "$url/agent/$pkg") -o "$pkg"
+    curl -sL $(escape_url "$pkg_url") -o "$pkg"
   fi
 
   as_root dpkg -i $pkg
