@@ -21,6 +21,7 @@
 url="https://s3.bixby.io"
 latest="latest"
 
+UPGRADE=0
 if [[ "$BETA" == "1" ]]; then
   latest="latest-beta"
 fi
@@ -155,6 +156,8 @@ fi
 if [[ "$UPGRADE" == "1" ]]; then
   echo
   echo "bixby upgraded to ${bixby_version}"
+  echo
+  echo "to restart agent now, run: [sudo] /etc/init.d/bixby restart"
   exit
 fi
 
