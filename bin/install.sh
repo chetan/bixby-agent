@@ -26,9 +26,6 @@ if [[ "$BETA" == "1" ]]; then
   latest="latest-beta"
 fi
 
-# seed with current build version
-bixby_version=`\\curl -sL $url/$latest`
-
 is_64() {
   [[ `uname -p` == "x86_64" ]]
 }
@@ -38,6 +35,24 @@ as_root() {
     $*
   else
     sudo env PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" $*
+  fi
+}
+
+fetch() {
+  if [[ -n `which curl 2>/dev/null` ]]; then
+    if [[ -n "$2" ]]; then
+      \curl -sL $1 -o "$2"
+    else
+      \curl -sL $1
+    fi
+  elif [[ -n `which wget 2>/dev/null` ]]; then
+    if [[ -n "$2" ]]; then
+      \wget -q $1 -O "$2"
+    else
+      \wget -q $1 -O -
+    fi
+  else
+    echo "neither curl or wget?!"
   fi
 }
 
@@ -52,6 +67,9 @@ is_interactive() {
   # http://stackoverflow.com/a/16935422/102920
   [[ ${-#*i} != ${-} ]]
 }
+
+# seed with current build version
+bixby_version=$(fetch $url/$latest)
 
 if [[ -f /etc/issue ]]; then
   issue=`cat /etc/issue`
@@ -131,11 +149,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   cd /tmp
 
   echo "downloading $pkg_url ..."
-  if is_interactive; then
-    curl -L# $(escape_url "$pkg_url") -o "$pkg"
-  else
-    curl -sL $(escape_url "$pkg_url") -o "$pkg"
-  fi
+  fetch $(escape_url "$pkg_url") "$pkg"
 
   as_root dpkg -i $pkg
   if [[ $? -ne 0 ]]; then
