@@ -52,7 +52,8 @@ fetch() {
       \wget -q $1 -O -
     fi
   else
-    echo "neither curl or wget?!"
+    echo "neither curl or wget are available?!"
+    exit 1
   fi
 }
 
