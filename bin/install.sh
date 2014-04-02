@@ -29,11 +29,11 @@ fi
 # seed with current build version
 bixby_version=`\\curl -sL $url/$latest`
 
-function is_64() {
+is_64() {
   [[ `uname -p` == "x86_64" ]]
 }
 
-function as_root() {
+as_root() {
   if [[ `whoami` == root ]]; then
     $*
   else
@@ -41,13 +41,13 @@ function as_root() {
   fi
 }
 
-function escape_url() {
+escape_url() {
   # beta builds may have a + char which needs to be replaced
   echo $1 | sed -e 's/\+/%2B/'
 }
 
 # Test for interactive shell
-function is_interactive() {
+is_interactive() {
   # check for 'i' flag in bash env
   # http://stackoverflow.com/a/16935422/102920
   [[ ${-#*i} != ${-} ]]
