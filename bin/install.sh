@@ -57,6 +57,7 @@ if [[ -f /etc/issue ]]; then
   issue=`cat /etc/issue`
 fi
 
+amzn='^Amazon Linux AMI'
 if [[ $issue =~ ^"CentOS" ]]; then
   # e.g., CentOS release 5.10
 
@@ -97,6 +98,42 @@ if [[ $issue =~ ^"CentOS" ]]; then
     echo "ERROR: installing $pkg: $ret"
     exit 1
   fi
+
+elif [[ $issue =~ $amzn ]]; then
+  # e.g., Amazon Linux AMI 2013.09
+
+  # grab amazon ver
+  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+\.[0-9]+)/; print $1')
+
+  # check if upgrade
+  rpm -qa bixby | grep bixby >/dev/null
+  if [[ $? -eq 0 && -f /opt/bixby/etc/bixby.yml ]]; then
+    UPGRADE=1
+  fi
+
+  pkg="bixby-${bixby_version}"
+  if is_64; then
+    pkg="$pkg.x86_64"
+  else
+    pkg="$pkg.i686"
+  fi
+  pkg="$pkg.rpm"
+  pkg_url="$url/agent/amazon/$ver/$pkg"
+
+  # download and install
+  if [[ ! `yum -q info bixby 2>/dev/null` ]]; then
+    cmd="install"
+  else
+    cmd="upgrade"
+  fi
+
+  as_root yum -y $cmd $(escape_url $pkg_url)
+  ret=$?
+  if [[ $ret -ne 0 ]]; then
+    echo "ERROR: installing $pkg: $ret"
+    exit 1
+  fi
+
 
 elif [[ $issue =~ ^"Ubuntu" ]]; then
   # e.g., Ubuntu 13.04
@@ -147,7 +184,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
 
 else
     echo
-    echo "ERROR: only Ubuntu and CentOS are currently supported!"
+    echo "ERROR: only Ubuntu, CentOS and Amazon Linux are currently supported!"
     echo
     exit 1
 fi
