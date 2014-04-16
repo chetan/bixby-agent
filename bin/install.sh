@@ -81,7 +81,7 @@ if [[ $issue =~ ^"CentOS" ]]; then
   # e.g., CentOS release 5.10
 
   # grab cent ver
-  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+)\.[0-9]+/; print $1')
+  ver=$(echo $issue | head -n 1 | sed -E 's/.*?([0-9]+)\.[0-9]+.*/\1/')
   if [[ $ver != "5" && $ver != "6" ]]; then
     echo "ERROR: only Centos 5 & 6 are currently supported!"
     exit 1
@@ -122,7 +122,7 @@ elif [[ $issue =~ $amzn ]]; then
   # e.g., Amazon Linux AMI 2013.09
 
   # grab amazon ver
-  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+\.[0-9]+)/; print $1')
+  ver=$(echo $issue | head -n 1 | sed -E 's/.*? ([0-9]+\.[0-9]+).*/\1/')
 
   # check if upgrade
   rpm -qa bixby | grep bixby >/dev/null
@@ -158,7 +158,7 @@ elif [[ $issue =~ ^"Ubuntu" ]]; then
   # e.g., Ubuntu 13.04
 
   # grab ubuntu ver
-  ver=$(echo $issue | head -n 1 | perl -ne '/([0-9]+\.[0-9]+)/; print $1')
+  ver=$(echo $issue | head -n 1 | egrep -o '([0-9]+\.[0-9]+)')
 
   supported_versions="10.04 12.04 13.04 13.10"
   if [[ 0 -ne `echo $supported_versions | grep $ver >/dev/null` ]]; then
