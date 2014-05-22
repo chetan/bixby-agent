@@ -30,13 +30,19 @@ Where <command> is one of:
 
 To register with the manager:
 
-  #{$0} [--url URL] -t TENANT -P [PASSWORD] [--tags TAG1,TAG2]
+  #{$0} --register [URL] -t TENANT -P [PASSWORD] [--tags TAG1,TAG2]
 
 Options:
 
 EOF
 
   # :nocov:
+
+  option :register,
+      :on             => :head,
+      :long           => "--register [URL]",
+      :description    => "Register with the management server (optional URL, default: https://bixby.io)",
+      :proc           => Proc.new { |url| url || "https://bixby.io" } # default URL
 
   option :tenant,
       :on             => :head,
@@ -82,12 +88,6 @@ EOF
       :boolean        => true,
       :show_options   => true,
       :exit           => 0
-
-  option :url,
-      :on             => :tail,
-      :long           => "--url URL",
-      :default        => "https://bixby.io",
-      :description    => "Bixby Manager URL (optional, default: https://bixby.io)"
 
   option :version,
       :on             => :tail,

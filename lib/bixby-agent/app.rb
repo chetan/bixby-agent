@@ -4,6 +4,7 @@ require 'bixby-agent/agent_handler'
 require 'bixby-agent/app/cli'
 
 require 'daemons'
+require 'highline/import'
 
 module Bixby
 class App
@@ -16,14 +17,9 @@ class App
   # Load the agent from $BIXBY_HOME. If no existing configuration was found,
   # try to register with the server if we have the correct parameters.
   def load_agent
-    opts = {
-      :uri       => (@argv.shift || @config[:url]),
-      :root_dir  => @config[:directory]
-    }
-    %w{tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }
 
     begin
-      agent = Agent.create(opts)
+      agent = Agent.create(@config[:directory])
     rescue Exception => ex
       if ex.message =~ /manager URI/ then
         # if unable to load from config and no/bad uri passed, bail!
@@ -44,8 +40,33 @@ class App
     # end
 
     if agent.new? then
-      $stdout.puts "Going to register with manager: #{Bixby.manager_uri}"
-      if (ret = agent.register_agent(@config[:tags])).fail? then
+
+      if !@config[:register] then
+        # --register not passed, bail out
+        if File.exists? agent.config_file then
+          $stderr.puts "Unable to load agent config from #{agent.config_file}; pass --register to reinitialize"
+        else
+          $stderr.puts "Unable to load agent from BIXBY_HOME=#{ENV['BIXBY_HOME']}; pass --register to initialize"
+        end
+        exit 1
+      end
+
+      # validate uri
+      uri = @argv.shift || @config[:register]
+      begin
+        if uri.nil? or URI.parse(uri).nil? or URI.join(uri, "/api").nil? then
+          raise ConfigException, "Missing manager URI", caller
+        end
+      rescue URI::Error => ex
+        raise ConfigException, "Bad manager URI: '#{uri}'"
+      end
+
+      tenant   = @config[:tenant]   || HighLine.new.ask("Tenant: ")
+      password = @config[:password] || HighLine.new.ask("Enter agent registration password: ") { |q| q.echo = "*" }
+
+      # register
+      $stdout.puts "Going to register with manager: #{uri}"
+      if (ret = agent.register_agent(uri, tenant, password, @config[:tags])).fail? then
         $stderr.puts "error: failed to register with manager!"
         $stderr.puts "reason:"
         $stderr.puts "  #{ret.message}"

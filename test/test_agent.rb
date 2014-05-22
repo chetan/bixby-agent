@@ -61,20 +61,6 @@ class TestAgent < TestCase
     assert_equal @root_dir, Bixby.root
   end
 
-  def test_create_missing_manager_uri
-    @manager_uri = nil
-    assert_throws(ConfigException) do
-      @agent = create_new_agent()
-    end
-  end
-
-  def test_create_with_bad_manager_uri
-    @manager_uri = "asdf"
-    assert_throws(ConfigException) do
-      @agent = create_new_agent()
-    end
-  end
-
   def test_register_with_manager
     @agent = create_new_agent()
 
@@ -92,7 +78,7 @@ class TestAgent < TestCase
 
     }.to_return(:body => response_str, :status => 200)
 
-    response = @agent.register_agent
+    response = @agent.register_agent(@manager_uri, @tenant, @password)
     assert response.status == "success"
 
     key_file = Bixby.path("etc", "server.pub")

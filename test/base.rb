@@ -65,11 +65,7 @@ module Bixby
 
       def create_new_agent
         ENV["BIXBY_HOME"] = nil
-        @agent = Agent.create({
-          :uri => @manager_uri, :tenant => @tenant,
-          :password => @password, :root_dir => @root_dir,
-          :port => @port
-          })
+        @agent = Agent.create(@root_dir)
       end
 
 

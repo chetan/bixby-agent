@@ -22,48 +22,30 @@ class Agent
   include Handshake
   include ShellExec
 
-  attr_accessor :manager_uri, :uuid, :mac_address, :tenant, :password,
+  attr_accessor :manager_uri, :uuid, :mac_address,
                 :access_key, :secret_key, :client
 
-  def self.create(opts={}, use_config = true)
+  def self.create(root_dir=nil, use_config = true)
 
-    agent = load_config(opts[:root_dir]) if use_config
-
+    agent = load_config(root_dir) if use_config
     if agent.nil? then
       # create a new one if unable to load
-
-      if File.exists? config_file then
-        $stderr.puts "Unable to load agent from BIXBY_HOME=#{ENV['BIXBY_HOME']}; going to initialize"
-      end
-
-      uri = opts[:uri]
-      begin
-        if uri.nil? or URI.parse(uri).nil? or URI.join(uri, "/api").nil? then
-          raise ConfigException, "Missing manager URI", caller
-        end
-      rescue URI::Error => ex
-        raise ConfigException, "Bad manager URI: '#{uri}'"
-      end
-
-      agent = new(opts)
+      agent = new()
     end
 
     # pass config to some modules
     Bixby.agent = agent
+    return agent if agent.new?
+
     Bixby.manager_uri = agent.manager_uri
     Bixby.client = Bixby::Client.new(agent.access_key, agent.secret_key)
-
     return agent
   end
 
-  def initialize(opts)
+  def initialize()
     #uri, tenant = nil, password = nil, root_dir = nil
     Bixby::Log.setup_logger()
     @new = true
-
-    @manager_uri = opts[:uri]
-    @tenant = opts[:tenant]
-    @password = opts[:password]
 
     @uuid = create_uuid()
     @mac_address = get_mac_address()

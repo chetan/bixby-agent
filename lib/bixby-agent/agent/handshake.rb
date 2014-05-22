@@ -13,14 +13,20 @@ module Handshake
 
   # Register the agent with the server
   #
+  # @param [String] url                 Bixby manager URL
+  # @param [String] tenant              Tenant name
+  # @param [String] password            Tenant registration password
+  # @param [String] tags                Comma-separated list of tags (e.g., "foo,bar")
+  #
   # @return [JsonResponse] response from server
-  def register_agent(tags=nil)
+  def register_agent(url, tenant, password, tags=nil)
+    Bixby.manager_uri = @manager_uri = url
     ret = Bixby::Inventory.register_agent({
       :uuid       => @uuid,
       :public_key => self.public_key.to_s,
       :hostname   => get_hostname(),
-      :tenant     => @tenant,
-      :password   => @password,
+      :tenant     => tenant,
+      :password   => password,
       :tags       => tags,
       :version    => Bixby::Agent::VERSION
       })
@@ -31,6 +37,7 @@ module Handshake
 
     @access_key = ret.data["access_key"]
     @secret_key = ret.data["secret_key"]
+    Bixby.client = Bixby::Client.new(access_key, secret_key)
 
     # success, store server's pub key
     File.open(self.server_key_file, 'w') do |f|

@@ -12,9 +12,10 @@ class TestApp < TestCase
 
   def test_load_agent
     ARGV.clear
-    ARGV << "-d"
-    ARGV << @root_dir
-    ARGV << @manager_uri
+    ARGV << "--register" << @manager_uri
+    ARGV << "-d" << @root_dir
+    ARGV << "--tenant" << "mytenant"
+    ARGV << "--password" << "mypass"
 
     response_str = MultiJson.dump({
                       :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
@@ -58,11 +59,11 @@ class TestApp < TestCase
   def test_run_agent
 
     ARGV.clear
+    ARGV << "--register" # uri should default to bixby.io
     ARGV << "--debug"
-    ARGV << "-d"
-    ARGV << @root_dir
-    # uri should default to bixby.io
-    # ARGV << @manager_uri
+    ARGV << "--directory" << @root_dir
+    ARGV << "--tenant" << "mytenant"
+    ARGV << "--password" << "mypass"
 
     Bixby::WebSocket::Client.any_instance.expects(:start).once()
 
@@ -80,6 +81,16 @@ class TestApp < TestCase
     App.new.run!
 
     assert_equal "debug", ENV["BIXBY_LOG"]
+  end
+
+  def test_run_with_bad_manager_uri
+    ARGV.clear
+    ARGV << "--register" << "asdf"
+    ARGV << "-d" << @root_dir
+
+    assert_throws(ConfigException) do
+      App.new.run!
+    end
   end
 
   def test_register_failed
