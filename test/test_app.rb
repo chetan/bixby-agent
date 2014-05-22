@@ -61,7 +61,8 @@ class TestApp < TestCase
     ARGV << "--debug"
     ARGV << "-d"
     ARGV << @root_dir
-    ARGV << @manager_uri
+    # uri should default to bixby.io
+    # ARGV << @manager_uri
 
     Bixby::WebSocket::Client.any_instance.expects(:start).once()
 
@@ -73,23 +74,12 @@ class TestApp < TestCase
                       :status  => "success",
                       :message => nil })
 
-    stub_request(:post, "http://localhost:3000/api").
+    stub_request(:post, "https://bixby.io/api").
       to_return(:status => 200, :body => response_str)
 
     App.new.run!
 
     assert_equal "debug", ENV["BIXBY_LOG"]
-  end
-
-  def test_missing_manager_uri
-    ARGV.clear
-    ARGV << "-d"
-    ARGV << @root_dir
-
-    app = App.new
-    assert_throws(SystemExit) do
-      app.load_agent()
-    end
   end
 
   def test_register_failed

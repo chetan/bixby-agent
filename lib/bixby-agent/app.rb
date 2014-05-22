@@ -17,7 +17,7 @@ class App
   # try to register with the server if we have the correct parameters.
   def load_agent
     opts = {
-      :uri       => @argv.empty? ? nil : @argv.shift,
+      :uri       => (@argv.shift || @config[:url]),
       :root_dir  => @config[:directory]
     }
     %w{tenant password}.each{ |k| opts[k.to_sym] = @config[k.to_sym] }

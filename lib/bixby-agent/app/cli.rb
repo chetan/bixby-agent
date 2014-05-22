@@ -30,7 +30,7 @@ Where <command> is one of:
 
 To register with the manager:
 
-  #{$0} -t TENANT -P [PASSWORD] <manager url>
+  #{$0} [--url URL] -t TENANT -P [PASSWORD] [--tags TAG1,TAG2]
 
 Options:
 
@@ -82,6 +82,12 @@ EOF
       :boolean        => true,
       :show_options   => true,
       :exit           => 0
+
+  option :url,
+      :on             => :tail,
+      :long           => "--url URL",
+      :default        => "https://bixby.io",
+      :description    => "Bixby Manager URL (optional, default: https://bixby.io)"
 
   option :version,
       :on             => :tail,
