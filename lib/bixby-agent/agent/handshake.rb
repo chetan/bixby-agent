@@ -48,18 +48,20 @@ module Handshake
     `hostname`.strip
   end
 
+  # Get the mac address of the system's primary interface
   def get_mac_address
     return @mac if not @mac.nil?
-    Facter.collection.loader.load(:ipaddress)
-    Facter.collection.loader.load(:interfaces)
-    Facter.collection.loader.load(:macaddress)
-    vals = {}
-    Facter.collection.list.each { |n| vals[n] = Facter.collection[n] }
-    ip = vals[:ipaddress]
+    Facter.collection.fact(:ipaddress).value # force value to be loaded now (usually lazy-loaded)
+    Facter.collection.fact(:interfaces).value
+    Facter.collection.fact(:macaddress).value
+    vals = Facter.collection.to_hash
+    ip = vals["ipaddress"]
     raise "Unable to find IP address" if ip.nil?
-    int = vals.find{ |k,v| v == ip && k != :ipaddress }.first.to_s.split(/_/)[1]
+    # use the primary IP of the system to find the associated interface name (e.g., en0 or eth0)
+    int = vals.find{ |k,v| v == ip && k != "ipaddress" }.first.to_s.split(/_/)[1]
     raise "Unable to find primary interface" if int.nil? or int.empty?
-    @mac = vals["macaddress_#{int}".to_sym]
+    # finally, get the mac address
+    @mac = vals["macaddress_#{int}"]
   end
 
   def create_uuid

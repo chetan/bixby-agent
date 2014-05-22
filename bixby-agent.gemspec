@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Chetan Sarva"]
-  s.date = "2014-03-31"
+  s.date = "2014-05-22"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -88,7 +88,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<oj>, [">= 0"])
       s.add_runtime_dependency(%q<httpi>, [">= 0"])
       s.add_runtime_dependency(%q<curb>, [">= 0"])
-      s.add_runtime_dependency(%q<facter>, ["~> 1.6.0"])
+      s.add_runtime_dependency(%q<facter>, ["~> 2.0.0"])
       s.add_runtime_dependency(%q<mixlib-cli>, [">= 0"])
       s.add_runtime_dependency(%q<mixlib-shellout>, [">= 0"])
       s.add_runtime_dependency(%q<highline>, [">= 0"])
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<oj>, [">= 0"])
       s.add_dependency(%q<httpi>, [">= 0"])
       s.add_dependency(%q<curb>, [">= 0"])
-      s.add_dependency(%q<facter>, ["~> 1.6.0"])
+      s.add_dependency(%q<facter>, ["~> 2.0.0"])
       s.add_dependency(%q<mixlib-cli>, [">= 0"])
       s.add_dependency(%q<mixlib-shellout>, [">= 0"])
       s.add_dependency(%q<highline>, [">= 0"])
@@ -155,7 +155,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<oj>, [">= 0"])
     s.add_dependency(%q<httpi>, [">= 0"])
     s.add_dependency(%q<curb>, [">= 0"])
-    s.add_dependency(%q<facter>, ["~> 1.6.0"])
+    s.add_dependency(%q<facter>, ["~> 2.0.0"])
     s.add_dependency(%q<mixlib-cli>, [">= 0"])
     s.add_dependency(%q<mixlib-shellout>, [">= 0"])
     s.add_dependency(%q<highline>, [">= 0"])
