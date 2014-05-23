@@ -24,12 +24,12 @@ GOD_PID=$BIXBY_HOME/var/bixby-god.pid
 GOD_BIN="$BIXBY_HOME/embedded/bin/god -P $GOD_PID -p $GOD_PORT"
 
 start() {
+  echo " * Starting bixby"
   $GOD_BIN $GOD_CONF
-  echo "* Started bixby"
 }
 stop() {
+  echo " * Stopping bixby"
   $GOD_BIN terminate >/dev/null
-  echo "* Stopped bixby"
 }
 quit() {
   $GOD_BIN quit >/dev/null
