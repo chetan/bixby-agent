@@ -87,6 +87,7 @@ module Bixby
           begin
             api.message(e)
           rescue Exception => ex
+            raise ex if ex.kind_of? SystemExit # possible when message is a connect() response
             log.error ex
           end
         end

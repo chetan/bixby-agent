@@ -1,5 +1,6 @@
 
 require 'helper'
+require 'timeout'
 
 module Bixby
 module Test
@@ -125,6 +126,17 @@ class TestApp < TestCase
       to_return(:status => 200, :body => ret)
 
     assert_output(nil, /current time.*sudo ntpdate/m) do
+      assert_throws(SystemExit) do
+        App.new.run!
+      end
+    end
+  end
+
+  def test_agent_auth_fails
+    setup_existing_agent()
+    ARGV.clear
+    ARGV << "--debug"
+    Timeout::timeout(2) do
       assert_throws(SystemExit) do
         App.new.run!
       end
