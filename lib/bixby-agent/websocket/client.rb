@@ -1,4 +1,6 @@
 
+require 'bixby-agent/help/system_time'
+
 require 'faye/websocket'
 require 'eventmachine'
 
@@ -71,7 +73,11 @@ module Bixby
                 @tries = 0
 
               else
-                log.error "error: #{ret.code} #{ret.message}"
+                if ret.message =~ /900 seconds old/ then
+                  logger.error "error authenticating with manager:\n" + Help::SystemTime.message
+                else
+                  log.error "error: #{ret.code} #{ret.message}"
+                end
                 log.error "exiting since we failed to auth"
                 @exiting = true
                 exit 1 # bail out since we failed to connect, nothing to do

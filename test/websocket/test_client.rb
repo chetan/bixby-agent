@@ -35,7 +35,7 @@ class TestClient < TestCase
     super
     EM.stub!
     setup_existing_agent()
-    Logging.logger[Bixby::WebSocket::Client].level = 5
+    Logging.logger[Bixby::WebSocket::Client].level = :fatal
   end
 
   def teardown
@@ -82,6 +82,25 @@ class TestClient < TestCase
 
     @client.api.expects(:message).once.with("foobar")
     @fake_ws.trigger(:message, "foobar")
+  end
+
+  def test_auth_fails_causes_exit
+    Logging.logger[Bixby::WebSocket::Client].level = :error
+    @fake_ws = FakeClient.new
+    Faye::WebSocket::Client.expects(:new).with("http://localhost", nil, :ping => 55).returns(@fake_ws)
+    @client = Bixby::WebSocket::Client.new("http://localhost", TestHandler)
+    @client.start
+
+    @fake_ws.expects(:send).with{ |r| c = Bixby::WebSocket::Message.from_wire(r); c.type == "connect" }
+    @fake_ws.trigger(:open, nil)
+
+    stub_request(:get, "http://google.com/").to_return(:status => 200, :body => "", :headers => {"Date" => (Time.new+1).utc.to_s})
+
+    assert_output(/ntpdate.*exiting since we failed to auth/m) do
+      assert_throws(SystemExit) do
+        @client.api.responses.values.first.response = JsonResponse.new("fail", "request is more than 900 seconds old", nil, 401)
+      end
+    end
   end
 
 end

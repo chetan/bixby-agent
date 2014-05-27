@@ -132,17 +132,6 @@ class TestApp < TestCase
     end
   end
 
-  def test_agent_auth_fails
-    setup_existing_agent()
-    ARGV.clear
-    ARGV << "--debug"
-    Timeout::timeout(2) do
-      assert_throws(SystemExit) do
-        App.new.run!
-      end
-    end
-  end
-
 end
 
 end
