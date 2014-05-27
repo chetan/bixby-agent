@@ -76,7 +76,7 @@ module Bixby
                 if ret.message =~ /900 seconds old/ then
                   logger.error "error authenticating with manager:\n" + Help::SystemTime.message
                 else
-                  log.error "error: #{ret.code} #{ret.message}"
+                  log.error "error authenticating with manager: #{ret.code} #{ret.message}"
                 end
                 log.error "exiting since we failed to auth"
                 @exiting = true
