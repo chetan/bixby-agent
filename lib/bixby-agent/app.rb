@@ -11,6 +11,8 @@ class App
 
   include CLI
   include Bixby::Log
+  include Bixby::Script::Distro
+  include Bixby::Script::Platform
 
   # Load Agent
   #
@@ -69,7 +71,11 @@ class App
       if (ret = agent.register_agent(uri, tenant, password, @config[:tags])).fail? then
         $stderr.puts "error: failed to register with manager!"
         $stderr.puts "reason:"
-        $stderr.puts "  #{ret.message}"
+        if ret.message =~ /900 seconds old/ then
+          print_system_time_help()
+        else
+          $stderr.puts "  #{ret.message}"
+        end
         exit 1
       end
       agent.save_config()
@@ -196,6 +202,33 @@ class App
         IO.for_fd(i).close
       rescue Exception
       end
+    end
+  end
+
+
+  private
+
+  # Registration may fail if the system clock is too far in the past (more than 15 minutes)
+  # Show the user how to fix the issue and try again
+  def print_system_time_help
+    $stderr.puts "  it appears your system clock is out of sync"
+
+    res = HTTPI.get("http://google.com")
+    if not res.error? then
+      current_time = Time.parse(res.headers["Date"]).utc
+      $stderr.puts "  > current time: #{current_time}"
+      $stderr.puts "  >  system time: #{Time.new.utc}"
+    end
+
+    $stderr.puts
+    if linux? && ubuntu? then
+      $stderr.puts "  to fix:"
+      $stderr.puts "  sudo apt-get install ntpdate && sudo ntpdate ntp.ubuntu.com"
+    elsif linux? && centos? then
+      $stderr.puts "  to fix:"
+      $stderr.puts "  sudo yum install ntpdate && sudo ntpdate ntp.ubuntu.com"
+    else
+      $stderr.puts "  you can fix this on most unix systems by running 'sudo ntpdate ntp.ubuntu.com'"
     end
   end
 

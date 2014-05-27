@@ -109,6 +109,28 @@ class TestApp < TestCase
 
   end
 
+  def test_register_agent_with_old_date
+
+    ARGV.clear
+    ARGV << "--register" # uri should default to bixby.io
+    ARGV << "--debug"
+    ARGV << "--directory" << @root_dir
+    ARGV << "--tenant" << "mytenant"
+    ARGV << "--password" << "mypass"
+
+    stub_request(:get, "http://google.com/").to_return(:status => 200, :body => "", :headers => {"Date" => (Time.new+1).utc.to_s})
+
+    ret = Bixby::JsonResponse.new("fail", "request is more than 900 seconds old", nil, 401).to_json
+    stub_request(:post, "https://bixby.io/api").
+      to_return(:status => 200, :body => ret)
+
+    assert_output(nil, /current time.*sudo ntpdate/m) do
+      assert_throws(SystemExit) do
+        App.new.run!
+      end
+    end
+  end
+
 end
 
 end
