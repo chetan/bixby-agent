@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Chetan Sarva"]
-  s.date = "2014-05-22"
+  s.date = "2014-06-11"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/bixby-agent",
-    "bin/ci_setup.sh",
     "bixby-agent.gemspec",
     "etc/bixby-god.initd",
     "etc/bixby.god",
@@ -43,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/bixby-agent/app.rb",
     "lib/bixby-agent/app/cli.rb",
     "lib/bixby-agent/config_exception.rb",
+    "lib/bixby-agent/help/system_time.rb",
     "lib/bixby-agent/version.rb",
     "lib/bixby-agent/websocket/client.rb",
     "tasks/cane.rake",
