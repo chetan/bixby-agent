@@ -13,8 +13,8 @@ Jeweler::Tasks.new do |gemspec|
   gemspec.executables = %w{ bixby-agent }
 
   # exclude these bin scripts for now
-  %w{ bin/bundle bin/cache_all.rb bin/install.sh bin/old_install.sh bin/package }.each do |f|
-    gemspec.files.exclude f
+  %w{ ci.sh ci_setup.sh install.sh }.each do |f|
+    gemspec.files.exclude "bin/#{f}"
   end
 
 end
