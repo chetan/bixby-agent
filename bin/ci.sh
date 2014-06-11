@@ -3,8 +3,10 @@
 bundle exec micron test/
 ret=$?
 
+set -e
+
 echo -e "\n"
-rake gemspec
+bundle exec rake gemspec
 diffcount=$(git diff *.gemspec | egrep '^\+' | wc -l)
 if [[ $diffcount -gt 2 ]]; then
   echo
