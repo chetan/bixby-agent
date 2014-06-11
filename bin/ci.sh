@@ -1,19 +1,18 @@
 #!/bin/bash
 
-set -e
-
 bundle exec micron test/
 ret=$?
 
+echo -e "\n"
 rake gemspec
-diffcount=$(git diff *.gemspec | egrep '^\+')
+diffcount=$(git diff *.gemspec | egrep '^\+' | wc -l)
 if [[ $diffcount -gt 2 ]]; then
   echo
   echo "***********************"
   echo "gemspec is out of date!"
   echo "***********************"
   echo
-  git diff *.gemspec
+  git diff *.gemspec | cat -
   exit 1
 fi
 
