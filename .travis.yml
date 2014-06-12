@@ -1,13 +1,15 @@
-
-install: bundle install --deployment
+language: ruby
+before_install:
+  - "curl -sL https://s3.bixby.io/wad > ~/wad"
+  - "chmod +x ~/wad"
+install:
+  - "travis_retry ~/wad"
 before_script: "./bin/ci_setup.sh"
 script: "./bin/ci.sh"
 after_script:
   - "bundle exec rake coverage"
   - "bundle exec rake coveralls"
 
-language: ruby
-cache: bundler
 rvm:
   - 2.1.1
   - 1.9.3
