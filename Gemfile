@@ -25,7 +25,6 @@ gem 'logging'
 
 group :development do
   # packaging
-  gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
   gem 'yard', '~> 0.7'
 
   # debugging
@@ -43,7 +42,9 @@ group :development do
 end
 
 group :development, :test do
+  # packaging
   gem "rake"
+  gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
 
   # test frameworks
   gem 'webmock', :require => false
