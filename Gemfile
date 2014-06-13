@@ -43,6 +43,8 @@ group :development do
 end
 
 group :development, :test do
+  gem "rake"
+
   # test frameworks
   gem 'webmock', :require => false
   gem 'mocha',   :require => false

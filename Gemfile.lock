@@ -239,6 +239,7 @@ DEPENDENCIES
   multi_json
   oj
   pry
+  rake
   rb-fchange
   rb-fsevent
   rb-inotify
