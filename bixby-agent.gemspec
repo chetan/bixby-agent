@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Chetan Sarva"]
-  s.date = "2014-06-11"
+  s.date = "2014-06-13"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -94,7 +94,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<highline>, [">= 0"])
       s.add_runtime_dependency(%q<uuidtools>, [">= 0"])
       s.add_runtime_dependency(%q<logging>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<awesome_print>, [">= 0"])
@@ -103,6 +102,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<hirb>, [">= 0"])
       s.add_development_dependency(%q<test_guard>, [">= 0"])
       s.add_development_dependency(%q<cane>, [">= 0"])
+      s.add_development_dependency(%q<rake>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
@@ -127,7 +128,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<highline>, [">= 0"])
       s.add_dependency(%q<uuidtools>, [">= 0"])
       s.add_dependency(%q<logging>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<awesome_print>, [">= 0"])
@@ -136,6 +136,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<hirb>, [">= 0"])
       s.add_dependency(%q<test_guard>, [">= 0"])
       s.add_dependency(%q<cane>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
@@ -161,7 +163,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<highline>, [">= 0"])
     s.add_dependency(%q<uuidtools>, [">= 0"])
     s.add_dependency(%q<logging>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<awesome_print>, [">= 0"])
@@ -170,6 +171,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<hirb>, [">= 0"])
     s.add_dependency(%q<test_guard>, [">= 0"])
     s.add_dependency(%q<cane>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
