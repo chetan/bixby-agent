@@ -39,6 +39,7 @@ module ShellExec
 
     logger.debug("exec: #{cmd}")
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
+                                      :env   => spec.env,
                                       :user  => uid(spec.user),
                                       :group => gid(spec.group))
 
