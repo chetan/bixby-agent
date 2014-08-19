@@ -60,30 +60,7 @@ module Bixby
 
         ws.on :open do |e|
           begin
-            log.debug "connected to manager, authenticating"
-
-            # send a connection request
-            id = SecureRandom.uuid
-            json_req = JsonRequest.new("", "")
-            signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
-            api.execute_async(Request.new(signed_req, id, "connect")) do |ret|
-              if ret.success? then
-                log.info "Successfully connected to manager at #{@url}"
-                api.open(e)
-                @tries = 0
-
-              else
-                if ret.message =~ /900 seconds old/ then
-                  logger.error "error authenticating with manager:\n" + Help::SystemTime.message
-                else
-                  log.error "error authenticating with manager: #{ret.code} #{ret.message}"
-                end
-                log.error "exiting since we failed to auth"
-                @exiting = true
-                exit 1 # bail out since we failed to connect, nothing to do
-              end
-            end
-
+            authenticate(e)
           rescue Exception => ex
             log.error ex
           end
@@ -116,6 +93,33 @@ module Bixby
             log.error ex
           end
         })
+      end
+
+      # Send a connection request to authenticate with the manager
+      def authenticate(e)
+        log.debug "connected to manager, authenticating"
+
+        json_req   = JsonRequest.new("", "")
+        signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
+        auth_req   = Request.new(signed_req, SecureRandom.uuid, "connect")
+
+        api.execute_async(auth_req) do |ret|
+          if ret.success? then
+            log.info "Successfully connected to manager at #{@url}"
+            api.open(e)
+            @tries = 0
+
+          else
+            if ret.message =~ /900 seconds old/ then
+              logger.error "error authenticating with manager:\n" + Help::SystemTime.message
+            else
+              log.error "error authenticating with manager: #{ret.code} #{ret.message}"
+            end
+            log.error "exiting since we failed to auth"
+            @exiting = true
+            exit 1 # bail out since we failed to connect, nothing to do
+          end
+        end
       end
 
       # Delay reconnection by a slowly increasing interval
