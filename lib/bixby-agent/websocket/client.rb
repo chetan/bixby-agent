@@ -35,7 +35,7 @@ module Bixby
           # :nocov:
         end
 
-        log.debug "connecting to #{@url}"
+        logger.debug "connecting to #{@url}"
         EM.run {
           connect()
         }
@@ -63,7 +63,7 @@ module Bixby
           begin
             authenticate(e)
           rescue Exception => ex
-            log.error ex
+            logger.error ex
           end
         end
 
@@ -72,7 +72,7 @@ module Bixby
             api.message(e)
           rescue Exception => ex
             raise ex if ex.kind_of? SystemExit # possible when message is a connect() response
-            log.error ex
+            logger.error ex
           end
         end
 
@@ -82,20 +82,20 @@ module Bixby
             api.close(e)
             return if @exiting or not EM.reactor_running?
             if was_connected then
-              log.info "lost connection to manager"
+              logger.info "lost connection to manager"
             else
-              log.debug "failed to connect"
+              logger.debug "failed to connect"
             end
             reconnect()
           rescue Exception => ex
-            log.error ex
+            logger.error ex
           end
         })
       end
 
       # Send a connection request to authenticate with the manager
       def authenticate(e)
-        log.debug "connected to manager, authenticating"
+        logger.debug "connected to manager, authenticating"
 
         json_req   = JsonRequest.new("", "")
         signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
@@ -103,7 +103,7 @@ module Bixby
 
         id = api.execute_async(auth_req) do |ret|
           if ret.success? then
-            log.info "Successfully connected to manager at #{@url}"
+            logger.info "Successfully connected to manager at #{@url}"
             api.open(e)
             @tries = 0
 
@@ -111,9 +111,9 @@ module Bixby
             if ret.message =~ /900 seconds old/ then
               logger.error "error authenticating with manager:\n" + Help::SystemTime.message
             else
-              log.error "error authenticating with manager: #{ret.code} #{ret.message}"
+              logger.error "error authenticating with manager: #{ret.code} #{ret.message}"
             end
-            log.error "exiting since we failed to auth"
+            logger.error "exiting since we failed to auth"
             @exiting = true
             exit 1 # bail out since we failed to connect, nothing to do
           end
@@ -155,22 +155,22 @@ module Bixby
 
         if @exiting or not EM.reactor_running? then
           # shutting down, don't try to reconnect
-          log.debug "not retrying since we are shutting down"
+          logger.debug "not retrying since we are shutting down"
           return false
         end
 
         @tries += 1
         if @tries == 1 then
-          log.debug "retrying immediately"
+          logger.debug "retrying immediately"
 
         # :nocov:
         elsif @tries == 2 then
-          log.debug "retrying every 1 sec"
+          logger.debug "retrying every 1 sec"
           sleep 1
         elsif @tries <= 30 then
           sleep 1
         elsif @tries == 31 then
-          log.debug "retrying every 5 sec"
+          logger.debug "retrying every 5 sec"
           sleep 5
         else
           sleep 5
