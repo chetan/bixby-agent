@@ -3,6 +3,7 @@ require 'bixby-agent/help/system_time'
 
 require 'faye/websocket'
 require 'eventmachine'
+require 'timeout'
 
 module Bixby
   module WebSocket
@@ -85,10 +86,7 @@ module Bixby
             else
               log.debug "failed to connect"
             end
-            api.close(e)
-            if backoff() then
-              connect()
-            end
+            reconnect()
           rescue Exception => ex
             log.error ex
           end
@@ -103,7 +101,7 @@ module Bixby
         signed_req = SignedJsonRequest.new(json_req, Bixby.agent.access_key, Bixby.agent.secret_key)
         auth_req   = Request.new(signed_req, SecureRandom.uuid, "connect")
 
-        api.execute_async(auth_req) do |ret|
+        id = api.execute_async(auth_req) do |ret|
           if ret.success? then
             log.info "Successfully connected to manager at #{@url}"
             api.open(e)
@@ -119,6 +117,36 @@ module Bixby
             @exiting = true
             exit 1 # bail out since we failed to connect, nothing to do
           end
+        end
+
+        # Start a thread to watch for auth timeout
+        Thread.new do
+          begin
+            sec = 60
+            Timeout.timeout(sec) do
+              api.fetch_response(id) # blocks until request is completed
+            end
+
+          rescue Timeout::Error => ex
+            logger.warn("Authentication timed out after #{sec} seconds; trying again")
+            reconnect()
+
+          rescue Exception => ex
+            logger.error(ex)
+          end
+        end
+
+      end
+
+      def cleanup
+        @api.close(nil) if @api
+        @ws.close if @ws
+      end
+
+      def reconnect
+        if backoff() then
+          cleanup()
+          connect()
         end
       end
 
