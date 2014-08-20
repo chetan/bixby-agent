@@ -7,7 +7,7 @@ set -e
 
 echo -e "\n"
 bundle exec rake gemspec
-diffcount=$(git diff *.gemspec | egrep '^\+' | wc -l)
+diffcount=$(git diff *.gemspec | egrep '^\+' | egrep -v 's\.(date|rubygems_version)' | wc -l)
 if [[ $diffcount -gt 2 ]]; then
   echo
   echo "***********************"
