@@ -29,13 +29,14 @@ class TestClient < TestCase
     def trigger(type, event)
       @types[type].call(event)
     end
+    def close
+    end
   end
 
   def setup
     super
     EM.stub!
     setup_existing_agent()
-    Logging.logger[Bixby::WebSocket::Client].level = :fatal
   end
 
   def teardown
