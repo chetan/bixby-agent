@@ -36,8 +36,8 @@ GIT
 PATH
   remote: .
   specs:
-    bixby-agent (0.2.4)
-      api-auth
+    bixby-agent (0.3.0)
+      bixby-auth
       bixby-client
       bixby-common
       curb
@@ -59,7 +59,6 @@ GEM
     CFPropertyList (2.2.8)
     addressable (2.3.6)
     ansi (1.4.3)
-    api-auth (1.2.6)
     awesome_print (1.2.0)
     bixby-auth (0.1.0)
     bixby-client (0.5.1)
