@@ -25,7 +25,7 @@ class TestAgent < TestCase
     assert ENV["BIXBY_HOME"]
     assert_equal ENV["BIXBY_HOME"], @root_dir
 
-    assert_equal 2, Logging::Logger.root.level # default is warn
+    assert_equal 1, Logging::Logger.root.level # default is info
   end
 
   def test_load_existing_agent

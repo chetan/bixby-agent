@@ -6,12 +6,13 @@ end
 
 gem 'bixby-common'
 gem 'bixby-client'
-# gem 'bixby-common', :path => "../common"
-# gem 'bixby-client', :path => "../client"
+gem 'bixby-auth'
+#gem 'bixby-auth',   :path => "../auth"
+#gem 'bixby-common', :path => "../common"
+#gem 'bixby-client', :path => "../client"
 
 gem 'god'
 gem 'daemons'
-gem 'api-auth', :git => "https://github.com/chetan/api_auth.git", :branch => "bixby"
 gem 'multi_json'
 gem 'oj'
 gem 'httpi'
@@ -35,7 +36,7 @@ group :development do
   gem 'hirb'
 
   # tools
-  gem "test_guard", :git => "https://github.com/chetan/test_guard.git"
+  gem "test_guard", :github => "chetan/test_guard"
 
   # quality
   gem "cane", :platforms => [:mri_19, :mri_20]
@@ -44,7 +45,7 @@ end
 group :development, :test do
   # packaging
   gem "rake"
-  gem 'jeweler', :git => "https://github.com/chetan/jeweler.git", :branch => "bixby"
+  gem 'jeweler', :github => "chetan/jeweler", :branch => "bixby"
 
   # test frameworks
   gem 'webmock', :require => false
