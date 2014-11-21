@@ -36,22 +36,22 @@ GIT
 PATH
   remote: .
   specs:
-    bixby-agent (0.3.0)
-      bixby-auth
-      bixby-client
-      bixby-common
-      curb
-      daemons
+    bixby-agent (0.3.1)
+      bixby-auth (~> 0.1)
+      bixby-client (~> 0.5)
+      bixby-common (~> 0.5)
+      curb (~> 0.8)
+      daemons (~> 1.1)
       facter (~> 2.0.0)
-      god
-      highline
-      httpi
-      logging
-      mixlib-cli
-      mixlib-shellout
-      multi_json
-      oj
-      uuidtools
+      god (~> 0.13)
+      highline (~> 1.6)
+      httpi (~> 2.3)
+      logging (~> 1.8)
+      mixlib-cli (~> 1.5)
+      mixlib-shellout (~> 1.6)
+      multi_json (~> 1.8)
+      oj (~> 2.11)
+      uuidtools (~> 2.1)
 
 GEM
   remote: https://rubygems.org/
