@@ -40,8 +40,8 @@ module ShellExec
     logger.debug("exec: #{cmd}")
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
                                       :env   => spec.env,
-                                      :user  => uid(spec.user),
-                                      :group => gid(spec.group))
+                                      :user  => lookup_id(:uid, spec.user),
+                                      :group => lookup_id(:gid, spec.group))
 
     shell.run_command
 
@@ -55,51 +55,32 @@ module ShellExec
 
   private
 
-  # Return uid of 'bixby' user, if it exists
+  # Lookup the id of the given user or group
   #
-  # @param [String] user        username to run as [Optional, default=bixby]
-  # @return [Fixnum]
-  def uid(user)
-    if Process.uid != 0 then
-      logger.warn("Can't change effective uid unless running as root")
-      return nil
-    end
-
-    if user then
-      begin
-        return Etc.getpwnam(user).uid
-      rescue ArgumentError => ex
-        logger.warn("Username '#{user}' was invalid: #{ex.message}")
-      end
-    end
-
-    begin
-      return Etc.getpwnam("bixby").uid
-    rescue ArgumentError
-    end
-    return nil
-  end
-
-  # Return uid of 'bixby' group, if it exists
+  # @param [Symbol] type          :uid or :gid
+  # @param [String] str           user or group name [Optional, default=bixby]
   #
-  # @param [String] group         group to run as [Optional, default=bixby]
   # @return [Fixnum]
-  def gid(group)
+  def lookup_id(type, str=nil)
     if Process.uid != 0 then
       logger.warn("Can't change effective gid unless running as root")
       return nil
     end
 
-    if group then
+    method = type == :uid ? :getpwnam : :getgrnam
+
+    if !(str.nil? or str.empty?) then
       begin
-        return Etc.getgrnam(group).gid
+        logger.debug "Running as #{type} '#{str}'"
+        return Etc.send(method, str).send(type)
       rescue ArgumentError => ex
-        logger.warn("Group '#{group}' was invalid: #{ex.message}")
+        logger.warn("#{type} lookup for '#{str}' failed: #{ex.message}")
       end
     end
 
     begin
-      return Etc.getgrnam("bixby").gid
+      logger.debug "Running as #{type} 'bixby' (default)"
+      return Etc.send(method, "bixby").send(type)
     rescue ArgumentError
     end
     return nil
