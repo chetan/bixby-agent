@@ -38,10 +38,12 @@ module ShellExec
       old_env[r] = ENV.delete(r) if ENV.include?(r) }
 
     logger.debug("exec: #{cmd}")
+    uid = lookup_id(:uid, spec.user)
+    gid = lookup_id(:gid, spec.group)
     shell = Mixlib::ShellOut.new(cmd, :input => spec.stdin,
-                                      :env   => spec.env,
-                                      :user  => lookup_id(:uid, spec.user),
-                                      :group => lookup_id(:gid, spec.group))
+                                      :env   => reset_env(spec.env, uid),
+                                      :user  => uid,
+                                      :group => gid)
 
     shell.run_command
 
@@ -54,6 +56,18 @@ module ShellExec
 
 
   private
+
+  # Merge in the correct ENV settings for the target user
+  def reset_env(env, uid)
+    if uid.nil? || uid == Process.uid then
+      # no need to change
+      return env
+    end
+
+    env ||= {}
+    user = Etc.getpwuid(uid)
+    env.merge({"HOME" => user.dir, "USER" => user.name})
+  end
 
   # Lookup the id of the given user or group
   #
