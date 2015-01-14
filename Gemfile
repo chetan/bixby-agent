@@ -16,7 +16,6 @@ gem 'daemons', "~> 1.1"
 gem 'multi_json', "~> 1.8"
 gem 'oj', "~> 2.11"
 gem 'httpi', "~> 2.3"
-gem 'curb', "~> 0.8"
 gem 'facter', '~> 2.0.0'
 gem 'mixlib-cli', "~> 1.5"
 gem 'mixlib-shellout', "~> 1.6"

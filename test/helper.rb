@@ -10,8 +10,6 @@ end
 
 require 'micron/minitest'
 
-# load curb first so webmock can stub it out as necessary
-require 'curb'
 require 'webmock'
 include WebMock::API
 require 'mocha/setup'
