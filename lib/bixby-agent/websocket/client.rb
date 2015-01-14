@@ -82,7 +82,7 @@ module Bixby
             api.close(e)
             return if @exiting or not EM.reactor_running?
             if was_connected then
-              logger.info "lost connection to manager"
+              logger.info "lost connection to manager (code=#{e.code}; reason=\"#{e.reason}\")"
             else
               logger.debug "failed to connect"
             end
@@ -120,6 +120,9 @@ module Bixby
         end
 
         # Start a thread to watch for auth timeout
+        #
+        # Because the CONNECT request is fully-async, we need to make sure a reply is received
+        # within a certain time limit. If not, reconnect
         Thread.new do
           begin
             sec = 60
@@ -155,13 +158,13 @@ module Bixby
 
         if @exiting or not EM.reactor_running? then
           # shutting down, don't try to reconnect
-          logger.debug "not retrying since we are shutting down"
+          logger.info "not reconnecting since we are shutting down"
           return false
         end
 
         @tries += 1
         if @tries == 1 then
-          logger.debug "retrying immediately"
+          logger.info "retrying immediately"
 
         # :nocov:
         elsif @tries == 2 then
