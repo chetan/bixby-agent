@@ -4,7 +4,6 @@ module Bixby
   class AgentHandler < Bixby::RpcHandler
 
     include Bixby::Log
-    # include Bixby::CryptoUti
 
     def initialize(request)
       @request = request

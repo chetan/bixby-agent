@@ -20,6 +20,7 @@ module Bixby
         @handler = handler
         @tries = 0
         @exiting = false
+        @thread_pool = Bixby::ThreadPool.new(:min_size => 1, :max_size => 4)
       end
 
       # Start the Client thread
@@ -57,7 +58,7 @@ module Bixby
         # 60 sec timeout, like the AWS ELB:
         # http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ts-elb-healthcheck.html
         @ws = Faye::WebSocket::Client.new(@url, nil, :ping => 55)
-        @api = Bixby::WebSocket::APIChannel.new(@ws, @handler)
+        @api = Bixby::WebSocket::APIChannel.new(@ws, @handler, @thread_pool)
 
         ws.on :open do |e|
           begin

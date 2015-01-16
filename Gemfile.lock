@@ -39,7 +39,7 @@ PATH
     bixby-agent (0.3.1)
       bixby-auth (~> 0.1)
       bixby-client (~> 0.5)
-      bixby-common (~> 0.5)
+      bixby-common
       daemons (~> 1.1)
       facter (~> 2.0.0)
       god (~> 0.13)
@@ -47,7 +47,7 @@ PATH
       httpi (~> 2.3)
       logging (~> 1.8)
       mixlib-cli (~> 1.5)
-      mixlib-shellout (~> 1.6)
+      mixlib-shellout (~> 2.0)
       multi_json (~> 1.8)
       oj (~> 2.11)
       uuidtools (~> 2.1)
@@ -68,7 +68,7 @@ GEM
       mixlib-shellout
       multi_json
       oj
-    bixby-common (0.5.0)
+    bixby-common (0.6.0)
       bixby-auth (~> 0.1)
       faye-websocket (~> 0.7)
       httpi (~> 2.1)
@@ -141,7 +141,7 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     mixlib-cli (1.5.0)
-    mixlib-shellout (1.6.1)
+    mixlib-shellout (2.0.1)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
@@ -206,7 +206,7 @@ DEPENDENCIES
   bixby-agent!
   bixby-auth (~> 0.1)
   bixby-client (~> 0.5)
-  bixby-common (~> 0.5)
+  bixby-common (~> 0.6)
   cane
   colorize
   coveralls
@@ -221,7 +221,7 @@ DEPENDENCIES
   logging (~> 1.8)
   micron!
   mixlib-cli (~> 1.5)
-  mixlib-shellout (~> 1.6)
+  mixlib-shellout (~> 2.0)
   mocha
   multi_json (~> 1.8)
   oj (~> 2.11)

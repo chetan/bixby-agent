@@ -4,7 +4,7 @@ group :self do
   gem 'bixby-agent', :path => "."
 end
 
-gem 'bixby-common', "~> 0.5"
+gem 'bixby-common', "~> 0.6"
 gem 'bixby-client', "~> 0.5"
 gem 'bixby-auth', "~> 0.1"
 #gem 'bixby-auth',   :path => "../auth"
@@ -18,7 +18,7 @@ gem 'oj', "~> 2.11"
 gem 'httpi', "~> 2.3"
 gem 'facter', '~> 2.0.0'
 gem 'mixlib-cli', "~> 1.5"
-gem 'mixlib-shellout', "~> 1.6"
+gem 'mixlib-shellout', "~> 2.0"
 gem 'highline', "~> 1.6"
 gem 'uuidtools', "~> 2.1"
 gem 'logging', "~> 1.8"
@@ -38,7 +38,7 @@ group :development do
   gem "test_guard", :github => "chetan/test_guard"
 
   # quality
-  gem "cane", :platforms => [:mri_19, :mri_20]
+  gem "cane", :platforms => [:mri_19, :mri_20, :mri_21, :mri_22]
 end
 
 group :development, :test do
@@ -51,7 +51,7 @@ group :development, :test do
   gem 'mocha',   :require => false
 
   # tools
-  gem "simplecov", :platforms => [:mri_19, :mri_20]
+  gem "simplecov", :platforms => [:mri_19, :mri_20, :mri_21, :mri_22]
   gem "coveralls", :require => false
   gem "micron", :github => "chetan/micron"
   gem 'rb-inotify', :require => false
