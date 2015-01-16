@@ -22,6 +22,7 @@ branches:
 
 env:
   global:
+    - MICRON_NO_HTML="1"
     - S3_REGION="us-east-1"
     - S3_BUCKET_NAME="io.bixby.gemcache.wad.agent"
     - secure: bnMJOHx5QrfTgOcxg0glw5x9mDoAJ0kKWILQaFCqwORwiJE4nh/3jYsx/uifVmSqOMXqY/9ozBwYrWeG6krPdcFCPS6mq4dVWsbtgQa31x9IWhjUg5lOt0MCrGXpq1JOD3CFIxnQ2f77hl0TzxutIfAtO023ad598+5/FVviyik=
