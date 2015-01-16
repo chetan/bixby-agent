@@ -36,7 +36,7 @@ GIT
 PATH
   remote: .
   specs:
-    bixby-agent (0.3.1)
+    bixby-agent (0.3.2)
       bixby-auth (~> 0.1)
       bixby-client (~> 0.5)
       bixby-common (~> 0.6)
