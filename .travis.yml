@@ -1,5 +1,6 @@
 language: ruby
 before_install:
+  - "gem install bundler --no-ri --no-rdoc"
   - "curl -sL https://s3.bixby.io/wad > ~/wad"
   - "chmod +x ~/wad"
 install:
