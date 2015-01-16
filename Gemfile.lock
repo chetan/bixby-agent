@@ -39,7 +39,7 @@ PATH
     bixby-agent (0.3.1)
       bixby-auth (~> 0.1)
       bixby-client (~> 0.5)
-      bixby-common
+      bixby-common (~> 0.6)
       daemons (~> 1.1)
       facter (~> 2.0.0)
       god (~> 0.13)
