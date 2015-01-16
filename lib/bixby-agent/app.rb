@@ -132,14 +132,19 @@ class App
   end
 
   def trap_signals
-    %w{INT QUIT TERM}.each do |sig|
-      Kernel.trap(sig) do
-        @client.stop()
+
+    Bixby::Signal.trap(%w{INT QUIT TERM}) do |sig|
+      @client.stop()
+      if sig == "INT" then
         puts # to get a blank line after the ^C in the term
-        reason = sig + (sig == "INT" ? " (^C)" : "")
-        logger.warn  "caught #{reason} signal; exiting"
+        reason = " (^C)"
+      else
+        reason = ""
       end
+      logger.warn  "caught #{sig}#{reason} signal; exiting"
     end
+
+    Bixby::ThreadDump.trap!
   end
 
   # If running as root, fix ownership of var and etc dirs
