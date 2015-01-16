@@ -8,6 +8,7 @@ module EventMachine
     alias_method :_orig_stop_event_loop, :stop_event_loop
 
     def run_immediately(&block)
+      @reactor_pid = Process.pid
       @reactor_running = true
       block.call() if block
     end

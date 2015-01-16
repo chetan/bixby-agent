@@ -19,7 +19,10 @@ module WebSocket
 class TestClient < TestCase
 
   class FakeClient
-    attr_reader :types
+    class Event
+      attr_reader :code, :reason
+    end
+    attr_reader :types, :ready_state
     def initialize
       @types = {}
     end
@@ -27,6 +30,7 @@ class TestClient < TestCase
       @types[type] = block
     end
     def trigger(type, event)
+      event ||= Event.new
       @types[type].call(event)
     end
     def close
