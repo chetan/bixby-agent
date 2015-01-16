@@ -54,6 +54,14 @@ module Bixby
       # the connection open forever, reconnecting as needed.
       def connect
 
+        # cleanup any previously opened connections
+        if !@ws.nil? && ws.ready_state != Faye::WebSocket::API::CLOSED then
+          begin
+            @ws.close
+          rescue Exception => ex
+          end
+        end
+
         # Ping is set to 55 sec to workaround issues with certain gateway devices which have a hard
         # 60 sec timeout, like the AWS ELB:
         # http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ts-elb-healthcheck.html
