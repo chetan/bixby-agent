@@ -77,7 +77,10 @@ if [[ -f /etc/issue ]]; then
 fi
 
 amzn='^Amazon Linux AMI'
-if [[ $issue =~ ^"CentOS" ]]; then
+centos='^CentOS'
+ubuntu='^Ubuntu'
+
+if [[ $issue =~ $centos ]]; then
   # e.g., CentOS release 5.10
 
   # grab cent ver
@@ -153,8 +156,7 @@ elif [[ $issue =~ $amzn ]]; then
     exit 1
   fi
 
-
-elif [[ $issue =~ ^"Ubuntu" ]]; then
+elif [[ $issue =~ $ubuntu ]]; then
   # e.g., Ubuntu 13.04
 
   # grab ubuntu ver
