@@ -76,13 +76,7 @@ if [[ -f /etc/issue ]]; then
   issue=`cat /etc/issue`
 fi
 
-amzn='^Amazon Linux AMI'
-centos='^CentOS'
-ubuntu='^Ubuntu'
-
-if [[ $issue =~ $centos ]]; then
-  # e.g., CentOS release 5.10
-
+install_centos() {
   # grab cent ver
   ver=$(echo $issue | head -n 1 | sed -E 's/.*?([0-9]+)\.[0-9]+.*/\1/')
   if [[ $ver != "5" && $ver != "6" ]]; then
@@ -120,10 +114,9 @@ if [[ $issue =~ $centos ]]; then
     echo "ERROR: installing $pkg: $ret"
     exit 1
   fi
+}
 
-elif [[ $issue =~ $amzn ]]; then
-  # e.g., Amazon Linux AMI 2013.09
-
+install_amazon() {
   # grab amazon ver
   ver=$(echo $issue | head -n 1 | sed -E 's/.*? ([0-9]+\.[0-9]+).*/\1/')
 
@@ -155,10 +148,9 @@ elif [[ $issue =~ $amzn ]]; then
     echo "ERROR: installing $pkg: $ret"
     exit 1
   fi
+}
 
-elif [[ $issue =~ $ubuntu ]]; then
-  # e.g., Ubuntu 13.04
-
+install_ubuntu() {
   # grab ubuntu ver
   ver=$(echo $issue | head -n 1 | egrep -o '([0-9]+\.[0-9]+)')
 
@@ -198,42 +190,65 @@ elif [[ $issue =~ $ubuntu ]]; then
   fi
   rm -f /tmp/$pkg
   cd -
+}
 
-else
+install() {
+
+  amzn='^Amazon Linux AMI'
+  centos='^CentOS'
+  ubuntu='^Ubuntu'
+
+  if [[ $issue =~ $centos ]]; then
+    # e.g., CentOS release 5.10
+    install_centos;
+
+  elif [[ $issue =~ $amzn ]]; then
+    # e.g., Amazon Linux AMI 2013.09
+    install_amazon;
+
+  elif [[ $issue =~ $ubuntu ]]; then
+    # e.g., Ubuntu 13.04
+    install_ubuntu;
+
+  else
     echo
     echo "ERROR: only Ubuntu, CentOS and Amazon Linux are currently supported!"
     echo
     exit 1
-fi
+  fi
 
 
-if [[ "$UPGRADE" == "1" ]]; then
+  if [[ "$UPGRADE" == "1" ]]; then
+    echo
+    echo "bixby upgraded to ${bixby_version}"
+    echo
+    echo "to restart agent now, run: [sudo] /etc/init.d/bixby restart"
+    exit
+  fi
+
+
+  tenant="<TENANT>"
+  if [[ -n "$1" ]]; then
+    tenant="$1"
+  fi
+
+  mgr_url="<MANAGER URL>"
+  if [[ -n "$2" ]]; then
+    mgr_url="$2"
+  fi
+
   echo
-  echo "bixby upgraded to ${bixby_version}"
   echo
-  echo "to restart agent now, run: [sudo] /etc/init.d/bixby restart"
-  exit
-fi
+  echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
+  echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} -- ${mgr_url}"
+  echo
+  echo "or optionally add some tags while registering:"
+  echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} --tags tag1,tag2 -- ${mgr_url}"
+  echo
+  echo "or to see all available options:"
+  echo "/opt/bixby/bin/bixby-agent --help"
+  echo
 
+}
 
-tenant="<TENANT>"
-if [[ -n "$1" ]]; then
-  tenant="$1"
-fi
-
-mgr_url="<MANAGER URL>"
-if [[ -n "$2" ]]; then
-  mgr_url="$2"
-fi
-
-echo
-echo
-echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
-echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} -- ${mgr_url}"
-echo
-echo "or optionally add some tags while registering:"
-echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} --tags tag1,tag2 -- ${mgr_url}"
-echo
-echo "or to see all available options:"
-echo "/opt/bixby/bin/bixby-agent --help"
-echo
+install;
