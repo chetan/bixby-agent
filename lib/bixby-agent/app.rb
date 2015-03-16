@@ -125,7 +125,7 @@ class App
   def start_websocket_client
     # make sure log level is still set correctly here
     Bixby::Log.setup_logger(:level => Logging.appenders["file"].level)
-    logger.info "Started Bixby Agent"
+    logger.info "Started Bixby Agent #{Bixby::Agent::VERSION}"
     @client = Bixby::WebSocket::Client.new(Bixby.agent.manager_ws_uri, AgentHandler)
     trap_signals()
     @client.start
