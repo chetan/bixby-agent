@@ -3,8 +3,8 @@
 
 # Bixby Agent install script
 #
-# Usage: \curl -sL https://get.bixby.io | bash -s [<tenant> <manager url>]
-# Beta:  \curl -sL https://get.bixby.io | BETA=1 bash -s [<tenant> <manager url>]
+# Usage: \curl -sL https://get.bixby.io | bash -s -- --register <manager url> --token <token> [--tags tag1,tag2]
+# Beta:  \curl -sL https://get.bixby.io | BETA=1 bash -s ...
 #
 # Params can be excluded when upgrading
 #
@@ -12,7 +12,8 @@
 #
 #   Ubuntu 10.04, 12.04
 #   CentOS or RHEL 5, 6
-#   x86 and x64
+#   Amazon Linux
+#   x86, x64
 
 
 
@@ -20,6 +21,7 @@
 # package repository
 url="https://s3.bixby.io"
 latest="latest"
+args="$@"
 
 UPGRADE=0
 if [[ "$BETA" == "1" ]]; then
@@ -31,10 +33,11 @@ is_64() {
 }
 
 as_root() {
+  path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
   if [[ `whoami` == root ]]; then
-    $*
+    env PATH="$path" $*
   else
-    sudo env PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" $*
+    sudo env PATH="$path" $*
   fi
 }
 
@@ -192,6 +195,20 @@ install_ubuntu() {
   cd -
 }
 
+install_help() {
+  echo
+  echo
+  echo "bixby ${bixby_version} has been successfully installed! to register this node, run:"
+  echo "sudo /opt/bixby/bin/bixby-agent --register <url> --token <token>"
+  echo
+  echo "or optionally add some tags while registering:"
+  echo "sudo /opt/bixby/bin/bixby-agent --register <url> --token <token> --tags tag1,tag2"
+  echo
+  echo "or to see all available options:"
+  echo "/opt/bixby/bin/bixby-agent --help"
+  echo
+}
+
 install() {
 
   amzn='^Amazon Linux AMI'
@@ -222,33 +239,16 @@ install() {
     echo
     echo "bixby upgraded to ${bixby_version}"
     echo
-    echo "to restart agent now, run: [sudo] /etc/init.d/bixby restart"
+    echo "to restart agent now, run: sudo /etc/init.d/bixby restart"
     exit
   fi
 
-
-  tenant="<TENANT>"
-  if [[ -n "$1" ]]; then
-    tenant="$1"
+  if [[ "$args" == "" ]]; then
+    install_help
+    exit
   fi
 
-  mgr_url="<MANAGER URL>"
-  if [[ -n "$2" ]]; then
-    mgr_url="$2"
-  fi
-
-  echo
-  echo
-  echo "bixby ${bixby_version} has been successfully installed! to get started, run:"
-  echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} -- ${mgr_url}"
-  echo
-  echo "or optionally add some tags while registering:"
-  echo "sudo /opt/bixby/bin/bixby-agent -P -t ${tenant} --tags tag1,tag2 -- ${mgr_url}"
-  echo
-  echo "or to see all available options:"
-  echo "/opt/bixby/bin/bixby-agent --help"
-  echo
-
+  as_root /opt/bixby/bin/bixby-agent $args
 }
 
 install;
