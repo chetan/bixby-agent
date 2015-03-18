@@ -216,7 +216,6 @@ DEPENDENCIES
   facter (~> 2.0.0)
   god (~> 0.13)
   growl
-  highline (~> 1.6)
   hirb
   httpi (~> 2.3)
   jeweler!

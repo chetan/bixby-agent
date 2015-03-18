@@ -18,8 +18,7 @@ module Bixby
         @support_path = File.join(@git_path, "test", "support")
 
         @manager_uri = "http://localhost:3000"
-        @tenant = "pixelcop"
-        @password = "foobar"
+        @token = "ABCDEF012345"
         @root_dir = Dir.mktmpdir("bixby-agent-test-")
         @port = 9999
 

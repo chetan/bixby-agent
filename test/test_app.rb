@@ -15,8 +15,7 @@ class TestApp < TestCase
     ARGV.clear
     ARGV << "--register" << @manager_uri
     ARGV << "-d" << @root_dir
-    ARGV << "--tenant" << "mytenant"
-    ARGV << "--password" << "mypass"
+    ARGV << "--token" << "mytoken"
 
     response_str = MultiJson.dump({
                       :data => {:server_key => "-----BEGIN RSA PUBLIC KEY-----",
@@ -63,8 +62,7 @@ class TestApp < TestCase
     ARGV << "--register" # uri should default to bixby.io
     ARGV << "--debug"
     ARGV << "--directory" << @root_dir
-    ARGV << "--tenant" << "mytenant"
-    ARGV << "--password" << "mypass"
+    ARGV << "--token" << "mytoken"
 
     Bixby::WebSocket::Client.any_instance.expects(:start).once()
 
@@ -116,8 +114,7 @@ class TestApp < TestCase
     ARGV << "--register" # uri should default to bixby.io
     ARGV << "--debug"
     ARGV << "--directory" << @root_dir
-    ARGV << "--tenant" << "mytenant"
-    ARGV << "--password" << "mypass"
+    ARGV << "--token" << "mytoken"
 
     stub_request(:get, "http://google.com/").to_return(:status => 200, :body => "", :headers => {"Date" => (Time.new+1).utc.to_s})
 

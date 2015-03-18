@@ -5,7 +5,6 @@ require 'bixby-agent/app/cli'
 require 'bixby-agent/help/system_time'
 
 require 'daemons'
-require 'highline/import'
 
 module Bixby
 class App
@@ -62,12 +61,9 @@ class App
         raise ConfigException, "Bad manager URI: '#{uri}'"
       end
 
-      tenant   = @config[:tenant]   || HighLine.new.ask("Tenant: ")
-      password = @config[:password] || HighLine.new.ask("Enter agent registration password: ") { |q| q.echo = "*" }
-
       # register
       $stdout.puts "Going to register with manager: #{uri}"
-      if (ret = agent.register_agent(uri, tenant, password, @config[:tags])).fail? then
+      if (ret = agent.register_agent(uri, @config[:token], @config[:tags])).fail? then
         $stderr.puts "error: failed to register with manager!"
         $stderr.puts "reason:"
         if ret.message =~ /900 seconds old/ then
@@ -197,8 +193,7 @@ class App
   end
 
   # Copied from daemons gem. We hit a bug where closing FDs failed,
-  # probably related to prompting for a password. So close them
-  # all cleanly before daemonizing.
+  # so close them all cleanly before daemonizing.
   def close_fds
     # don't close stdin/out/err (0/1/2)
     3.upto(8192).each do |i|

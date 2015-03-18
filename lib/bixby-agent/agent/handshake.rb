@@ -14,19 +14,17 @@ module Handshake
   # Register the agent with the server
   #
   # @param [String] url                 Bixby manager URL
-  # @param [String] tenant              Tenant name
-  # @param [String] password            Tenant registration password
+  # @param [String] token               Client registration token
   # @param [String] tags                Comma-separated list of tags (e.g., "foo,bar")
   #
   # @return [JsonResponse] response from server
-  def register_agent(url, tenant, password, tags=nil)
+  def register_agent(url, token, tags=nil)
     Bixby.manager_uri = @manager_uri = url
     ret = Bixby::Inventory.register_agent({
       :uuid       => @uuid,
       :public_key => self.public_key.to_s,
       :hostname   => get_hostname(),
-      :tenant     => tenant,
-      :password   => password,
+      :token      => token,
       :tags       => tags,
       :version    => Bixby::Agent::VERSION
       })

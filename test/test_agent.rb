@@ -74,11 +74,11 @@ class TestAgent < TestCase
 
     # stub out http request
     stub_request(:post, "#{@manager_uri}/api").with { |req|
-      req.body =~ /inventory:register_agent/ and req.body =~ /"tenant":"pixelcop"/
+      req.body =~ /inventory:register_agent/ and req.body =~ /"token":"#{@token}"/
 
     }.to_return(:body => response_str, :status => 200)
 
-    response = @agent.register_agent(@manager_uri, @tenant, @password)
+    response = @agent.register_agent(@manager_uri, @token)
     assert response.status == "success"
 
     key_file = Bixby.path("etc", "server.pub")

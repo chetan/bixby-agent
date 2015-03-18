@@ -19,7 +19,6 @@ gem 'httpi', "~> 2.3"
 gem 'facter', '~> 2.0.0'
 gem 'mixlib-cli', "~> 1.5"
 gem 'mixlib-shellout', "~> 2.0"
-gem 'highline', "~> 1.6"
 gem 'uuidtools', "~> 2.1"
 gem 'logging', "~> 1.8"
 

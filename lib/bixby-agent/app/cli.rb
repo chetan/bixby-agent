@@ -1,6 +1,5 @@
 
 require 'mixlib/cli'
-require 'highline/import'
 
 module Bixby
 class App
@@ -30,7 +29,7 @@ Where <command> is one of:
 
 To register with the manager:
 
-  #{$0} --register [URL] -t TENANT -P [PASSWORD] [--tags TAG1,TAG2]
+  #{$0} --register [URL] --token TOKEN [--tags TAG1,TAG2]
 
 Options:
 
@@ -44,24 +43,11 @@ EOF
       :description    => "Register with the management server (optional URL, default: https://bixby.io)",
       :proc           => Proc.new { |url| url || "https://bixby.io" } # default URL
 
-  option :tenant,
+  option :token,
       :on             => :head,
-      :short          => "-t TENANT",
-      :long           => "--tenant TENANT",
-      :description    => "Tenant name"
-
-  option :password,
-      :on             => :head,
-      :short          => "-P [PASSWORD]",
-      :long           => "--password [PASSWORD]",
-      :description    => "Agent registration password (prompt if not supplied)",
-      :proc           => Proc.new { |c|
-                           if c then
-                             c
-                           else
-                             HighLine.new.ask("Enter agent registration password: ") { |q| q.echo = "*" }
-                           end
-                         }
+      :short          => "-t TOKEN",
+      :long           => "--token TOKEN",
+      :description    => "Client registration token"
 
   option :tags,
       :on             => :head,
