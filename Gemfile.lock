@@ -43,7 +43,6 @@ PATH
       daemons (~> 1.1)
       facter (~> 2.0.0)
       god (~> 0.13)
-      highline (~> 1.6)
       httpi (~> 2.3)
       logging (~> 1.8)
       mixlib-cli (~> 1.5)

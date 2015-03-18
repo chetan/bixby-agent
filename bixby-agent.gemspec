@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Chetan Sarva"]
-  s.date = "2015-01-16"
+  s.date = "2015-03-18"
   s.description = "Bixby Agent"
   s.email = "chetan@pixelcop.net"
   s.executables = ["bixby-agent"]
@@ -72,7 +72,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/chetan/bixby-agent"
   s.licenses = ["MIT"]
-  s.rubygems_version = "2.4.2"
+  s.rubygems_version = "2.4.6"
   s.summary = "Bixby Agent"
 
   if s.respond_to? :specification_version then
@@ -90,7 +90,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<facter>, ["~> 2.0.0"])
       s.add_runtime_dependency(%q<mixlib-cli>, ["~> 1.5"])
       s.add_runtime_dependency(%q<mixlib-shellout>, ["~> 2.0"])
-      s.add_runtime_dependency(%q<highline>, ["~> 1.6"])
       s.add_runtime_dependency(%q<uuidtools>, ["~> 2.1"])
       s.add_runtime_dependency(%q<logging>, ["~> 1.8"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
@@ -123,7 +122,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<facter>, ["~> 2.0.0"])
       s.add_dependency(%q<mixlib-cli>, ["~> 1.5"])
       s.add_dependency(%q<mixlib-shellout>, ["~> 2.0"])
-      s.add_dependency(%q<highline>, ["~> 1.6"])
       s.add_dependency(%q<uuidtools>, ["~> 2.1"])
       s.add_dependency(%q<logging>, ["~> 1.8"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
@@ -157,7 +155,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<facter>, ["~> 2.0.0"])
     s.add_dependency(%q<mixlib-cli>, ["~> 1.5"])
     s.add_dependency(%q<mixlib-shellout>, ["~> 2.0"])
-    s.add_dependency(%q<highline>, ["~> 1.6"])
     s.add_dependency(%q<uuidtools>, ["~> 2.1"])
     s.add_dependency(%q<logging>, ["~> 1.8"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
