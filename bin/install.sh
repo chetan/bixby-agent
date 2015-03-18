@@ -21,7 +21,13 @@
 # package repository
 url="https://s3.bixby.io"
 latest="latest"
-args="$@"
+
+if [[ "$1" == "--" ]]; then
+  # strip -- from args
+  args="${@:2}"
+else
+  args="$@"
+fi
 
 UPGRADE=0
 if [[ "$BETA" == "1" ]]; then
@@ -249,6 +255,10 @@ install() {
   fi
 
   as_root /opt/bixby/bin/bixby-agent $args
+  if [[ $? -eq 0 ]]; then
+    # finally, start god service also
+    as_root /etc/init.d/bixby start >/dev/null
+  fi
 }
 
 install;
