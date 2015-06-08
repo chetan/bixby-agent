@@ -11,6 +11,8 @@ module Bixby
     # WebSocket Client
     class Client
 
+      MAX_RECONNECT_TIME = 600
+
       include Bixby::Log
 
       attr_reader :ws, :api
@@ -18,7 +20,7 @@ module Bixby
       def initialize(url, handler)
         @url = url
         @handler = handler
-        @tries = 0
+        clear_errors()
         @exiting = false
         @thread_pool = Bixby::ThreadPool.new(:min_size => 1, :max_size => 4)
       end
@@ -96,6 +98,9 @@ module Bixby
               logger.debug "failed to connect"
             end
             reconnect()
+
+          rescue SystemExit => ex
+            logger.error(ex) if !@exiting
           rescue Exception => ex
             logger.error ex
           end
@@ -114,7 +119,7 @@ module Bixby
           if ret.success? then
             logger.info "Successfully connected to manager at #{@url}"
             api.open(e)
-            @tries = 0
+            clear_errors()
 
           else
             if ret.message =~ /900 seconds old/ then
@@ -124,7 +129,7 @@ module Bixby
             end
             logger.error "exiting since we failed to auth"
             @exiting = true
-            exit 1 # bail out since we failed to connect, nothing to do
+            exit 2 # bail out since we failed to connect, nothing to do
           end
         end
 
@@ -140,6 +145,7 @@ module Bixby
             end
 
           rescue Timeout::Error => ex
+            @timeouts += 1
             logger.warn("Authentication timed out after #{sec} seconds; trying again")
             reconnect()
 
@@ -156,10 +162,20 @@ module Bixby
       end
 
       def reconnect
+        if @tries == 0 then
+          @connect_start_time = Time.new
+        end
+
         if backoff() then
           cleanup()
           connect()
         end
+      end
+
+      def clear_errors
+        @tries = 0
+        @timeouts = 0
+        @connect_start_time = nil
       end
 
       # Delay reconnection by a slowly increasing interval
@@ -169,6 +185,24 @@ module Bixby
           # shutting down, don't try to reconnect
           logger.info "not reconnecting since we are shutting down"
           return false
+        end
+
+        if @connect_start_time then
+          diff = (Time.new-@connect_start_time).to_i
+          if @timeouts > 0 && diff > MAX_RECONNECT_TIME then
+            # Give up trying to reconnect
+            #
+            # This is to avoid issues where we get completely stuck trying to connect to the
+            # manager. In at least one case, it seems EventMachine never sent our CONNECT request
+            # and so we were never able to complete the auth process.
+            #
+            # In this situation, we expect the process to be automatically restarted via the
+            # system supervisor (God, etc).
+            logger.fatal "giving up since we have been trying for #{diff} seconds"
+            logger.fatal "exiting"
+            stop()
+            exit 2
+          end
         end
 
         @tries += 1

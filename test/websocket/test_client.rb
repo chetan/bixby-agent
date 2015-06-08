@@ -19,20 +19,36 @@ module WebSocket
 class TestClient < TestCase
 
   class FakeClient
-    class Event
-      attr_reader :code, :reason
+
+    class EventTarget
+      attr_reader :env
+      def initialize
+        @env = {}
+      end
     end
+
+    class Event
+      attr_reader :code, :reason, :target
+      def initialize
+        @target = EventTarget.new
+      end
+    end
+
     attr_reader :types, :ready_state
+
     def initialize
       @types = {}
     end
+
     def on(type, &block)
       @types[type] = block
     end
+
     def trigger(type, event)
       event ||= Event.new
       @types[type].call(event)
     end
+
     def close
     end
   end
