@@ -24,7 +24,7 @@ module Bixby
 
         Bixby.manager_uri = @manager_uri
         @api_url = @manager_uri + "/api"
-        `rm -rf #{@root_dir}`
+        cleanup_root()
 
         vendor_path = File.join(@root_dir, "repo", "vendor")
         `mkdir -p #{vendor_path}`
@@ -36,9 +36,17 @@ module Bixby
       end
 
       def teardown
-        `rm -rf #{@root_dir}`
+        cleanup_root()
         @agent = nil
         ENV["BIXBY_HOME"] = nil
+      end
+
+      def cleanup_root
+        begin
+          `rm -rf #{@root_dir}`
+        rescue Exception => ex
+          logger.debug(ex)
+        end
       end
 
       def setup_existing_agent
