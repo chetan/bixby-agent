@@ -95,7 +95,8 @@ module Bixby
             if was_connected then
               logger.info "lost connection to manager (code=#{e.code}; reason=\"#{e.reason}\")"
             else
-              logger.debug "failed to connect"
+              msg = proc { "failed to connect" + (@tries > 1 ? " (#{@tries} attempts)" : "") + "; still trying..." }
+              @tries % 10 == 0 ? logger.info(&msg) : logger.debug(&msg)
             end
             reconnect()
 
@@ -117,11 +118,13 @@ module Bixby
 
         id = api.execute_async(auth_req) do |ret|
           if ret.success? then
+            # success!
             logger.info "Successfully connected to manager at #{@url}"
             api.open(e)
             clear_errors()
 
-          else
+          elsif ret.code == 401 || ret.code == 403
+            # auth error
             if ret.message =~ /900 seconds old/ then
               logger.error "error authenticating with manager:\n" + Help::SystemTime.message
             else
@@ -130,6 +133,11 @@ module Bixby
             logger.error "exiting since we failed to auth"
             @exiting = true
             exit 2 # bail out since we failed to connect, nothing to do
+
+          else
+            # some other error, probably on the server-side
+            logger.warn "error while trying to connect (#{ret.code} #{ret.message}); retrying..."
+            cleanup() # trigger close event above which will automatically reconnect
           end
         end
 
